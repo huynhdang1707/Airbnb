@@ -1,7 +1,7 @@
 import React from 'react'
 import {Outlet} from 'react-router-dom';
-import Header from '../component/Header/Header';
-import Footer from '../component/Footer/Footer';
+import Header from '../../component/Header/Header';
+import Footer from '../../component/Footer/Footer';
 function MainLayout() {
   return (
     <div>

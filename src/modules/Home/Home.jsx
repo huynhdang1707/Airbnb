@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 
 
 function Home() {
-  const [phongThue, setPhongThue] = useState<PhongThue[]>([]);
+  const [phongThue, setPhongThue] = useState<PhongThue>([]);
   const [err, setErr] = useState<Error | null>(null);
 
   const getPhongThue = async () => {
