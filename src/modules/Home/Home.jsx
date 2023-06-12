@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { apiPhongThue } from '../../apis/bnbApi';
-import { PhongThue } from '../../models/PhongThue';
+import { apiViTri } from '../../apis/bnbApi';
 import Card from 'react-bootstrap/Card';
-
+import ReactPaginate from 'react-paginate';
+import { Container, Row, Col } from 'react-bootstrap';
+import './Home.scss';
 
 function Home() {
-  const [phongThue, setPhongThue] = useState<PhongThue>([]);
-  const [err, setErr] = useState<Error | null>(null);
+  const [phongThue, setPhongThue] = useState([]);
+  const [viTri, setViTri] = useState([]);
+  const [err, setErr] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 20;
+  const navigate = useNavigate();
 
   const getPhongThue = async () => {
     try {
@@ -14,7 +21,7 @@ function Home() {
       setPhongThue(data.content);
     } catch (error) {
       console.log(error);
-      setErr(err);
+      setErr(error);
     }
   };
 
@@ -22,33 +29,70 @@ function Home() {
     getPhongThue();
   }, []);
 
-  console.log(phongThue);
+  const getViTri = async () => {
+    try {
+      const data = await apiViTri();
+      setViTri(data.content);
+    } catch (error) {
+      console.log(error);
+      setErr(error);
+    }
+  }
+  
+  useEffect(() => {
+    getViTri();
+  }, []);
+
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+  
+  const offset = currentPage * itemsPerPage;
+  const pageCount = Math.ceil(phongThue.length / itemsPerPage);
+  
+  const displayData = phongThue.slice(offset, offset + itemsPerPage).map((item, index) => {
+    const matchingViTri = viTri.find(viTriItem => viTriItem.id === item.maViTri);
+    
+    return (
+      <Col className='my-2' key={index} sm={6} md={4} lg={3}>
+        <Card className='hienThi' onClick={() => navigate(`/phong-thue/${item.id}`)}>
+          <div>
+            <Card.Img variant="top" className='hinhAnh' src={item.hinhAnh} alt={item.tenPhong} />
+          </div>
+          <Card.Body className="text-white mt-2 p-0">
+            <a href="" className="text-start">
+              <Card.Title className="tenPhong">{matchingViTri ? `${matchingViTri.tenViTri}, ${matchingViTri.tinhThanh}, ${matchingViTri.quocGia}` : 'Unknown Location'}</Card.Title>
+              <Card.Text className="mt-1 fs-7 text-muted">
+                <p>{item.moTa.length > 60 ? item.moTa.slice(0, 60) + ' ...' : item.moTa}</p>
+                <h5 className='giaTien'>{item.giaTien}.000.000đ</h5>
+              </Card.Text>
+            </a>
+            <div className=""></div>
+          </Card.Body>
+        </Card>
+      </Col>
+    );
+  });
 
   if (err) return null;
 
   return (
-    <div className="container">
-      <div className="row">
-        {phongThue.map((item, index) => (
-          <div className="col-sm-3" key={index}>
-            <Card>
-              <div>
-                <Card.Img variant="top" className="incomingMovieImg" src={item.hinhAnh} alt={item.tenPhong} />
-              </div>
-              <Card.Body className="text-white mt-2 p-0">
-                <a href="" className="infoMovies text-start">
-                  <Card.Title className="nameMovie">{item.tenPhong}</Card.Title>
-                  <Card.Text className="mt-1 fs-7 text-muted">
-                    {item.moTa.length > 60 ? item.moTa.slice(0, 60) + ' ...' : item.moTa}
-                  </Card.Text>
-                </a>
-                <div className=""></div>
-              </Card.Body>
-            </Card>
-          </div>
-        ))}
+    <Container>
+      <Row className='phongThue mt-4'>{displayData}</Row>
+      <div className="d-flex justify-content-center my-2 page">
+        <ReactPaginate
+          previousLabel="<"
+          nextLabel=">"
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageChange}
+          containerClassName="pagination"
+          activeClassName="active"
+          pageClassName="mx-2"
+        />
       </div>
-    </div>
+    </Container>
   );
 }
 

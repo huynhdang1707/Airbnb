@@ -1,17 +1,6 @@
 .moDau{
-    font-size: 20px;
     padding: 22px 0px 20px;
-}
-.gioiThieu{
-    font-size: 14px;
-    margin: 0 8px;
-    padding: 8px;
-    border-right: 1px solid #dddddd;
-}
-.chiTiet{
-    font-size: 14px;
-    margin: 0 8px;
-    padding: 8px;
+    border-bottom: 1px solid #ebebeb;
 }
 
 .choThue, .ngonNgu{
@@ -41,13 +30,24 @@
     border: 1px solid #DDDDDD;
     border-radius: 21px;
     transition: box-shadow 0.2s ease;
-    a{}
+    &:hover{
+        box-shadow:0 2px 4px rgba(0,0,0,0.18);
+    }
+    .item{
+        &:active{
+            background-color: #717171;
+        }
+    }
+    i{
+        color: #717171;
+    }
     .danhMuc i{
         width: 16px;
         height: 16px;
     }
 }
-.cursor {
-    cursor: pointer;
-  }
 
+#basic-nav-dropdown::after {
+    content: none;
+}
+  

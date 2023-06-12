@@ -1,0 +1,35 @@
+.phongThue{
+    a{
+        text-decoration: none;
+    }    
+    .hienThi{
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+    .hinhAnh{
+        width: 320px;
+        height: 272px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+    .tenPhong{
+        font-weight: 600;
+        font-size: 18px;
+        color: black;
+    }
+    .giaTien{
+        font-size: 16px;
+        color: black;
+        font-weight: 600;
+        text-decoration: underline;
+    }
+}
+
+.page{
+    a{
+        text-decoration: none;
+        color: black;
+    }
+   
+}
