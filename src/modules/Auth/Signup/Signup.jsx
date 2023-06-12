@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./Signup.module.scss";
 import { Modal, Form, InputGroup } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
@@ -47,13 +47,14 @@ function Signup() {
   const [passShow, setPassShow] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     watch,
-    getValues,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -70,9 +71,14 @@ function Signup() {
     resolver: yupResolver(schema),
   });
 
+  useEffect(()=>{
+    setValue('birthday', dayjs(selectedDate).format('DD/MM/YYYY'));
+},[selectedDate]);
+
   const { user, isLoading, error } = useSelector((state) => state.signup);
 
   const onSubmit = (data) => {
+    console.log(data)
     dispatch(signup(data));
   };
 
@@ -198,7 +204,6 @@ function Signup() {
               </InputGroup.Text>
               <div className={`col-8 form-control ${style.date}`}>
                 <DatePicker
-                  // value={value}
                   showIcon
                   selected={selectedDate}
                   maxDate={startDate}
@@ -208,6 +213,22 @@ function Signup() {
                 />
               </div>
             </InputGroup>
+            <InputGroup className="mb-2">
+              <InputGroup.Text className="row col-4 mx-1">
+                Giới tính
+              </InputGroup.Text>
+              
+                <select  className="col-8 form-control" name="" {...register("gender")}>
+                  <option value={true}>Nam</option>
+                  <option value={false}>Nữ</option>
+                </select>
+              
+            </InputGroup>
+            {errors.gender && (
+              <p className="ms-3 fs-7 text-danger fst-italic">
+                {errors.gender.message}
+              </p>
+            )}
           </Modal.Body>
           <Modal.Footer className="w-100 justify-content-end">
             <div className="w-100 mt-2 ">
