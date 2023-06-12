@@ -1,0 +1,23 @@
+@import "../../../index.scss";
+
+.cursor {
+  cursor: pointer;
+}
+
+.btnPrimary {
+  @extend .btnPrimary;
+}
+
+.quenPass {
+  font-size: 1rem;
+  font-style: italic;
+  color: $text-dark-color;
+  &:hover {
+    transition: all 0.3s;
+    color: $pink-primary;
+    font-style: normal;
+  }
+}
+.auth {
+  min-height: calc(100vh - 80px);
+}
