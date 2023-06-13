@@ -6,7 +6,6 @@ import Card from "react-bootstrap/Card";
 import ReactPaginate from "react-paginate";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Home.scss";
-
 function Home() {
   const [phongThue, setPhongThue] = useState([]);
   const [viTri, setViTri] = useState([]);
