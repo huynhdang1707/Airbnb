@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import style from "./Signup.module.scss";
 import { Modal, Form, InputGroup } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import swal from "sweetalert";
 import { signup } from "../../../slices/signUpSlice";
 import { signin } from "../../../slices/userSlice";
@@ -27,9 +27,10 @@ const schema = yup.object({
       /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
       "(*)Mật khẩu phải có ít nhất 8 kí tự, phải có 1 chữ hoa, 1 chữ thường và 1 số"
     ),
-    rePassword: yup.string()
-    .oneOf([yup.ref('password'), null], '(*)Mật khẩu không khớp')
-    .required('(*)Vui lòng nhập lại mật khẩu'),
+  rePassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "(*)Mật khẩu không khớp")
+    .required("(*)Vui lòng nhập lại mật khẩu"),
   name: yup.string().required("(*)Họ tên không được để trống"),
   phone: yup
     .string()
@@ -47,7 +48,7 @@ function Signup() {
   const [passShow, setPassShow] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -71,14 +72,14 @@ function Signup() {
     resolver: yupResolver(schema),
   });
 
-  useEffect(()=>{
-    setValue('birthday', dayjs(selectedDate).format('DD/MM/YYYY'));
-},[selectedDate]);
+  useEffect(() => {
+    setValue("birthday", dayjs(selectedDate).format("DD/MM/YYYY"));
+  }, [selectedDate]);
 
   const { user, isLoading, error } = useSelector((state) => state.signup);
 
   const onSubmit = (data) => {
-    console.log(data)
+    console.log(data);
     dispatch(signup(data));
   };
 
@@ -92,14 +93,26 @@ function Signup() {
       "You clicked the button!",
       "success"
     );
+  const location = useLocation();
+  console.log(location);
   if (user) {
     const userSignin = {
       email: user.email,
       password: user.password,
     };
     dispatch(signin(userSignin));
-    navigate(`/`);
+    const redirectUrl = location.state?.redirectUrl;
+    navigate(redirectUrl || "/");
   }
+  const handleLoginRedirect = () => {
+    // Lấy giá trị redirectUrl từ query parameters
+    const redirectUrl = location.state?.redirectUrl;
+    // searchParams.set('redirectUrl', window.location.pathname);
+    console.log(redirectUrl);
+
+    // Chuyển hướng đến trang đăng nhập và truyền redirectUrl qua state
+    navigate("/signin", { state: { redirectUrl } });
+  };
   if (isLoading)
     return (
       <div className="h-100vh d-flex justify-content-center align-items-center">
@@ -115,9 +128,7 @@ function Signup() {
               <InputGroup.Text className="row col-4 mx-1">
                 Email
               </InputGroup.Text>
-              <Form.Control
-                {...register("email")}
-              />
+              <Form.Control {...register("email")} />
             </InputGroup>
             {errors.email && (
               <p className="ms-3 fs-7 text-danger fst-italic">
@@ -176,9 +187,7 @@ function Signup() {
               <InputGroup.Text className="row col-4 mx-1">
                 Họ và tên
               </InputGroup.Text>
-              <Form.Control
-                {...register("name")}
-              />
+              <Form.Control {...register("name")} />
             </InputGroup>
             {errors.name && (
               <p className="ms-3 fs-7 text-danger fst-italic">
@@ -189,9 +198,7 @@ function Signup() {
               <InputGroup.Text className="row col-4 mx-1">
                 Số điện thoại
               </InputGroup.Text>
-              <Form.Control
-                {...register("phone")}
-              />
+              <Form.Control {...register("phone")} />
             </InputGroup>
             {errors.phone && (
               <p className="ms-3 fs-7 text-danger fst-italic">
@@ -217,12 +224,15 @@ function Signup() {
               <InputGroup.Text className="row col-4 mx-1">
                 Giới tính
               </InputGroup.Text>
-              
-                <select  className="col-8 form-control" name="" {...register("gender")}>
-                  <option value={true}>Nam</option>
-                  <option value={false}>Nữ</option>
-                </select>
-              
+
+              <select
+                className="col-8 form-control"
+                name=""
+                {...register("gender")}
+              >
+                <option value={true}>Nam</option>
+                <option value={false}>Nữ</option>
+              </select>
             </InputGroup>
             {errors.gender && (
               <p className="ms-3 fs-7 text-danger fst-italic">
@@ -241,11 +251,14 @@ function Signup() {
               </button>
             </div>
             <div className="ms-4 text-end">
-              <a onClick={() => navigate("/signin")}
-               disabled={isLoading ? true : false}
-               className={style.login}>Đã có tài khoản, đăng nhập.</a>
+              <a
+                onClick={() => handleLoginRedirect()}
+                disabled={isLoading ? true : false}
+                className={style.login}
+              >
+                Đã có tài khoản, đăng nhập.
+              </a>
             </div>
-            
           </Modal.Footer>
           {error && (
             <p className="text-center fs-7 text-danger fst-italic">{error}</p>

@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import "./Header.scss";
@@ -9,34 +9,44 @@ import swal from "sweetalert";
 import { signout } from "../../slices/userSlice";
 import { removeUser } from "../../slices/signUpSlice";
 
-function Header() {
+function Header({
+  onLoginRedirect,
+  onHandleSignUpRedirect,
+  onHandleLogoutRedirect,
+}) {
   const { user } = useSelector((state) => state.user);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleSignOut = () => {
-    swal({
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleSignOut = async () => {
+    onHandleLogoutRedirect();
+    await swal({
       title: "Bạn có muốn đăng xuất!",
       text: "Nhấn Ok để tiếp tục!",
       icon: "warning",
       buttons: true,
-    })
-      .then((willSuccess) => {
-        if (willSuccess) {
-          dispatch(signout());
-          dispatch(removeUser());
-          localStorage.removeItem("user");
-          swal({
-            title: "Bạn đã đăng xuất thành công",
-            text: "Nhấn Ok để tiếp tục!",
-            icon: "success",
-          }).then((willSuccess) => {
-            if (willSuccess) {
-              navigate("/");
+    }).then((willSuccess) => {
+      if (willSuccess) {
+        dispatch(signout());
+        dispatch(removeUser());
+        localStorage.removeItem("user");
+        swal({
+          title: "Bạn đã đăng xuất thành công",
+          text: "Nhấn Ok để tiếp tục!",
+          icon: "success",
+        }).then((willSuccess) => {
+          if (willSuccess) {
+            const currentPath = sessionStorage.getItem("currentPath");
+            if (currentPath) {
+              navigate(currentPath);
+            } else {
+              const redirectUrl = location.state?.redirectUrl;
+              navigate(redirectUrl || "/");
             }
-          });
-        }
-      })
-
+          }
+        });
+      }
+    });
   };
   return (
     <div>
@@ -73,7 +83,7 @@ function Header() {
                   <a href="#" className="danhMuc">
                     <i className="bi bi-list mx-1"></i>
                   </a>
-                  <a href="#">
+                  <a onClick={() => navigate(`/user/user-info/${user?.user?.id}`)}>
                     <i className="bi bi-person-circle mx-1"></i>
                   </a>
                 </span>
@@ -81,18 +91,22 @@ function Header() {
               id="basic-nav-dropdown"
             >
               {user ? (
-                <NavDropdown.Item
-                  className="item"
-                  onClick={handleSignOut}
-                >
+                <NavDropdown.Item className="item" onClick={handleSignOut}>
                   Đăng xuất
                 </NavDropdown.Item>
               ) : (
                 <>
-                  <NavDropdown.Item className="item" href="/signup">
+                  <NavDropdown.Item
+                    className="item"
+                    onClick={onHandleSignUpRedirect}
+                  >
                     Đăng ký
                   </NavDropdown.Item>
-                  <NavDropdown.Item className="item" href="/signin">
+                  <NavDropdown.Item
+                    className="item"
+                    // href="/signin"
+                    onClick={onLoginRedirect}
+                  >
                     Đăng nhập
                   </NavDropdown.Item>
                 </>

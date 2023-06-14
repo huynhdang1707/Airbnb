@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import style from "./SignIn.module.scss";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { signin } from "../../../slices/userSlice";
 import swal from "sweetalert";
+import queryString from "query-string";
 
 function Signin() {
   const [passShow, setPassShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  console.log(location);
   const [searchParams] = useSearchParams();
   const {
     register,
@@ -32,16 +35,23 @@ function Signin() {
   const onError = (error) => {
     console.log(error);
   };
+  const handleSignUpRedirect = () => {
+    // Lấy giá trị redirectUrl từ query parameters
+    const redirectUrl = location.state?.redirectUrl;
+    navigate("/signup", { state: { redirectUrl } });
+  };
 
   if (user) {
-    const url = searchParams.get("redirectUrl") || "/";
+    // const url = searchParams.get("redirectUrl") || "/";
+    // console.log(url);
     swal({
       title: "Bạn đã đăng nhập thành công",
       text: "Nhấn Ok để tiếp tục!",
       icon: "success",
     }).then((willSuccess) => {
       if (willSuccess) {
-        navigate(url);
+        const redirectUrl = location.state?.redirectUrl;
+        navigate(redirectUrl || "/");
       }
     });
   }
@@ -132,7 +142,8 @@ function Signin() {
             <div className="ms-4 text-end">
               <a
                 className={style.quenPass}
-                onClick={() => navigate("/signup")}
+                // onClick={() => navigate("/signup")}
+                onClick={handleSignUpRedirect}
                 disabled={isLoading ? true : false}
               >
                 Đăng ký thành viên mới.
