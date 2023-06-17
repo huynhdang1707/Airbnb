@@ -215,12 +215,12 @@ function UserInfo() {
                 type="text"
                 className="form-control"
                 placeholder="Họ và tên"
-                {...register("hoTen")}
+                {...register("name")}
               />
             </div>
-            {errors.hoTen && (
+            {errors.name && (
               <p className="ms-3 fs-7 text-danger fst-italic">
-                {errors.hoTen.message}
+                {errors.name.message}
               </p>
             )}
             <div className={`input-group ${style.input}`}>
@@ -260,7 +260,7 @@ function UserInfo() {
                 {...register("role")}
               >
                 <option value="ADMIN">Quản trị</option>
-                <option value="KHACHHANG">Khách hàng</option>
+                <option value="USER">Khách hàng</option>
               </select>
             </div>
             {errors.role && (
