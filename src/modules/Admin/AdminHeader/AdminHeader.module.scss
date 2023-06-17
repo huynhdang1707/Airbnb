@@ -1,0 +1,15 @@
+@import "../../../index.scss";
+
+.btnPrimary {
+  @extend .btnPrimary;
+}
+.cursor {
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+}
+.bg {
+  background-color: $bg-pink-color;
+  max-width: 100%;
+}

@@ -1,0 +1,44 @@
+@import '../../index.scss';
+
+.infoUser {
+    max-width: 100%;
+    margin: 0;
+    border-radius: 4px;
+    background-color: $bg-pink-color;
+    border: solid 1px $header-border-color;
+    .right{
+        .table{
+            color: $text-dark-color;
+            td{
+                background-color: $bg-pink-color;
+                vertical-align: middle;
+            }
+        }
+    }
+    .left{
+        text-align: end;
+        font-size: 30px;
+        color: $text-dark-color;
+        cursor: pointer;
+    }
+}
+
+.formBody{
+    .input{
+        margin-bottom: 10px;
+        span{
+            width: 10rem;
+        }
+    }
+    p{
+        margin-bottom: 10px;
+    }
+}
+
+.btn{
+    @extend .btnPrimary;
+    // &:hover{
+    //     --tw-bg-opacity: 0.6;
+    //     background-color: rgb(216 45 139/var(--tw-bg-opacity));
+    // }
+}

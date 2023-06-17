@@ -105,9 +105,9 @@ function UserInfo() {
       <div className={style.infoUser}>
         <div className="container">
           <div className="row">
-            <div className="col-6">
+            <div className="col-11">
               <div className={style.right}>
-                <table className={style.table}>
+                <table className={`${style.table} my-3`}>
                   <tbody>
                     <tr>
                       <td scope="col">ID:</td>
@@ -139,15 +139,17 @@ function UserInfo() {
                     </tr>
                     <tr>
                       <td scope="col">Ảnh đại diện:</td>
-                      <img src={infoUser?.avatar} alt={infoUser?.id} />
+                      <td>
+                        <img src={infoUser?.avatar} alt={infoUser?.id} />
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-            <div className="col-6">
+            <div className="col-1">
               <div
-                className={style.left}
+                className={`${style.left} me-3`}
                 onClick={() => setShow(infoUser?.id ? true : false)}
               >
                 <i class="bi bi-pencil-square"></i>
@@ -268,7 +270,7 @@ function UserInfo() {
                 {errors.role.message}
               </p>
             )}
-             <div className={`input-group ${style.input}`}>
+            <div className={`input-group ${style.input}`}>
               <span className="input-group-text">Ảnh đại diện</span>
               <input
                 type="text"
@@ -282,7 +284,7 @@ function UserInfo() {
                 {errors.avatar.message}
               </p>
             )}
-             <div className={`input-group ${style.input}`}>
+            <div className={`input-group ${style.input}`}>
               <span className="input-group-text">Ngày sinh</span>
               <input
                 type="text"
@@ -296,7 +298,7 @@ function UserInfo() {
                 {errors.birthday.message}
               </p>
             )}
-             <div className={`input-group ${style.input}`}>
+            <div className={`input-group ${style.input}`}>
               <span className="input-group-text">Giới tính</span>
               <select
                 type="text"
