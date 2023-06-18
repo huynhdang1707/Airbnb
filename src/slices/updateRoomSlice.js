@@ -24,7 +24,7 @@ const updateRoomSlice = createSlice({
     roomUpdated: (state, action) => {
       return {
         ...state,
-        user: action?.payload?.meta?.arg,
+        room: action?.payload?.meta?.arg,
         updated: action.payload,
       };
     },

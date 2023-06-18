@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import { roomUpdated, updateRoom } from "../../slices/updateRoomSlice";
 import style from "./RoomForm.module.scss";
-import { number } from "yargs";
 
 const schema = yup.object({
   tenPhong: yup.string().required("(*)Tên phòng không được để trống"),
@@ -70,9 +69,18 @@ function RoomForm({ onShow, handleShow, onUpdateRoom }) {
     (state) => state.updateRoom
   );
   const onSubmit = async (value) => {
-    console.log(value);
     const data = await dispatch(updateRoom(value));
-    console.log(data);
+    if (data?.payload?.statusCode === 200) {
+      swal({
+        title: `Cập nhật phòng thuê thành công`,
+        text: "Nhấn Ok để tiếp tục!",
+        icon: "success",
+      }).then((willSuccess) => {
+        if (willSuccess) {
+          handleShow(!onShow);
+        }
+      });
+    }
     dispatch(roomUpdated(data));
   };
   const onErr = (error) => {
@@ -127,17 +135,7 @@ function RoomForm({ onShow, handleShow, onUpdateRoom }) {
       }
     }
   }, [onUpdateRoom]);
-  if (room?.statusCode === 200) {
-    swal({
-      title: `Cập nhật phòng thuê thành công`,
-      text: "Nhấn Ok để tiếp tục!",
-      icon: "success",
-    }).then((willSuccess) => {
-      if (willSuccess) {
-        handleShow(!onShow);
-      }
-    });
-  }
+  
   if (isLoading)
     return (
       <div className="h-100 d-flex justify-content-center align-items-center">
@@ -196,116 +194,274 @@ function RoomForm({ onShow, handleShow, onUpdateRoom }) {
 
           <div className={`input-group ${style.input}`}>
             <span className="input-group-text">Mô tả</span>
-            <textarea className="form-control" rows="3" {...register("moTa")}  placeholder="Tên phòng">
-                {getValues("moTa")}
-                </textarea>
+            <textarea
+              className="form-control"
+              rows="3"
+              {...register("moTa")}
+              placeholder="Mô tả"
+            >
+              {getValues("moTa")}
+            </textarea>
           </div>
           {errors.moTa && (
             <p className="ms-3 fs-7 text-danger fst-italic">
               {errors.moTa.message}
             </p>
           )}
+          <div className={`input-group ${style.input}`}>
+            <span className="input-group-text">Giá tiền</span>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Giá tiền"
+              {...register("giaTien")}
+            />
+          </div>
+          {errors.giaTien && (
+            <p className="ms-3 fs-7 text-danger fst-italic">
+              {errors.giaTien.message}
+            </p>
+          )}
 
           <div className={`input-group ${style.input}`}>
-            <span className="input-group-text">Họ và tên</span>
+            <span className="input-group-text">Khách</span>
             <input
               type="text"
               className="form-control"
-              placeholder="Họ và tên"
-              {...register("name")}
+              placeholder="Khách"
+              {...register("khach")}
             />
           </div>
-          {errors.name && (
+          {errors.khach && (
             <p className="ms-3 fs-7 text-danger fst-italic">
-              {errors.name.message}
+              {errors.khach.message}
             </p>
           )}
           <div className={`input-group ${style.input}`}>
-            <span className="input-group-text">Email</span>
+            <span className="input-group-text">Phòng ngủ</span>
             <input
               type="text"
               className="form-control"
-              placeholder="Email"
-              {...register("email")}
+              placeholder="Phòng ngủ"
+              {...register("phongNgu")}
             />
           </div>
-          {errors.email && (
+          {errors.phongNgu && (
             <p className="ms-3 fs-7 text-danger fst-italic">
-              {errors.email.message}
+              {errors.phongNgu.message}
             </p>
           )}
+
           <div className={`input-group ${style.input}`}>
-            <span className="input-group-text">Số điện thoại</span>
+            <span className="input-group-text">Giường</span>
             <input
               type="text"
               className="form-control"
-              placeholder="Số điện thoại"
-              {...register("phone")}
+              placeholder="Giường"
+              {...register("giuong")}
             />
           </div>
-          {errors.phone && (
+          {errors.giuong && (
             <p className="ms-3 fs-7 text-danger fst-italic">
-              {errors.phone.message}
+              {errors.giuong.message}
             </p>
           )}
+
           <div className={`input-group ${style.input}`}>
-            <span className="input-group-text">Loại người dùng</span>
+            <span className="input-group-text">Phòng tắm</span>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Phòng tắm"
+              {...register("phongTam")}
+            />
+          </div>
+          {errors.phongTam && (
+            <p className="ms-3 fs-7 text-danger fst-italic">
+              {errors.phongTam.message}
+            </p>
+          )}
+
+          <div className={`input-group ${style.input}`}>
+            <span className="input-group-text">Máy giặt</span>
             <select
               type="text"
               className="form-control"
-              placeholder="Mã loại người dùng"
-              {...register("role")}
+              placeholder="Máy giặt"
+              {...register("mayGiat")}
             >
-              <option value="ADMIN">Quản trị</option>
-              <option value="USER">Khách hàng</option>
+              <option value={true}>Có</option>
+              <option value={false}>Không</option>
             </select>
           </div>
-          {errors.role && (
-            <p className="fs-7 text-danger fst-italic">{errors.role.message}</p>
-          )}
-          <div className={`input-group ${style.input}`}>
-            <span className="input-group-text">Ảnh đại diện</span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Avatar"
-              {...register("avatar")}
-            />
-          </div>
-          {errors.avatar && (
-            <p className="ms-3 fs-7 text-danger fst-italic">
-              {errors.avatar.message}
+          {errors.mayGiat && (
+            <p className="fs-7 text-danger fst-italic">
+              {errors.mayGiat.message}
             </p>
           )}
+
           <div className={`input-group ${style.input}`}>
-            <span className="input-group-text">Ngày sinh</span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Ngày sinh"
-              {...register("birthday")}
-            />
-          </div>
-          {errors.birthday && (
-            <p className="ms-3 fs-7 text-danger fst-italic">
-              {errors.birthday.message}
-            </p>
-          )}
-          <div className={`input-group ${style.input}`}>
-            <span className="input-group-text">Giới tính</span>
+            <span className="input-group-text">Bàn là</span>
             <select
               type="text"
               className="form-control"
-              placeholder="Giới tính"
-              {...register("gender")}
+              placeholder="Bàn là"
+              {...register("banLa")}
             >
-              <option value={true}>Nam</option>
-              <option value={false}>Nữ</option>
+              <option value={true}>Có</option>
+              <option value={false}>Không</option>
             </select>
           </div>
-          {errors.gender && (
+          {errors.banLa && (
+            <p className="fs-7 text-danger fst-italic">
+              {errors.banLa.message}
+            </p>
+          )}
+
+          <div className={`input-group ${style.input}`}>
+            <span className="input-group-text">Tivi</span>
+            <select
+              type="text"
+              className="form-control"
+              placeholder="Tivi"
+              {...register("tivi")}
+            >
+              <option value={true}>Có</option>
+              <option value={false}>Không</option>
+            </select>
+          </div>
+          {errors.tivi && (
+            <p className="fs-7 text-danger fst-italic">{errors.tivi.message}</p>
+          )}
+
+          <div className={`input-group ${style.input}`}>
+            <span className="input-group-text">Điều hòa</span>
+            <select
+              type="text"
+              className="form-control"
+              placeholder="Điều hòa"
+              {...register("dieuHoa")}
+            >
+              <option value={true}>Có</option>
+              <option value={false}>Không</option>
+            </select>
+          </div>
+          {errors.dieuHoa && (
+            <p className="fs-7 text-danger fst-italic">
+              {errors.dieuHoa.message}
+            </p>
+          )}
+
+          <div className={`input-group ${style.input}`}>
+            <span className="input-group-text">Wifi</span>
+            <select
+              type="text"
+              className="form-control"
+              placeholder="Wifi"
+              {...register("wifi")}
+            >
+              <option value={true}>Có</option>
+              <option value={false}>Không</option>
+            </select>
+          </div>
+          {errors.wifi && (
+            <p className="fs-7 text-danger fst-italic">{errors.wifi.message}</p>
+          )}
+
+          <div className={`input-group ${style.input}`}>
+            <span className="input-group-text">Bếp</span>
+            <select
+              type="text"
+              className="form-control"
+              placeholder="Bếp"
+              {...register("bep")}
+            >
+              <option value={true}>Có</option>
+              <option value={false}>Không</option>
+            </select>
+          </div>
+          {errors.bep && (
+            <p className="fs-7 text-danger fst-italic">{errors.bep.message}</p>
+          )}
+
+          <div className={`input-group ${style.input}`}>
+            <span className="input-group-text">Đỗ xe</span>
+            <select
+              type="text"
+              className="form-control"
+              placeholder="Đỗ xe"
+              {...register("doXe")}
+            >
+              <option value={true}>Có</option>
+              <option value={false}>Không</option>
+            </select>
+          </div>
+          {errors.doXe && (
+            <p className="fs-7 text-danger fst-italic">{errors.doXe.message}</p>
+          )}
+
+          <div className={`input-group ${style.input}`}>
+            <span className="input-group-text">Hồ bơi</span>
+            <select
+              type="text"
+              className="form-control"
+              placeholder="Hồ bơi"
+              {...register("hoBoi")}
+            >
+              <option value={true}>Có</option>
+              <option value={false}>Không</option>
+            </select>
+          </div>
+          {errors.hoBoi && (
+            <p className="fs-7 text-danger fst-italic">
+              {errors.hoBoi.message}
+            </p>
+          )}
+
+          <div className={`input-group ${style.input}`}>
+            <span className="input-group-text">Bàn ủi</span>
+            <select
+              type="text"
+              className="form-control"
+              placeholder="Bàn ủi"
+              {...register("banUi")}
+            >
+              <option value={true}>Có</option>
+              <option value={false}>Không</option>
+            </select>
+          </div>
+          {errors.banUi && (
+            <p className="fs-7 text-danger fst-italic">
+              {errors.banUi.message}
+            </p>
+          )}
+
+          <div className={`input-group ${style.input}`}>
+            <span className="input-group-text">Mã vị trí</span>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Mã vị trí"
+              {...register("maViTri")}
+            />
+          </div>
+          {errors.maVitri && (
             <p className="ms-3 fs-7 text-danger fst-italic">
-              {errors.gender.message}
+              {errors.maVitri.message}
+            </p>
+          )}
+          <div className={`input-group ${style.input}`}>
+            <span className="input-group-text">Hình ảnh</span>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Hình ảnh"
+              {...register("hinhAnh")}
+            />
+          </div>
+          {errors.hinhAnh && (
+            <p className="ms-3 fs-7 text-danger fst-italic">
+              {errors.hinhAnh.message}
             </p>
           )}
         </Modal.Body>
