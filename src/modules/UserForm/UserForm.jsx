@@ -67,9 +67,7 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
     (state) => state.updateUser
   );
   const onSubmit = async (value) => {
-    console.log(value);
     const data = await dispatch(updateUser(value));
-    console.log(data);
     dispatch(userUpdated(data));
   };
   const onErr = (error) => {
@@ -104,9 +102,6 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
       }
     }
   }, [onUpdateUser]);
-  //   if (err || error) {
-  //     navigate("/*");
-  //   }
   if (user?.statusCode === 200) {
     swal({
       title: `Cập nhật người dùng thành công`,

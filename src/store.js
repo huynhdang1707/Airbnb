@@ -7,6 +7,7 @@ import updateUserSlice from "./slices/updateUserSlice";
 import adminCreateUser from "./slices/adminCreateUser";
 import roomListPageSlice from "./slices/roomListPage";
 import updateRoomSlice from "./slices/updateRoomSlice";
+import adminCreateRoom from "./slices/adminCreateRoom";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     createUser: adminCreateUser,
     roomListPage: roomListPageSlice,
     updateRoom: updateRoomSlice,
+    createRoom: adminCreateRoom,
   },
 });
 
