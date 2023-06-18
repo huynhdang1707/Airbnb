@@ -127,3 +127,11 @@ a {
     color: map-get($custom-colors, "bg-light-color");
   }
 }
+.titleAdmin {
+  background-color: $bg-dark-color;
+  color: $bg-light-color;
+  text-align: center;
+  margin: 3px;
+  padding: 5px;
+  border-radius: 4px;
+}

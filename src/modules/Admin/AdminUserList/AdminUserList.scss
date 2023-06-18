@@ -1,0 +1,93 @@
+@import "../../../index.scss";
+
+.itemPag {
+  border: none;
+  margin: 0 0.5rem;
+  height: 2rem;
+  width: 2rem;
+  background-color: inherit;
+  color: $pink-primary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  &:hover {
+    background-color: $bg-pink-color;
+  }
+}
+.userManagement {
+  .button {
+    @extend .btnPrimary;
+  }
+  h2 {
+    @extend .titleAdmin;
+  }
+  .body {
+    margin: 3px;
+    border-radius: 4px;
+    background-color: $bg-pink-color;
+    border: solid 1px $header-border-color;
+    .table {
+      .th1 {
+        th {
+          background-color: #262626;
+          color: white;
+        }
+      }
+      .th2 {
+        td,
+        th {
+          background-color: $bg-pink-color;
+        }
+      }
+      img {
+        max-width: 90px;
+        max-height: 150px;
+        object-fit: contain;
+      }
+    }
+    .pagination1 {
+      display: flex;
+      justify-content: end;
+      .rc-pagination-prev {
+        &::marker {
+          content: none;
+        }
+        .rc-pagination-item-link {
+          @extend .itemPag;
+          &::after {
+            content: "<";
+          }
+        }
+      }
+      .rc-pagination-next {
+        &::marker {
+          content: none;
+        }
+        .rc-pagination-item-link {
+          @extend .itemPag;
+          &::after {
+            content: ">";
+          }
+        }
+      }
+      .rc-pagination-jump-next,
+      .rc-pagination-jump-prev {
+        .rc-pagination-item-link {
+          @extend .itemPag;
+          &::after {
+            content: "...";
+          }
+        }
+      }
+      .rc-pagination-item {
+        @extend .itemPag;
+      }
+      .rc-pagination-item-active {
+        background-color: $pink-primary !important;
+        color: $bg-light-color;
+      }
+    }
+  }
+}
