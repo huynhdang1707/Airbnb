@@ -57,12 +57,6 @@ function AdminRoomList() {
           index === 0 && rooms?.totalRow % 10 === 1
             ? setCurrent(current - 1)
             : setCurrent(current);
-          dispatch(
-            getRoomListPage({
-              pageIndex: current,
-              pageSize: 10,
-            })
-          );
         } catch (error) {
           console.log(error);
         }
@@ -71,6 +65,12 @@ function AdminRoomList() {
           text: "Nhấn Ok để tiếp tục!",
           icon: "success",
         }).then((willSuccess) => {
+          dispatch(
+            getRoomListPage({
+              pageIndex: current,
+              pageSize: 10,
+            })
+          );
           deleteRoom.current = null;
         });
       }
@@ -120,7 +120,7 @@ function AdminRoomList() {
             <table className="table">
               <thead>
                 <tr className="th1">
-                  <th scope="col" >#</th>
+                  <th scope="col">#</th>
                   <th scope="col">ID</th>
                   <th scope="col">Hình ảnh</th>
                   <th scope="col">Tên Phòng</th>

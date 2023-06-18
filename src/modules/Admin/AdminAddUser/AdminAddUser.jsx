@@ -76,7 +76,6 @@ function AdminAddUser() {
   const onError = (errors) => {
     console.log(errors);
   };
-  console.log(addUser);
   if (addUser?.payload?.statusCode === 200) {
     swal({
       title: "Thêm người dùng mới thành công",

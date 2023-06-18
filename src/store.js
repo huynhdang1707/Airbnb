@@ -8,6 +8,9 @@ import adminCreateUser from "./slices/adminCreateUser";
 import roomListPageSlice from "./slices/roomListPage";
 import updateRoomSlice from "./slices/updateRoomSlice";
 import adminCreateRoom from "./slices/adminCreateRoom";
+import descListPageSlice from "./slices/descListPageSlice";
+import updateDescSlice from "./slices/updateDescSlice";
+import adminCreateDesc from "./slices/adminCreateDesc";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +23,9 @@ const store = configureStore({
     roomListPage: roomListPageSlice,
     updateRoom: updateRoomSlice,
     createRoom: adminCreateRoom,
+    descListPage: descListPageSlice,
+    updateDesc: updateDescSlice,
+    createDesc: adminCreateDesc,
   },
 });
 

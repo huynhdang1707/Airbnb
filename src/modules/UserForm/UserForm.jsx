@@ -46,6 +46,7 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -237,6 +238,7 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
           )}
           <div className={`input-group ${style.input}`}>
             <span className="input-group-text">Ảnh đại diện</span>
+            <img  style={{ maxWidth: "66px" }} src={watch("avatar")} alt="" />
             <input
               type="text"
               className="form-control"
@@ -282,7 +284,7 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <button type="submit" className={`btn ${style.btn}`}>
+          <button type="submit" className={` ${style.btn}`}>
             Cập nhật
           </button>
         </Modal.Footer>

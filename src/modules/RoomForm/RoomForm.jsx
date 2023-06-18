@@ -30,19 +30,18 @@ const schema = yup.object({
   hinhAnh: yup.string(),
 });
 function RoomForm({ onShow, handleShow, onUpdateRoom }) {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [passShow, setPassShow] = useState(false);
 
   const {
     register,
     handleSubmit,
     getValues,
+    watch,
     reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      id: null,
+      id: 0,
       tenPhong: "",
       khach: 0,
       phongNgu: 0,
@@ -135,7 +134,7 @@ function RoomForm({ onShow, handleShow, onUpdateRoom }) {
       }
     }
   }, [onUpdateRoom]);
-  
+
   if (isLoading)
     return (
       <div className="h-100 d-flex justify-content-center align-items-center">
@@ -452,6 +451,7 @@ function RoomForm({ onShow, handleShow, onUpdateRoom }) {
           )}
           <div className={`input-group ${style.input}`}>
             <span className="input-group-text">Hình ảnh</span>
+            <img  style={{ maxWidth: "100px" }} src={watch("hinhAnh")} alt="" />
             <input
               type="text"
               className="form-control"
@@ -466,7 +466,7 @@ function RoomForm({ onShow, handleShow, onUpdateRoom }) {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <button type="submit" className={`btn ${style.btn}`}>
+          <button type="submit" className={` ${style.btn}`}>
             Cập nhật
           </button>
         </Modal.Footer>

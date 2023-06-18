@@ -1,7 +1,6 @@
 import axiosClient from "./axiosClient";
 
 //Lấy danh sách phòng theo trang
-
 export const apiGetRoomListPage = async (value) => {
   const payload = { ...value };
   const { data } = await axiosClient.get("/phong-thue/phan-trang-tim-kiem", {
@@ -28,8 +27,12 @@ export const apiUpdateRoom = async (value) => {
   return data;
 };
 
-//upload avatar
+//upload hình ảnh phòng
 export const apiUploadRoomImg = async (value) => {
-  const data = await axiosClient.post("/phong-thue/upload-hinh-phong");
+  const data = await axiosClient.post("/phong-thue/upload-hinh-phong", {
+    params: {
+      maViTri: value.maPhong,
+    },
+  });
   return data;
 };

@@ -23,7 +23,7 @@ const roomListPageSlice = createSlice({
   name: "roomListPage",
   initialState,
   reducers: {
-    userUpdate: (state, action) => {},
+    roomUpdate: (state, action) => {},
   },
   extraReducers: (builder) => {
     builder.addCase(getRoomListPage.pending, (state) => {
