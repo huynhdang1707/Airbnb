@@ -29,10 +29,12 @@ export const apiUpdateDesc = async (value) => {
 
 //upload hình ảnh vị trí
 export const apiUploadDescImg = async (value) => {
-    const data = await axiosClient.post("/vi-tri/upload-hinh-vitri",{
-        params: {
-            maViTri: value.maViTri,
-          }
-    });
-    return data;
-  };
+  let formData = new FormData();
+  formData.append("formFile", value.hinhAnh);
+  const data = await axiosClient.post("/vi-tri/upload-hinh-vitri",formData, {
+    params: {
+      maViTri: value.id,
+    },
+  });
+  return data;
+};

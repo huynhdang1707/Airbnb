@@ -29,10 +29,17 @@ export const apiUpdateRoom = async (value) => {
 
 //upload hình ảnh phòng
 export const apiUploadRoomImg = async (value) => {
-  const data = await axiosClient.post("/phong-thue/upload-hinh-phong", {
-    params: {
-      maViTri: value.maPhong,
-    },
-  });
+  let formData = new FormData();
+  // for (const key in value) {
+  //   formData.append(key, value[key]);
+  // }
+  formData.append("formFile", value.hinhAnh);
+  const data = await axiosClient.post(
+    "/phong-thue/upload-hinh-phong",
+    formData,
+    {
+      params: { maPhong: value.id },
+    }
+  );
   return data;
 };

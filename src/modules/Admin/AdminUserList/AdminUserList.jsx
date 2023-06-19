@@ -123,6 +123,7 @@ function AdminUserList() {
                 <tr className="th1">
                   <th scope="col">#</th>
                   <th scope="col">ID</th>
+                  <th scope="col">Hình ảnh</th>
                   <th scope="col">Họ tên</th>
                   <th scope="col">Email</th>
                   <th scope="col">Giới tính</th>
@@ -139,6 +140,9 @@ function AdminUserList() {
                     <tr key={index} className="th2">
                       <th>{index + 1 + (current - 1) * 10}</th>
                       <td>{item.id}</td>
+                      <td>
+                        <img src={ item.avatar} alt={item.id} />
+                      </td>
                       <td>{item.name}</td>
                       <td>{item.email}</td>
                       <td>{item.gender ? "Nam" : "Nữ"}</td>

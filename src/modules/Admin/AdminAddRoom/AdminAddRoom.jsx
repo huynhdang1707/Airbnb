@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { adminCreateRoom } from "../../../slices/adminCreateRoom";
 import "./AdminAddRoom.scss";
 
+
 const schema = yup.object({
   tenPhong: yup.string().required("(*)Tên phòng không được để trống"),
   khach: yup.number().required("(*)Lượng khách không được để trống"),
@@ -65,14 +66,15 @@ function AdminAddRoom() {
   });
   const { room, isLoading, error } = useSelector((state) => state.createRoom);
   const [addRoom, setAddRoom] = useState(null);
+  const [issloading, setIssLoading] = useState(null);
   const onSubmit = async (value) => {
     const data = await dispatch(adminCreateRoom(value));
     setAddRoom(data);
   };
+ 
   const onError = (errors) => {
     console.log(errors);
   };
-  console.log(addRoom);
   if (addRoom?.payload?.statusCode === 201) {
     swal({
       title: "Thêm phòng thuê mới thành công",
@@ -96,6 +98,22 @@ function AdminAddRoom() {
       <div className="body">
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <div className="container mb-2">
+            <div className="row mb-2 mt-2 align-items-top input-group">
+              <div className="col-2 text-end">ID</div>
+              <div className="col-10">
+                <input
+                  type="text"
+                  className="w-100 form-control"
+                  {...register("id")}
+                />
+                {errors.id && (
+                  <p className="ms-3 fs-7 text-danger fst-italic">
+                    {errors.id.message}
+                  </p>
+                )}
+              </div>
+            </div>
+
             <div className="row mb-2 mt-2 align-items-top input-group">
               <div className="col-2 text-end">Tên phòng</div>
               <div className="col-10">
@@ -401,7 +419,7 @@ function AdminAddRoom() {
               <div className="col-2 text-end">Hình ảnh</div>
               <div className="col-10">
                 <input
-                placeholder="Url"
+                  placeholder="Url"
                   type="text"
                   className="w-100 form-control"
                   {...register("hinhAnh")}
@@ -409,6 +427,18 @@ function AdminAddRoom() {
                 {errors.hinhAnh && (
                   <p className="ms-3 fs-7 text-danger fst-italic">
                     {errors.hinhAnh.message}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            
+            <div className="row mb-1 align-items-center">
+              <div className="col-2"></div>
+              <div className="col-10">
+                {errors?.tenPhim && (
+                  <p className="ms-3 mb-0 fs-7 text-danger fst-italic">
+                    {errors?.hinhAnh?.message}
                   </p>
                 )}
               </div>

@@ -135,3 +135,29 @@ a {
   padding: 5px;
   border-radius: 4px;
 }
+.btnSecondary {
+  display: inline-block;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  border-color: map-get($custom-colors, "text-dark-color");
+  background-color: map-get($custom-colors, "text-dark-color");
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  color: map-get($custom-colors, "bg-light-color");
+  --tw-text-opacity: 0.95;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;
+  &:disabled {
+    background-color: $pink-600 !important;
+    color: map-get($custom-colors, "bg-light-color") !important;
+  }
+  &:hover {
+    // --tw-bg-opacity: 0.7;
+    background-color: #404040;
+    color: map-get($custom-colors, "bg-light-color");
+  }
+}
