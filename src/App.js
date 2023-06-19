@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout/MainLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
-
+import AdminRouter from "./routes/AdminRouter";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
 const AuthLayout = lazy(() => import("./layouts/AuthLayout/AuthLayout.jsx"));
 const SignIn = lazy(() => import("./modules/Auth/Signin/Signin.jsx"));
@@ -63,7 +63,14 @@ function App() {
             }
           ></Route>
 
-          <Route path="admin" element={<AdminLayout />}>
+          <Route
+            path="admin"
+            element={
+              <AdminRouter>
+                <AdminLayout />
+              </AdminRouter>
+            }
+          >
             <Route index element={<UserInfoLayout />} />
 
             <Route path="history" element={<BookingHistory />} />
