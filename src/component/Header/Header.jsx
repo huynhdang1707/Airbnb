@@ -49,7 +49,7 @@ function Header({
     });
   };
   return (
-    <div>
+    <div className="sticky-top bg-white">
       <Navbar expand="lg" className="moDau">
         <Container>
           <Navbar.Brand href="/">

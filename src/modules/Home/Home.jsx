@@ -121,7 +121,7 @@ function Home() {
           onPageChange={handlePageChange}
           containerClassName="pagination"
           activeClassName="active"
-          pageClassName="mx-2"
+          pageClassName="mx-2 number"
         />
       </div>
     </Container>

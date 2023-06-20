@@ -40,7 +40,7 @@ const schema = yup.object({
       "(*)Số điện thoại phải là dãy số bắt đầu là 0 và ít nhất 10 chữ số"
     ),
   birthday: yup.string().required("(*)Ngày sinh không được để trống"),
-  gender: yup.boolean().required("(*)Gới tính không được để trống"),
+  gender: yup.boolean().required("(*)Giới tính không được để trống"),
 });
 
 function Signup() {
@@ -120,15 +120,13 @@ function Signup() {
       </div>
     );
   return (
-    <div className="bg-dark p-5">
+    <div className="bg-light p-5">
+      <h2 style={{textAlign:"center"}}>Đăng ký</h2>
       <div className="w-50 m-auto">
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <Modal.Body>
             <InputGroup className="mb-2">
-              <InputGroup.Text className="row col-4 mx-1">
-                Email
-              </InputGroup.Text>
-              <Form.Control {...register("email")} />
+              <Form.Control {...register("email")} placeholder="Email" />
             </InputGroup>
             {errors.email && (
               <p className="ms-3 fs-7 text-danger fst-italic">
@@ -136,12 +134,10 @@ function Signup() {
               </p>
             )}
             <InputGroup className="mb-2">
-              <InputGroup.Text className="row col-4 mx-1">
-                Mật khẩu
-              </InputGroup.Text>
               <Form.Control
                 type={passShow ? "text" : "password"}
                 {...register("password")}
+                placeholder="Mật khẩu"
               />
               <div
                 className={`input-group-text ${style.cursor}`}
@@ -160,12 +156,10 @@ function Signup() {
               </p>
             )}
             <InputGroup className="mb-2">
-              <InputGroup.Text className="row col-4 mx-1">
-                Nhập lại mật khẩu
-              </InputGroup.Text>
               <Form.Control
                 type={passShow ? "text" : "password"}
                 {...register("rePassword")}
+                placeholder="Nhập lại mật khẩu"
               />
               <div
                 className={`input-group-text ${style.cursor}`}
@@ -184,10 +178,7 @@ function Signup() {
               </p>
             )}
             <InputGroup className="mb-2">
-              <InputGroup.Text className="row col-4 mx-1">
-                Họ và tên
-              </InputGroup.Text>
-              <Form.Control {...register("name")} />
+              <Form.Control {...register("name")} placeholder="Họ và tên"/>
             </InputGroup>
             {errors.name && (
               <p className="ms-3 fs-7 text-danger fst-italic">
@@ -195,10 +186,7 @@ function Signup() {
               </p>
             )}
             <InputGroup className="mb-2">
-              <InputGroup.Text className="row col-4 mx-1">
-                Số điện thoại
-              </InputGroup.Text>
-              <Form.Control {...register("phone")} />
+              <Form.Control {...register("phone")} placeholder="Số điện thoại" />
             </InputGroup>
             {errors.phone && (
               <p className="ms-3 fs-7 text-danger fst-italic">
@@ -206,30 +194,29 @@ function Signup() {
               </p>
             )}
             <InputGroup className="mb-2">
-              <InputGroup.Text className="row col-4 mx-1">
+              <InputGroup.Text className="row col-sm-4 mx-1">
                 Ngày sinh
               </InputGroup.Text>
-              <div className={`col-8 form-control ${style.date}`}>
-                <DatePicker
-                  showIcon
-                  selected={selectedDate}
-                  maxDate={startDate}
-                  onChange={(date) => setSelectedDate(date)}
-                  dateFormat="dd/MM/yyyy"
-                  className="datePicker"
-                />
+              <div className="row">
+                <div className={`col-sm-8 form-control ${style.date}`}>
+                  <DatePicker
+                    showIcon
+                    selected={selectedDate}
+                    maxDate={startDate}
+                    onChange={(date) => setSelectedDate(date)}
+                    dateFormat="dd/MM/yyyy"
+                    className={`datePicker ${style.datePicker}`}
+                  />
+                </div>  
               </div>
             </InputGroup>
             <InputGroup className="mb-2">
-              <InputGroup.Text className="row col-4 mx-1">
-                Giới tính
-              </InputGroup.Text>
-
               <select
                 className="col-8 form-control"
                 name=""
                 {...register("gender")}
               >
+                <option value="">Giới tính</option>
                 <option value={true}>Nam</option>
                 <option value={false}>Nữ</option>
               </select>

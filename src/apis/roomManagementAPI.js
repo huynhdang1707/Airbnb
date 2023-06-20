@@ -36,3 +36,13 @@ export const apiUploadRoomImg = async (value) => {
   });
   return data;
 };
+
+// đặt phòng
+export const apiGetDatPhong = async (value) => {
+  const payload = { ...value };
+  const { data } = await axiosClient.get("/dat-phong/lay-theo-nguoi-dung", {
+    params: payload,
+  });
+  return data;
+};
+

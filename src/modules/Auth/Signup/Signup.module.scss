@@ -1,10 +1,19 @@
 .date{
     padding: 0!important;
+    text-align: center;
+    .datePicker{
+      text-align: center;
+      cursor: pointer;
+      width: 100%;
+    }
 }
+
+
+
 @import '../../../index.scss';
 
 .login{
-    font-size: 1rem;
+  font-size: 1rem;
   font-style: italic;
   color: $text-dark-color;
   &:hover {
@@ -14,9 +23,13 @@
   }
 }
 
+.ngaySinh{
+  font-size: 16px;
+  margin-right: 20px ;
+
+}
+
 .signUp{
-// background-color: black;
-// width: 50%;
 margin: auto;
 }
 
@@ -25,4 +38,11 @@ margin: auto;
 }
 .cursor{
     cursor: pointer;
+}
+
+
+@media only screen and (max-width:1024px) {
+  .datePicker{
+    width: 30%;
+  }
 }

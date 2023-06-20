@@ -34,6 +34,7 @@
         box-shadow:0 2px 4px rgba(0,0,0,0.18);
     }
     .item{
+        font-size: 14px;
         &:active{
             background-color: #717171;
         }
@@ -49,5 +50,19 @@
 
 #basic-nav-dropdown::after {
     content: none;
+}
+
+#basic-nav-dropdown::after {
+    content: none;
+}
+
+.dropdown-item{
+    width: auto;
+}
+
+@media only screen and (max-width:1024px) {
+    .nav-link{
+        margin: 10px 0;
+    }
 }
   

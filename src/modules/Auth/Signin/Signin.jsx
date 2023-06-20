@@ -64,11 +64,11 @@ function Signin() {
     );
 
   return (
-    <div className={`bg-dark p-5 ${style.auth}`}>
-      <div className="w-50 m-auto">
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
+    <div className={`bg-light p-5 ${style.auth}`}>
+      <div className={`container bg-white ${style.dangNhap}`}>
+        <h2 className="pt-3 mb-3" style={{textAlign:"center"}}>Đăng Nhập</h2>
+        <Form onSubmit={handleSubmit(onSubmit, onError)}>
           <InputGroup className="mb-2">
-            <InputGroup.Text className="row col-4 mx-1">Email</InputGroup.Text>
             <Form.Control
               {...register("email", {
                 required: {
@@ -81,6 +81,8 @@ function Signin() {
                   message: "(*)Email không đúng định dạng",
                 },
               })}
+              placeholder="Email"
+              className={style.input}
             />
           </InputGroup>
           {errors.email && (
@@ -89,9 +91,6 @@ function Signin() {
             </p>
           )}
           <InputGroup className="mb-2">
-            <InputGroup.Text className="row col-4 mx-1">
-              Mật khẩu
-            </InputGroup.Text>
             <Form.Control
               type={passShow ? "text" : "password"}
               {...register("password", {
@@ -105,6 +104,7 @@ function Signin() {
                     "(*)Mật khẩu có ít nhất 8 ký tự bao gồm 1 ký tự hoa, thường và ký tự đặc biệt.",
                 },
               })}
+              placeholder="Mật khẩu"
             />
             <div
               className={`input-group-text ${style.cursor}`}
@@ -130,16 +130,16 @@ function Signin() {
                   className={`${style.btnPrimary} w-100`}
                   disabled={isLoading ? true : false}
                 >
-                  Đăng nhập
+                  Đăng nhập ngay
                 </button>
               </div>
             </div>
-            <div className="ms-4 text-end">
+            <div className="ms-4 text-end mt-2">
               <a href="#" className={style.quenPass}>
                 Quên mật khẩu?
               </a>
             </div>
-            <div className="ms-4 text-end">
+            <div className="ms-4 text-end mt-2 pb-2">
               <a
                 className={style.quenPass}
                 // onClick={() => navigate("/signup")}
@@ -153,7 +153,7 @@ function Signin() {
               <p className="text-center fs-7 text-danger fst-italic">{error}</p>
             )}
           </div>
-        </form>
+        </Form>
       </div>
     </div>
   );
