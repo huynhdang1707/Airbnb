@@ -17,6 +17,11 @@ function AdminRoomList() {
   const [searchInput, setSearchInput] = useState(null);
   const deleteRoom = useRef(null);
 
+  const [image, setImage] = useState(null);
+  const handleUploaded = (hinhAnh) => {
+    setImage(hinhAnh);
+  };
+
   //Search by name
   const handleInput = (evt) => {
     if (evt?.key == "Enter" || evt?.key == "Tab") {
@@ -135,7 +140,7 @@ function AdminRoomList() {
                       <th>{index + 1 + (current - 1) * 10}</th>
                       <td>{item.id}</td>
                       <td>
-                        <img src={item.hinhAnh} alt={item.id} />
+                        <img src={ item.hinhAnh} alt={item.id} />
                       </td>
                       <td>{item.tenPhong}</td>
                       <td>{item.moTa}</td>
@@ -172,6 +177,7 @@ function AdminRoomList() {
         onShow={show}
         handleShow={handleShow}
         onUpdateRoom={updateRoom}
+        onHandleUploaded={handleUploaded}
       />
     </div>
   );

@@ -33,6 +33,8 @@ export const apiUpdateUser = async (value) => {
 
 //upload avatar
 export const apiUploadAva = async (value) => {
-  const data = await axiosClient.post("/users/upload-avatar");
+  let formData = new FormData();
+  formData.append("formFile", value.avatar);
+  const data = await axiosClient.post("/users/upload-avatar", formData);
   return data;
 };

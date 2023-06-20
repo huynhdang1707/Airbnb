@@ -24,7 +24,7 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     // xử lý lỗi chung, vd 401
-    if (error.response.status === 403) {
+    if (error?.response?.status === 403) {
      
       // khác navigate của react-router-dom là sẽ reload trình duyệt mất luôn state của redux
       // window.lo.replaceState(null, "/signin")

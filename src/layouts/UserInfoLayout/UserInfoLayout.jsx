@@ -8,13 +8,12 @@ function UserInfoLayout() {
   const { userID } = useParams();
   const { user } = useSelector((state) => state.user);
 
+
   if (user) {
     return (
       <div className={`${style.cont}`}>
         <div className="">
-          <h1 className="text-center my-4">
-            Thông tin người dùng
-          </h1>
+          <h1 className="text-center my-4">Thông tin người dùng</h1>
           <UserInfo />
         </div>
       </div>
@@ -22,7 +21,7 @@ function UserInfoLayout() {
   } else
     return (
       <div className="text-center text-danger">
-        <h3>Vui lòng đăng nhập để đặt vé</h3>
+        <h3>Vui lòng đăng nhập để tiếp tục</h3>
       </div>
     );
 }
