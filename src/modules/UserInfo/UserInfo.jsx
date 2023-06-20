@@ -18,13 +18,13 @@ const schema = yup.object({
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       "(*)Email không đúng định dạng"
     ),
-  password: yup
-    .string()
-    .required("(*)Mật khẩu không được để trống")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-      "(*)Mật khẩu phải có ít nhất 8 kí tự, phải có 1 chữ hoa, 1 chữ thường và 1 số"
-    ),
+  // password: yup
+  //   .string()
+  //   .required("(*)Mật khẩu không được để trống")
+  //   .matches(
+  //     /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+  //     "(*)Mật khẩu phải có ít nhất 8 kí tự, phải có 1 chữ hoa, 1 chữ thường và 1 số"
+  //   ),
   name: yup.string().required("(*)Họ tên không được để trống"),
   phone: yup
     .string()
@@ -60,7 +60,7 @@ function UserInfo() {
       id: null,
       name: "",
       email: "",
-      password: "",
+      // password: "",
       phone: "",
       birthday: "",
       avatar: "",
@@ -71,6 +71,7 @@ function UserInfo() {
     resolver: yupResolver(schema),
   });
   const { infoUser, isLoading, error } = useSelector((state) => state.infoUser);
+  
   useEffect(() => {
     dispatch(getInfoUser(user?.user?.id));
   }, [user?.user?.id]);
@@ -78,7 +79,7 @@ function UserInfo() {
   useEffect(() => {
     reset({
       id: infoUser.id,
-      password: infoUser?.password,
+      // password: infoUser?.password,
       name: infoUser?.name,
       email: infoUser?.email,
       phone: infoUser?.phone,
@@ -341,11 +342,7 @@ function UserInfo() {
         </form>
       </Modal> */}
 
-      <UserForm
-        onShow={show}
-        handleShow={handleShow}
-        onUpdateUser={infoUser}
-      />
+      <UserForm onShow={show} handleShow={handleShow} onUpdateUser={infoUser} />
     </>
   );
 }

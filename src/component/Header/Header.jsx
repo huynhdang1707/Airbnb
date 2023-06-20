@@ -15,6 +15,7 @@ function Header({
   onHandleLogoutRedirect,
 }) {
   const { user } = useSelector((state) => state.user);
+  const { infoUser } = useSelector((state) => state.infoUser);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ function Header({
       }
     });
   };
+  console.log(user);
   return (
     <div className="sticky-top bg-white">
       <Navbar expand="lg" className="moDau">
@@ -83,8 +85,19 @@ function Header({
                   <a href="#" className="danhMuc">
                     <i className="bi bi-list mx-1"></i>
                   </a>
-                  <a onClick={() => navigate(`/user/user-info/${user?.user?.id}`)}>
-                    <i className="bi bi-person-circle mx-1"></i>
+                  <a
+                    onClick={() =>
+                      navigate(`/user/user-info/${user?.user?.id}`)
+                    }
+                  >
+                    {infoUser?.avatar ? (
+                      <img
+                        src={infoUser?.avatar}
+                        style={{ width: "30px", maxHeight: "30px", borderRadius:"50%" }}
+                      />
+                    ) : (
+                      <i className="bi bi-person-circle mx-1"></i>
+                    )}
                   </a>
                 </span>
               }

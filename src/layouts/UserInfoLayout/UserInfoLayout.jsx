@@ -1,19 +1,33 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import UserInfo from "../../modules/UserInfo/UserInfo";
 import style from "./UserInfoLayout.module.scss";
 
 function UserInfoLayout() {
-  const { userID } = useParams();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
-
+  const role = user.user.role;
+  const location = useLocation();
+  const handleClick = () => {
+    navigate("/admin");
+  };
 
   if (user) {
     return (
       <div className={`${style.cont}`}>
         <div className="">
-          <h1 className="text-center my-4">Thông tin người dùng</h1>
+          <h1 className="text-center py-4 bg-dark text-light ">
+            Thông tin người dùng
+          </h1>
+
+          {role === "ADMIN" && location.pathname !== "/admin" ? (
+            <div className="d-flex justify-content-end m-3">
+              <button className={style.btn} onClick={handleClick}>
+                Admin Page
+              </button>
+            </div>
+          ) : null}
           <UserInfo />
         </div>
       </div>
