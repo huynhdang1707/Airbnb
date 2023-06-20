@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
@@ -8,15 +8,20 @@ import "./Header.scss";
 import swal from "sweetalert";
 import { signout } from "../../slices/userSlice";
 import { removeUser } from "../../slices/signUpSlice";
+import { getInfoUser } from "../../slices/infoUserSlice";
 
 function Header({
   onLoginRedirect,
   onHandleSignUpRedirect,
   onHandleLogoutRedirect,
 }) {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { infoUser } = useSelector((state) => state.infoUser);
-  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getInfoUser(user?.user?.id));
+  }, [user?.user?.id]);
+
   const location = useLocation();
   const navigate = useNavigate();
   const handleSignOut = async () => {
@@ -49,7 +54,6 @@ function Header({
       }
     });
   };
-  console.log(user);
   return (
     <div className="sticky-top bg-white">
       <Navbar expand="lg" className="moDau">
@@ -93,7 +97,11 @@ function Header({
                     {infoUser?.avatar ? (
                       <img
                         src={infoUser?.avatar}
-                        style={{ width: "30px", maxHeight: "30px", borderRadius:"50%" }}
+                        style={{
+                          width: "30px",
+                          maxHeight: "30px",
+                          borderRadius: "50%",
+                        }}
                       />
                     ) : (
                       <i className="bi bi-person-circle mx-1"></i>
