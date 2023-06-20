@@ -6,7 +6,6 @@ export const getUserListPage = createAsyncThunk(
   async (value) => {
     try {
       const data = await apiGetUserListPage(value);
-      console.log(data);
       return data.content;
     } catch (error) {
       throw error.response?.data?.content;

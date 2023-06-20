@@ -24,15 +24,14 @@ function DescForm({ onShow, handleShow, onUpdateDesc }) {
   const [key, setKey] = useState(null);
   const [id2, setId2] = useState(null);
   const [image, setImage] = useState(null);
+  const [imageUp, setImageUp] = useState(null);
   const handleUpload = (id, img, kw) => {
     setShow(true);
     setId2(id);
     setImage(img);
     setKey(kw);
   };
-  const handleUploaded = (hinhAnh) => {
-    setImage(hinhAnh);
-  };
+
   const handleShow2 = (value) => {
     setShow(value);
   };
@@ -42,6 +41,7 @@ function DescForm({ onShow, handleShow, onUpdateDesc }) {
     handleSubmit,
     getValues,
     watch,
+    setValue,
     reset,
     formState: { errors },
   } = useForm({
@@ -55,6 +55,10 @@ function DescForm({ onShow, handleShow, onUpdateDesc }) {
     mode: "onTouched",
     resolver: yupResolver(schema),
   });
+  const handleUploaded = (hinhAnh) => {
+    setImageUp(hinhAnh);
+    setValue("hinhAnh", hinhAnh);
+  };
   const { updated, desc, error, isLoading } = useSelector(
     (state) => state.updateDesc
   );
@@ -84,7 +88,7 @@ function DescForm({ onShow, handleShow, onUpdateDesc }) {
           tenViTri: desc?.tenViTri,
           tinhThanh: desc?.tinhThanh,
           quocGia: desc?.quocGia,
-          hinhAnh: desc?.hinhAnh,
+          hinhAnh: imageUp ? imageUp : desc?.hinhAnh,
         });
       } else {
         reset({
@@ -92,11 +96,16 @@ function DescForm({ onShow, handleShow, onUpdateDesc }) {
           tenViTri: onUpdateDesc?.tenViTri,
           tinhThanh: onUpdateDesc?.tinhThanh,
           quocGia: onUpdateDesc?.quocGia,
-          hinhAnh: image ? image : onUpdateDesc?.hinhAnh,
+          hinhAnh:
+            getValues("hinhAnh") !== ""
+              ? getValues("hinhAnh") !== onUpdateDesc?.hinhAnh && !imageUp
+                ? onUpdateDesc?.hinhAnh
+                : getValues("hinhAnh")
+              : onUpdateDesc?.hinhAnh,
         });
       }
     }
-  }, [onUpdateDesc, image]);
+  }, [onUpdateDesc, imageUp]);
   if (isLoading)
     return (
       <div className="h-100 d-flex justify-content-center align-items-center">
@@ -188,10 +197,11 @@ function DescForm({ onShow, handleShow, onUpdateDesc }) {
                 <span className="input-group-text">Hình ảnh</span>
                 <img
                   style={{ maxWidth: "100px" }}
-                  src={image ? image : watch("hinhAnh")}
+                  src={imageUp ? imageUp : watch("hinhAnh")}
                   alt=""
                 />
                 <input
+                  value={imageUp ? imageUp : watch("hinhAnh")}
                   type="text"
                   className="form-control"
                   placeholder="Hình ảnh"

@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { getInfoUser } from "../../slices/infoUserSlice";
 import style from "./UserInfo.module.scss";
+import UserForm from "../UserForm/UserForm";
 
 const schema = yup.object({
   email: yup
@@ -42,8 +43,12 @@ function UserInfo() {
   const { user } = useSelector((state) => state.user);
 
   const [show, setShow] = useState(false);
-  const [passShow, setPassShow] = useState(false);
-  const [updateUser, setUpdateUser] = useState(null);
+  // const [passShow, setPassShow] = useState(false);
+  // const [updateUser, setUpdateUser] = useState(null);
+  // const [image, setImage] = useState(null);
+  // const handleUploaded = (hinhAnh) => {
+  //   setImage(hinhAnh);
+  // };
   const [err, setErr] = useState(null);
   const {
     register,
@@ -89,6 +94,9 @@ function UserInfo() {
   if (err || error) {
     navigate("/*");
   }
+  const handleShow = (value) => {
+    setShow(value);
+  };
   if (isLoading)
     return (
       <div className="h-100 d-flex justify-content-center align-items-center">
@@ -140,7 +148,11 @@ function UserInfo() {
                     <tr>
                       <td scope="col">Ảnh đại diện:</td>
                       <td>
-                        <img src={infoUser?.avatar} alt={infoUser?.id} />
+                        <img
+                          style={{ maxWidth: "150px" }}
+                          src={infoUser?.avatar}
+                          alt={infoUser?.id}
+                        />
                       </td>
                     </tr>
                   </tbody>
@@ -159,7 +171,7 @@ function UserInfo() {
         </div>
       </div>
 
-      <Modal
+      {/* <Modal
         show={show}
         onHide={() => setShow(false)}
         backdrop="static"
@@ -327,7 +339,13 @@ function UserInfo() {
             </div>
           )}
         </form>
-      </Modal>
+      </Modal> */}
+
+      <UserForm
+        onShow={show}
+        handleShow={handleShow}
+        onUpdateUser={infoUser}
+      />
     </>
   );
 }

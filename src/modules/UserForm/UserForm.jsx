@@ -40,33 +40,33 @@ const schema = yup.object({
 function UserForm({ onShow, handleShow, onUpdateUser }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user: userPre } = useSelector((state) => state.user);
+
   //upload
   const [show, setShow] = useState(false);
   const [key, setKey] = useState(null);
   const [id2, setId2] = useState(null);
   const [image, setImage] = useState(null);
+  const [imageUp, setImageUp] = useState(null);
   const handleUpload = (id, img, kw) => {
     setShow(true);
     setId2(id);
     setImage(img);
     setKey(kw);
   };
-  const handleUploaded = (hinhAnh) => {
-    setImage(hinhAnh);
-  };
+
   const handleShow2 = (value) => {
     setShow(value);
   };
   //
   const [passShow, setPassShow] = useState(false);
-  const [updatedUser, setUpdatedUser] = useState(null);
-  const [err, setErr] = useState(null);
   const {
     register,
     handleSubmit,
     reset,
     watch,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -83,6 +83,11 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
     mode: "onTouched",
     resolver: yupResolver(schema),
   });
+  const handleUploaded = (hinhAnh) => {
+    setImageUp(hinhAnh);
+    setValue("avatar", hinhAnh);
+  };
+
   // const { infoUser, isLoading, error } = useSelector((state) => state.infoUser);
   const { updated, user, error, isLoading } = useSelector(
     (state) => state.updateUser
@@ -104,7 +109,7 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
           email: user?.email,
           phone: user?.phone,
           role: user?.role,
-          avatar: user?.avatar,
+          avatar: imageUp ? imageUp : user?.avatar,
           birthday: user?.birthday,
           gender: user?.gender,
         });
@@ -116,13 +121,18 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
           email: onUpdateUser?.email,
           phone: onUpdateUser?.phone,
           role: onUpdateUser?.role,
-          avatar: image ? image : onUpdateUser?.avatar,
+          avatar:
+            getValues("avatar") !== ""
+              ? getValues("avatar") !== onUpdateUser?.avatar && !imageUp
+                ? onUpdateUser?.avatar
+                : getValues("avatar")
+              : onUpdateUser?.avatar,
           birthday: onUpdateUser?.birthday,
           gender: onUpdateUser?.gender,
         });
       }
     }
-  }, [onUpdateUser, image]);
+  }, [onUpdateUser, imageUp]);
   if (user?.statusCode === 200) {
     swal({
       title: `Cập nhật người dùng thành công`,
@@ -264,10 +274,11 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
                 <span className="input-group-text">Ảnh đại diện</span>
                 <img
                   style={{ maxWidth: "66px" }}
-                  src={image ? image : watch("avatar")}
+                  src={imageUp ? imageUp : watch("avatar")}
                   alt=""
                 />
                 <input
+                  value={imageUp ? imageUp : getValues("avatar")}
                   type="text"
                   className="form-control"
                   placeholder="Avatar"
@@ -312,15 +323,18 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
               )}
             </Modal.Body>
             <Modal.Footer>
-              <button
-                className={style.btn2}
-                onClick={() =>
-                  handleUpload(getValues("id"), getValues("avatar"), "user")
-                }
-                type="button"
-              >
-                Upload ảnh
-              </button>
+              {userPre?.user?.id === onUpdateUser?.id ? (
+                <button
+                  className={style.btn2}
+                  onClick={() =>
+                    handleUpload(getValues("id"), getValues("avatar"), "user")
+                  }
+                  type="button"
+                >
+                  Upload ảnh
+                </button>
+              ) : null}
+
               <button type="submit" className={` ${style.btn}`}>
                 Cập nhật
               </button>

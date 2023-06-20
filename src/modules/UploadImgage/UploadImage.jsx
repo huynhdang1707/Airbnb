@@ -98,7 +98,6 @@ function UploadImage({
     } else if (onKey === "desc") {
       try {
         const data = await apiUploadDescImg(payload);
-        console.log(data);
         if (data?.data?.statusCode === 200) {
           swal({
             title: `Cập nhật hình ảnh vị trí thành công`,
@@ -187,9 +186,9 @@ function UploadImage({
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button type="submit" className={` ${style.btnn}`}>
+         {imageField?(imageField[0]?<button type="submit" className={` ${style.btnn}`}>
             Cập nhật
-          </button>
+          </button>: null )   : null}
         </Modal.Footer>
         {error && (
           <div className="fs-7 text-danger fst-italic text-center mb-3">

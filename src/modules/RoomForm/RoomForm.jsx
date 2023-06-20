@@ -37,15 +37,14 @@ function RoomForm({ onShow, handleShow, onUpdateRoom, onHandleUploaded }) {
   const [key, setKey] = useState(null);
   const [id2, setId2] = useState(null);
   const [image, setImage] = useState(null);
+  const [imageUp, setImageUp] = useState(null);
   const handleUpload = (id, img, kw) => {
     setShow(true);
     setId2(id);
     setImage(img);
     setKey(kw);
   };
-  const handleUploaded = (hinhAnh) => {
-    setImage(hinhAnh);
-  };
+
   const handleShow2 = (value) => {
     setShow(value);
   };
@@ -57,6 +56,7 @@ function RoomForm({ onShow, handleShow, onUpdateRoom, onHandleUploaded }) {
     getValues,
     watch,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -83,6 +83,10 @@ function RoomForm({ onShow, handleShow, onUpdateRoom, onHandleUploaded }) {
     mode: "onTouched",
     resolver: yupResolver(schema),
   });
+  const handleUploaded = (hinhAnh) => {
+    setImageUp(hinhAnh);
+    setValue("hinhAnh", hinhAnh);
+  };
   const { updated, room, error, isLoading } = useSelector(
     (state) => state.updateRoom
   );
@@ -128,7 +132,7 @@ function RoomForm({ onShow, handleShow, onUpdateRoom, onHandleUploaded }) {
           hoBoi: room?.hoBoi,
           banUi: room?.banUi,
           maViTri: room?.maViTri,
-          hinhAnh: room?.hinhAnh,
+          hinhAnh: imageUp ? imageUp : room?.hinhAnh,
         });
       } else {
         reset({
@@ -150,11 +154,16 @@ function RoomForm({ onShow, handleShow, onUpdateRoom, onHandleUploaded }) {
           hoBoi: onUpdateRoom?.hoBoi,
           banUi: onUpdateRoom?.banUi,
           maViTri: onUpdateRoom?.maViTri,
-          hinhAnh: image ? image : onUpdateRoom?.hinhAnh,
+          hinhAnh:
+            getValues("hinhAnh") !== ""
+              ? getValues("hinhAnh") !== onUpdateRoom?.hinhAnh && !imageUp
+                ? onUpdateRoom?.hinhAnh
+                : getValues("hinhAnh")
+              : onUpdateRoom?.hinhAnh,
         });
       }
     }
-  }, [onUpdateRoom, image]);
+  }, [onUpdateRoom, imageUp]);
 
   if (isLoading)
     return (
@@ -485,10 +494,11 @@ function RoomForm({ onShow, handleShow, onUpdateRoom, onHandleUploaded }) {
                 <span className="input-group-text">Hình ảnh</span>
                 <img
                   style={{ maxWidth: "100px" }}
-                  src={image ? image : watch("hinhAnh")}
+                  src={imageUp ? imageUp : watch("hinhAnh")}
                   alt=""
                 />
                 <input
+                  value={imageUp ? imageUp : watch("hinhAnh")}
                   type="text"
                   className="form-control"
                   placeholder="Hình ảnh"
