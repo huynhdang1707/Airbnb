@@ -59,6 +59,14 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="phong-thue/:id" element={<AirDetails />} />
+            <Route
+              path="user/booking"
+              element={
+                <ProtectedRoute>
+                  <BookingLayout />
+                </ProtectedRoute>
+              }
+            />
           </Route>
           <Route path="/" element={<AuthLayout />}>
             <Route path="/signin" element={<SignIn />} />
@@ -73,8 +81,7 @@ function App() {
             }
           >
             <Route index element={<UserInfoLayout />} />
-            <Route path="booking/:userID" element={<BookingLayout />} />
-            <Route path="booking-list" element={<UserBookingList/>} />
+            <Route path="booking-list" element={<UserBookingList />} />
           </Route>
 
           <Route

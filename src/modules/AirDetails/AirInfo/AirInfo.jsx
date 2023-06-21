@@ -4,11 +4,14 @@ import Calendar from "react-calendar";
 import LinesEllipsis from "react-lines-ellipsis";
 import "react-calendar/dist/Calendar.css";
 import { useNavigate } from "react-router-dom";
+import { createBooking } from "../../../slices/userCreateBooking";
+import { useDispatch } from "react-redux";
 
 import "./AirInfo.scss";
 
 function AirInfo({ id }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   //
   const dayjs = require("dayjs");
   const utc = require("dayjs/plugin/utc");
@@ -51,14 +54,22 @@ function AirInfo({ id }) {
   };
 
   const handleBooking = () => {
-    const startDate = selectedDateRange[0];
-    const newStartDate = Date.parse(startDate);
-    const formattedDate =
-      dayjs(newStartDate)
-        .utcOffset(0) // Chuyển đổi sang múi giờ UTC
-        .format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z";
-    const endDate = selectedDateRange[1];
+    const newStartDate = Date.parse(selectedDateRange[0]);
+
+    const newEndDate = Date.parse(selectedDateRange[1]);
     navigate("/user/booking");
+    const data = {
+      hinhPhong: phongThue.hinhAnh,
+      tenPhong: phongThue.tenPhong,
+      maPhong: phongThue.id,
+      ngayDen:
+        dayjs(newStartDate).utcOffset(0).format("YYYY-MM-DDTHH:mm:ss.SSS") +
+        "Z",
+      ngayDi:
+        dayjs(newEndDate).utcOffset(0).format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z",
+      soLuongKhach: phongThue.khach,
+    };
+    dispatch(createBooking(data));
   };
 
   return (

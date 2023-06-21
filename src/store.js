@@ -15,6 +15,7 @@ import bookingListSlice from "./slices/bookingListSlice";
 import updateBookingSlice from "./slices/updateBookingSlice";
 import commentListSlice from "./slices/commentListSlice";
 import updateCommentSlice from "./slices/updateCommentSlice";
+import userCreateBooking from "./slices/userCreateBooking";
 
 const store = configureStore({
   reducer: {
@@ -34,6 +35,7 @@ const store = configureStore({
     updateBooking: updateBookingSlice,
     commentList: commentListSlice,
     updateComment: updateCommentSlice,
+    createBooking: userCreateBooking,
   },
 });
 
