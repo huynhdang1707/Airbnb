@@ -91,7 +91,7 @@ function Header({
                   </a>
                   <a
                     onClick={() =>
-                      navigate(`/user/user-info/${user?.user?.id}`)
+                      navigate(`/user`)
                     }
                   >
                     {infoUser?.avatar ? (

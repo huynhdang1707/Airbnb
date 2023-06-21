@@ -3,15 +3,16 @@ import { apiPhongID } from "../../../apis/bnbApi";
 import Calendar from "react-calendar";
 import LinesEllipsis from "react-lines-ellipsis";
 import "react-calendar/dist/Calendar.css";
+import { useNavigate } from "react-router-dom";
 
 import "./AirInfo.scss";
 
 function AirInfo({ id }) {
+  const navigate = useNavigate();
   //
-  const dayjs = require('dayjs');
-  const utc = require('dayjs/plugin/utc');
-  const timezone = require('dayjs/plugin/timezone');
-  
+  const dayjs = require("dayjs");
+  const utc = require("dayjs/plugin/utc");
+  const timezone = require("dayjs/plugin/timezone");
   dayjs.extend(utc);
   dayjs.extend(timezone);
   //
@@ -56,10 +57,8 @@ function AirInfo({ id }) {
       dayjs(newStartDate)
         .utcOffset(0) // Chuyển đổi sang múi giờ UTC
         .format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z";
-    console.log(formattedDate);
     const endDate = selectedDateRange[1];
-    console.log("Ngày bắt đầu:", startDate);
-    console.log("Ngày kết thúc:", endDate);
+    navigate("/user/booking");
   };
 
   return (

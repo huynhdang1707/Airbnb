@@ -3,11 +3,12 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import UserInfo from "../../modules/UserInfo/UserInfo";
 import style from "./UserInfoLayout.module.scss";
+import AdminHeader from "../../modules/Admin/AdminHeader/AdminHeader";
 
 function UserInfoLayout() {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
-  const role = user.user.role;
+  const role = user?.user?.role;
   const location = useLocation();
   const handleClick = () => {
     navigate("/admin");
@@ -15,22 +16,23 @@ function UserInfoLayout() {
 
   if (user) {
     return (
-      <div className={`${style.cont}`}>
-        <div className="">
-          <h1 className="text-center py-4 bg-dark text-light ">
-            Thông tin người dùng
-          </h1>
-
-          {role === "ADMIN" && location.pathname !== "/admin" ? (
-            <div className="d-flex justify-content-end m-3">
-              <button className={style.btn} onClick={handleClick}>
-                Admin Page
-              </button>
-            </div>
-          ) : null}
-          <UserInfo />
+      <>
+        <div className={`${style.cont}`}>
+          <div className="">
+            <h1 className="text-center py-4 bg-dark text-light ">
+              Thông tin người dùng
+            </h1>
+            <UserInfo />{" "}
+            {role === "ADMIN" && location.pathname !== "/admin" ? (
+              <div className="d-flex justify-content-end m-3">
+                <button className={style.btn} onClick={handleClick}>
+                  Admin Page
+                </button>
+              </div>
+            ) : null}
+          </div>
         </div>
-      </div>
+      </>
     );
   } else
     return (

@@ -4,6 +4,7 @@ import MainLayout from "./layouts/MainLayout/MainLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminRouter from "./routes/AdminRouter";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
+import UserLayout from "./layouts/UserLayout/UserLayout";
 const AuthLayout = lazy(() => import("./layouts/AuthLayout/AuthLayout.jsx"));
 const SignIn = lazy(() => import("./modules/Auth/Signin/Signin.jsx"));
 const SignUp = lazy(() => import("./modules/Auth/Signup/Signup.jsx"));
@@ -37,6 +38,12 @@ const AdminAddUser = lazy(() =>
 const AdminCommentList = lazy(() =>
   import("./modules/Admin/AdminCommentList/AdminCommentList.jsx")
 );
+const BookingLayout = lazy(() =>
+  import("./layouts/BookingLayout/BookingLayout.jsx")
+);
+const UserBookingList = lazy(() =>
+  import("./modules/User/UserBookingList/UserBookingList.jsx")
+);
 
 function App() {
   return (
@@ -58,13 +65,17 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
           </Route>
           <Route
-            path="/user/user-info/:userID"
+            path="/user"
             element={
               <ProtectedRoute>
-                <UserInfoLayout />
+                <UserLayout />
               </ProtectedRoute>
             }
-          ></Route>
+          >
+            <Route index element={<UserInfoLayout />} />
+            <Route path="booking/:userID" element={<BookingLayout />} />
+            <Route path="booking-list" element={<UserBookingList/>} />
+          </Route>
 
           <Route
             path="admin"
@@ -78,7 +89,6 @@ function App() {
 
             <Route path="booking-list" element={<BookingHistory />} />
             <Route path="comment-list" element={<AdminCommentList />} />
-
 
             <Route path="user-list" element={<AdminUserList />} />
             <Route path="add-user" element={<AdminAddUser />} />

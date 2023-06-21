@@ -33,27 +33,49 @@ function BookingHistory() {
   const { updated } = useSelector((state) => state.updateBooking);
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const data = await apiGetBookingListBookingId(searchInput1);
-        setBookingList([data.content]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetch();
-  }, [searchInput1]);
+    if (searchInput1 !== "") {
+      const fetch = async () => {
+        try {
+          const data = await apiGetBookingListBookingId(searchInput1);
+          setBookingList([data.content]);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetch();
+    } else {
+      const fetch = async () => {
+        const data = await dispatch(getBookingList());
+        const tryyy = data.payload.filter(
+          (obj) => new Date(obj.ngayDi) > new Date()
+        );
+        setBookingList(tryyy);
+      };
+      fetch();
+    }
+  }, [searchInput1, deleteBooking]);
 
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const data = await apiGetBookingListUserId(searchInput2);
-        setBookingList(data.content);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetch();
+    if (searchInput2 !== "") {
+      const fetch = async () => {
+        try {
+          const data = await apiGetBookingListUserId(searchInput2);
+          setBookingList(data.content);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetch();
+    } else {
+      const fetch = async () => {
+        const data = await dispatch(getBookingList());
+        const tryyy = data.payload.filter(
+          (obj) => new Date(obj.ngayDi) > new Date()
+        );
+        setBookingList(tryyy);
+      };
+      fetch();
+    }
   }, [searchInput2, deleteBooking]);
 
   useEffect(() => {

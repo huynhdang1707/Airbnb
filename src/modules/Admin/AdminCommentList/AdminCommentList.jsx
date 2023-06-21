@@ -23,18 +23,34 @@ function AdminCommentList() {
   const { comments, isLoading, error } = useSelector(
     (state) => state.commentList
   );
+  const length = comments.filter(
+    (obj) => new Date(obj.ngayBinhLuan) <= new Date()
+  ).length;
   const { updated } = useSelector((state) => state.updateComment);
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const data = await apiGetCommentListRoomId(searchInput);
-        console.log(data);
-        setCommentList(data.content);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetch();
+    if (searchInput !== "") {
+      const fetch = async () => {
+        try {
+          const data = await apiGetCommentListRoomId(searchInput);
+          const tryyy = data.content.filter(
+            (obj) => new Date(obj.ngayBinhLuan) <= new Date()
+          );
+          setCommentList(tryyy);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetch();
+    } else {
+      const fetch = async () => {
+        const data = await dispatch(getCommentList());
+        const tryyy = data.payload.filter(
+          (obj) => new Date(obj.ngayBinhLuan) <= new Date()
+        );
+        setCommentList(tryyy);
+      };
+      fetch();
+    }
   }, [searchInput]);
   useEffect(() => {
     const fetch = async () => {
@@ -93,7 +109,6 @@ function AdminCommentList() {
         />
       </div>
     );
-
   return (
     <div className="commentManagement">
       <h2>Danh sách bình luận</h2>
@@ -112,94 +127,98 @@ function AdminCommentList() {
       <div className="body">
         <div className="container">
           <div className="row">
-            {commentList?.length!==1 ? <table className="table">
-              <thead>
-                <tr className="th1">
-                  <th scope="col">#</th>
-                  <th scope="col">ID</th>
-                  <th scope="col">Mã phòng</th>
-                  <th scope="col">Mã người dùng</th>
-                  <th scope="col">Ngày bình luận</th>
-                  <th scope="col">Nội dung</th>
-                  <th scope="col">Số sao bình luận</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {commentList?.map((item, index) => {
-                  const ngay = new Date(item.ngayBinhLuan);
-                  return (
-                    <tr key={index} className="th2">
-                      <th>{index + 1}</th>
-                      <td>{item.id}</td>
-                      <td>{item.maPhong}</td>
-                      <td>{item.maNguoiBinhLuan}</td>
-                      <td>{`${
-                        ngay.getDate() < 10
-                          ? "0" + ngay.getDate()
-                          : ngay.getDate()
-                      }/${
-                        ngay.getMonth() + 1 < 10
-                          ? "0" + (ngay.getMonth() + 1)
-                          : ngay.getMonth() + 1
-                      }/${ngay.getFullYear()}`}</td>
-                      <td>{item.noiDung}</td>
-                      <td>{item.saoBinhLuan}</td>
-                      <td>
-                        <button
-                          className="btn text-secondary me-1 border-warning mt-1"
-                          onClick={() => handleUpdateComment(index)}
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          className="btn text-danger border-success mt-1"
-                          onClick={() => handleDeleteComment(item.id, index)}
-                        >
-                          <i className="bi bi-trash3"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table> : <table className="table">
-              <thead>
-                <tr className="th1">
-                  <th scope="col">#</th>
-                  <th scope="col">Tên người dùng</th>
-                  <th scope="col">Avatar</th>
-                  <th scope="col">Ngày bình luận</th>
-                  <th scope="col">Nội dung</th>
-                  <th scope="col">Số sao bình luận</th>
-                </tr>
-              </thead>
-              <tbody>
-                {commentList?.map((item, index) => {
-                  const ngay = new Date(item.ngayBinhLuan);
-                  return (
-                    <tr key={index} className="th2">
-                      <th>{index + 1}</th>
-                      <td>{item.tenNguoiBinhLuan}</td>
-                      <td>
-                        <img src={item.avatar} alt={item.tenNguoiBinhLuan} />
-                      </td>
-                      <td>{`${
-                        ngay.getDate() < 10
-                          ? "0" + ngay.getDate()
-                          : ngay.getDate()
-                      }/${
-                        ngay.getMonth() + 1 < 10
-                          ? "0" + (ngay.getMonth() + 1)
-                          : ngay.getMonth() + 1
-                      }/${ngay.getFullYear()}`}</td>
-                      <td>{item.noiDung}</td>
-                      <td>{item.saoBinhLuan}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>}
+            {commentList?.length === length ? (
+              <table className="table">
+                <thead>
+                  <tr className="th1">
+                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Mã phòng</th>
+                    <th scope="col">Mã người dùng</th>
+                    <th scope="col">Ngày bình luận</th>
+                    <th scope="col">Nội dung</th>
+                    <th scope="col">Số sao bình luận</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {commentList?.map((item, index) => {
+                    const ngay = new Date(item.ngayBinhLuan);
+                    return (
+                      <tr key={index} className="th2">
+                        <th>{index + 1}</th>
+                        <td>{item.id}</td>
+                        <td>{item.maPhong}</td>
+                        <td>{item.maNguoiBinhLuan}</td>
+                        <td>{`${
+                          ngay.getDate() < 10
+                            ? "0" + ngay.getDate()
+                            : ngay.getDate()
+                        }/${
+                          ngay.getMonth() + 1 < 10
+                            ? "0" + (ngay.getMonth() + 1)
+                            : ngay.getMonth() + 1
+                        }/${ngay.getFullYear()}`}</td>
+                        <td>{item.noiDung}</td>
+                        <td>{item.saoBinhLuan}</td>
+                        <td>
+                          <button
+                            className="btn text-secondary me-1 border-warning mt-1"
+                            onClick={() => handleUpdateComment(index)}
+                          >
+                            <i className="bi bi-pencil-square"></i>
+                          </button>
+                          <button
+                            className="btn text-danger border-success mt-1"
+                            onClick={() => handleDeleteComment(item.id, index)}
+                          >
+                            <i className="bi bi-trash3"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <table className="table">
+                <thead>
+                  <tr className="th1">
+                    <th scope="col">#</th>
+                    <th scope="col">Tên người dùng</th>
+                    <th scope="col">Avatar</th>
+                    <th scope="col">Ngày bình luận</th>
+                    <th scope="col">Nội dung</th>
+                    <th scope="col">Số sao bình luận</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {commentList?.map((item, index) => {
+                    const ngay = new Date(item.ngayBinhLuan);
+                    return (
+                      <tr key={index} className="th2">
+                        <th>{index + 1}</th>
+                        <td>{item.tenNguoiBinhLuan}</td>
+                        <td>
+                          <img src={item.avatar} alt={item.tenNguoiBinhLuan} />
+                        </td>
+                        <td>{`${
+                          ngay.getDate() < 10
+                            ? "0" + ngay.getDate()
+                            : ngay.getDate()
+                        }/${
+                          ngay.getMonth() + 1 < 10
+                            ? "0" + (ngay.getMonth() + 1)
+                            : ngay.getMonth() + 1
+                        }/${ngay.getFullYear()}`}</td>
+                        <td>{item.noiDung}</td>
+                        <td>{item.saoBinhLuan}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       </div>
