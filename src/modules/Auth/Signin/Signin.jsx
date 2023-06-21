@@ -13,7 +13,6 @@ function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  console.log(location);
   const [searchParams] = useSearchParams();
   const {
     register,

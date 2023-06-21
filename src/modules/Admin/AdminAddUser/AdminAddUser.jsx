@@ -40,7 +40,6 @@ const schema = yup.object({
 });
 function AdminAddUser() {
   const dayjs = require("dayjs");
-  const [passShow, setPassShow] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
 

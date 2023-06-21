@@ -34,6 +34,9 @@ const AdminUserList = lazy(() =>
 const AdminAddUser = lazy(() =>
   import("./modules/Admin/AdminAddUser/AdminAddUser.jsx")
 );
+const AdminCommentList = lazy(() =>
+  import("./modules/Admin/AdminCommentList/AdminCommentList.jsx")
+);
 
 function App() {
   return (
@@ -73,7 +76,9 @@ function App() {
           >
             <Route index element={<UserInfoLayout />} />
 
-            <Route path="history" element={<BookingHistory />} />
+            <Route path="booking-list" element={<BookingHistory />} />
+            <Route path="comment-list" element={<AdminCommentList />} />
+
 
             <Route path="user-list" element={<AdminUserList />} />
             <Route path="add-user" element={<AdminAddUser />} />

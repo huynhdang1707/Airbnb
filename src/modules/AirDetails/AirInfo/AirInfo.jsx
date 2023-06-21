@@ -1,15 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { apiPhongID } from '../../../apis/bnbApi';
-import Calendar from 'react-calendar';
-import LinesEllipsis from 'react-lines-ellipsis';
-import 'react-calendar/dist/Calendar.css';
+import React, { useState, useEffect } from "react";
+import { apiPhongID } from "../../../apis/bnbApi";
+import Calendar from "react-calendar";
+import LinesEllipsis from "react-lines-ellipsis";
+import "react-calendar/dist/Calendar.css";
 
-import "./AirInfo.scss"
+import "./AirInfo.scss";
 
 function AirInfo({ id }) {
+  //
+  const dayjs = require('dayjs');
+  const utc = require('dayjs/plugin/utc');
+  const timezone = require('dayjs/plugin/timezone');
+  
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
+  //
   const [phongThue, setPhongThue] = useState({});
   const [err, setErr] = useState(null);
-  const [selectedDateRange, setSelectedDateRange] = useState([new Date(), new Date()]);
+  const [selectedDateRange, setSelectedDateRange] = useState([
+    new Date(),
+    new Date(),
+  ]);
   const startDate = selectedDateRange[0];
   const endDate = selectedDateRange[1];
   const diffInTime = endDate.getDate() - startDate.getDate() + 1;
@@ -32,7 +43,7 @@ function AirInfo({ id }) {
     getPhongThue();
   }, []);
 
-  if(err) return null;
+  if (err) return null;
 
   const handleDateChange = (date) => {
     setSelectedDateRange(date);
@@ -40,94 +51,126 @@ function AirInfo({ id }) {
 
   const handleBooking = () => {
     const startDate = selectedDateRange[0];
+    const newStartDate = Date.parse(startDate);
+    const formattedDate =
+      dayjs(newStartDate)
+        .utcOffset(0) // Chuyển đổi sang múi giờ UTC
+        .format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z";
+    console.log(formattedDate);
     const endDate = selectedDateRange[1];
     console.log("Ngày bắt đầu:", startDate);
     console.log("Ngày kết thúc:", endDate);
   };
 
   return (
-    <div className='container'>
+    <div className="container">
       <div className="row">
         <div className="col-sm-6">
-          <div className='mt-4 pb-3 chiTiet'>
-          <span className='phong'>{phongThue.khach} khách</span>
-          <span className='phong'> . {phongThue.phongNgu} phòng ngủ</span>
-          <span className='phong'> . {phongThue.giuong} giường</span>
-          <span className='phong'> . {phongThue.phongTam} phòng tắm</span>
+          <div className="mt-4 pb-3 chiTiet">
+            <span className="phong">{phongThue.khach} khách</span>
+            <span className="phong"> . {phongThue.phongNgu} phòng ngủ</span>
+            <span className="phong"> . {phongThue.giuong} giường</span>
+            <span className="phong"> . {phongThue.phongTam} phòng tắm</span>
           </div>
-          <div className='mt-3 chiTiet'>
-            <span className='info'><i class="bi bi-info"></i> Mô tả</span>
+          <div className="mt-3 chiTiet">
+            <span className="info">
+              <i class="bi bi-info"></i> Mô tả
+            </span>
             {phongThue?.moTa?.length > 80 ? (
               showFullDescription ? (
                 <div>
-                  <p className='moTa'>{phongThue.moTa}</p>
-                  <span className='moRong' onClick={toggleShowFullDescription}>Thu gọn</span>
+                  <p className="moTa">{phongThue.moTa}</p>
+                  <span className="moRong" onClick={toggleShowFullDescription}>
+                    Thu gọn
+                  </span>
                 </div>
               ) : (
                 <div>
                   <LinesEllipsis
-                    className='moTa'
+                    className="moTa"
                     text={phongThue.moTa}
-                    maxLine={showFullDescription ? '50' : '1'}
-                    ellipsis='...'
+                    maxLine={showFullDescription ? "50" : "1"}
+                    ellipsis="..."
                     trimRight
-                    basedOn='letters'
+                    basedOn="letters"
                   />
-                  <span className='moRong' onClick={toggleShowFullDescription}>Xem thêm</span>
+                  <span className="moRong" onClick={toggleShowFullDescription}>
+                    Xem thêm
+                  </span>
                 </div>
               )
             ) : (
-              <p className='moTa'>{phongThue.moTa}</p>
+              <p className="moTa">{phongThue.moTa}</p>
             )}
           </div>
-          <div className='mt-4 chiTiet'>
-            <h2 className='gioiThieu'>Nơi này có những gì cho bạn</h2>
-            <div className='suDung pb-3'>
-              <div className='me-5'>
+          <div className="mt-4 chiTiet">
+            <h2 className="gioiThieu">Nơi này có những gì cho bạn</h2>
+            <div className="suDung pb-3">
+              <div className="me-5">
                 <div>
-                <span className={phongThue.wifi ? '' : 'gach-ngang'}><i className="bi bi-wifi me-2"></i> Wifi</span>
+                  <span className={phongThue.wifi ? "" : "gach-ngang"}>
+                    <i className="bi bi-wifi me-2"></i> Wifi
+                  </span>
                 </div>
                 <div>
-                  <span className={phongThue.hoBoi ? '' : 'gach-ngang'}><i class="bi bi-water me-2"></i> Hồ bơi</span>
+                  <span className={phongThue.hoBoi ? "" : "gach-ngang"}>
+                    <i class="bi bi-water me-2"></i> Hồ bơi
+                  </span>
                 </div>
                 <div>
-                  <span className={phongThue.dieuHoa ? '' : 'gach-ngang'}><i class="bi bi-snow me-2"></i> Điều hòa</span>
+                  <span className={phongThue.dieuHoa ? "" : "gach-ngang"}>
+                    <i class="bi bi-snow me-2"></i> Điều hòa
+                  </span>
                 </div>
                 <div>
-                  <span className={phongThue.tivi ? '' : 'gach-ngang'}><i class="bi bi-tv me-2"></i> Tivi</span>
+                  <span className={phongThue.tivi ? "" : "gach-ngang"}>
+                    <i class="bi bi-tv me-2"></i> Tivi
+                  </span>
                 </div>
               </div>
-              
+
               <div>
                 <div>
-                  <span className={phongThue.doXe ? '' : 'gach-ngang'}><i class="bi bi-car-front-fill me-2"></i> Chỗ đỗ xe miễn phí tại nơi ở</span>
+                  <span className={phongThue.doXe ? "" : "gach-ngang"}>
+                    <i class="bi bi-car-front-fill me-2"></i> Chỗ đỗ xe miễn phí
+                    tại nơi ở
+                  </span>
                 </div>
                 <div>
-                  <span className={phongThue.bep ? '' : 'gach-ngang'}><i class="bi bi-kanban-fill me-2"></i> Bếp</span>
+                  <span className={phongThue.bep ? "" : "gach-ngang"}>
+                    <i class="bi bi-kanban-fill me-2"></i> Bếp
+                  </span>
                 </div>
                 <div>
-                  <span className={phongThue.banUi ? '' : 'gach-ngang'}> <i class="bi bi-thermometer-high me-2"></i> Bàn ủi</span>
+                  <span className={phongThue.banUi ? "" : "gach-ngang"}>
+                    {" "}
+                    <i class="bi bi-thermometer-high me-2"></i> Bàn ủi
+                  </span>
                 </div>
                 <div>
-                  <span className={phongThue.banLa ? '' : 'gach-ngang'}><i class="bi bi-thermometer-low me-2"></i> Bàn là</span>
+                  <span className={phongThue.banLa ? "" : "gach-ngang"}>
+                    <i class="bi bi-thermometer-low me-2"></i> Bàn là
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className='col-sm-4' style={{marginTop:"47px"}}>
-          <div className='datPhong'>
-            <div className='tongQuat'>
+        <div className="col-sm-4" style={{ marginTop: "47px" }}>
+          <div className="datPhong">
+            <div className="tongQuat">
               <div>
-                <span className='giaTien'>{totalPrice}.000.000đ</span>
+                <span className="giaTien">{totalPrice}.000.000đ</span>
               </div>
-              <div className='danhGia'>
-                <span><i class="bi bi-star-fill"></i></span>
+              <div className="danhGia">
+                <span>
+                  <i class="bi bi-star-fill"></i>
+                </span>
                 <span> .</span>
                 <span> đánh giá</span>
               </div>
             </div>
-            <div className='mt-3'>
+            <div className="mt-3">
               <Calendar
                 onChange={handleDateChange}
                 value={selectedDateRange}
@@ -135,8 +178,14 @@ function AirInfo({ id }) {
                 minDate={new Date()}
               />
             </div>
-            <div className='mt-2 text-center'>
-              <button type="button" class="btn btn-danger datCho" onClick={handleBooking}>Đặt Phòng</button>
+            <div className="mt-2 text-center">
+              <button
+                type="button"
+                class="btn btn-danger datCho"
+                onClick={handleBooking}
+              >
+                Đặt Phòng
+              </button>
             </div>
           </div>
         </div>

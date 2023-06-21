@@ -16,11 +16,14 @@ function AdminSidebar() {
   };
   const handleHistory = () => {
     handleFooterItem(5);
-    navigate("history");
+    navigate("booking-list");
+  };
+  const handleComment = () => {
+    handleFooterItem(6);
+    navigate("comment-list");
   };
   return (
     <div className={style.sideBar}>
-      
       <ul className={style.footer}>
         <div>
           <li
@@ -90,7 +93,7 @@ function AdminSidebar() {
               </li>
             </ul>
           </Collapse>
-        </div>       
+        </div>
 
         <div>
           <li
@@ -131,6 +134,16 @@ function AdminSidebar() {
             onClick={handleHistory}
           >
             Quản lý đặt phòng
+          </li>
+        </div>
+        <div>
+          <li
+            className={`${style.footerItem} ${
+              activeFooterItem === 6 ? style.action : ""
+            }`}
+            onClick={handleComment}
+          >
+            Quản lý bình luận
           </li>
         </div>
       </ul>
