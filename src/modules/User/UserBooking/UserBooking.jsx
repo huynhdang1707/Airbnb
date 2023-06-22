@@ -68,7 +68,7 @@ function UserBooking() {
   } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if(booking?.ngayDen&&booking?.ngayDi){
+    if (booking?.ngayDen && booking?.ngayDi) {
       const den = new Date(booking?.ngayDen);
       const di = new Date(booking?.ngayDi);
       setNewStartDate(new Date(booking?.ngayDen));
@@ -76,13 +76,12 @@ function UserBooking() {
       reset({
         // id: booking?.id,
         maPhong: booking?.maPhong,
-        ngayDen: den,
-        ngayDi: di,
+        ngayDen: getValues("ngayDen"),
+        ngayDi: getValues("ngayDi"),
         soLuongKhach: booking?.soLuongKhach,
         maNguoiDung: user?.user?.id,
       });
     }
-    
   }, []);
   const [addBooking, setAddBooking] = useState(null);
   const onSubmit = async (value) => {
@@ -94,6 +93,7 @@ function UserBooking() {
     const data = await dispatch(userCreateBooking(value));
     setAddBooking(data);
   };
+  const [total, setTotal] = useState(null);
   useEffect(() => {
     setValue(
       "ngayDen",
@@ -107,14 +107,28 @@ function UserBooking() {
         .utcOffset(7) // Chuyển đổi sang múi giờ UTC
         .format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z"
     );
+    const ngayDen = new Date(getValues("ngayDen"));
+
+    const ngayDi = new Date(getValues("ngayDi"));
+    const millisecondsDiff = ngayDi - ngayDen;
+
+    const daysDiff = Math.ceil(millisecondsDiff / (1000 * 60 * 60 * 24));
+
+    const millisecondsDiff1 =
+      new Date(booking?.ngayDi) - new Date(booking?.ngayDen);
+    const daysDiff1 = Math.ceil(millisecondsDiff1 / (1000 * 60 * 60 * 24));
+    setTotal((daysDiff * booking?.totalPrice) / daysDiff1);
   }, [newStartDate, newEndDate]);
+
   const onError = (errors) => {
     console.log(errors);
   };
   const [startDate, setStartDat] = useState(new Date());
   if (addBooking?.payload?.statusCode === 201) {
     swal({
-      title: "Đặt phòng thành công",
+      title: `Đặt phòng thành công với thanh toán ${
+        total ? total : booking?.totalPrice
+      }.000.000đ`,
       text: "Nhấn Ok để tiếp tục!",
       icon: "success",
     }).then((willSuccess) => {
@@ -148,7 +162,7 @@ function UserBooking() {
             </div>
 
             <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Tên Phòng</div>
+              <div className="col-2 text-end">Tên phòng</div>
               <div className="col-10">
                 <input
                   type="text"
@@ -230,6 +244,20 @@ function UserBooking() {
                     {errors.ngayDi.message}
                   </p>
                 )}
+              </div>
+            </div>
+            <div className="row mb-2 mt-2 align-items-top input-group">
+              <div className="col-2 text-end">Tổng thanh toán</div>
+              <div className="col-10">
+                <input
+                  type="text"
+                  className="w-100 form-control"
+                  value={
+                    total
+                      ? `${total}.000.000đ`
+                      : `${booking?.totalPrice}.000.000đ`
+                  }
+                />
               </div>
             </div>
 

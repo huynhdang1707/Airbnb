@@ -59,6 +59,7 @@ function AirInfo({ id }) {
     const newEndDate = Date.parse(selectedDateRange[1]);
     navigate("/user/booking");
     const data = {
+      totalPrice,
       hinhPhong: phongThue.hinhAnh,
       tenPhong: phongThue.tenPhong,
       maPhong: phongThue.id,
