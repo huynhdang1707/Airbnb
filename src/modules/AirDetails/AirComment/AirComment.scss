@@ -1,0 +1,21 @@
+.batDau{
+    margin-top: 50px;
+    border-top: 1px solid #ebebeb;
+    .tieuDeNX{
+        margin-top: 40px;
+    }
+    .noiDung{
+        border-bottom: 1px solid #ebebeb;
+    }
+    .bi-star-fill, .bi-star{
+        color: #d0011b;
+    }
+    .hinhAnh{
+        object-fit: cover;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: black;
+    }
+    
+}

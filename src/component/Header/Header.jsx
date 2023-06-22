@@ -89,19 +89,11 @@ function Header({
                   <a href="#" className="danhMuc">
                     <i className="bi bi-list mx-1"></i>
                   </a>
-                  <a
-                    onClick={() =>
-                      navigate(`/user`)
-                    }
-                  >
+                  <a href="#" className="danhMuc">
                     {infoUser?.avatar ? (
                       <img
                         src={infoUser?.avatar}
-                        style={{
-                          width: "30px",
-                          maxHeight: "30px",
-                          borderRadius: "50%",
-                        }}
+                        className="mx-1 mb-1"
                       />
                     ) : (
                       <i className="bi bi-person-circle mx-1"></i>
@@ -112,20 +104,28 @@ function Header({
               id="basic-nav-dropdown"
             >
               {user ? (
-                <NavDropdown.Item className="item" onClick={handleSignOut}>
-                  Đăng xuất
-                </NavDropdown.Item>
+                 <>
+                  <NavDropdown.Item className="item" onClick={() =>
+                      navigate(`/user`)
+                    }> 
+                    Tài khoản
+                  </NavDropdown.Item>
+                  <NavDropdown.Item className="item" onClick={handleSignOut}>
+                    Đăng xuất
+                  </NavDropdown.Item>
+               </>
               ) : (
                 <>
                   <NavDropdown.Item
                     className="item"
                     onClick={onHandleSignUpRedirect}
+                    href="signup"
                   >
                     Đăng ký
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     className="item"
-                    // href="/signin"
+                    href="/signin"
                     onClick={onLoginRedirect}
                   >
                     Đăng nhập
