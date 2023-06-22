@@ -110,12 +110,12 @@ function UserBooking() {
     const ngayDen = new Date(getValues("ngayDen"));
 
     const ngayDi = new Date(getValues("ngayDi"));
-    const millisecondsDiff = ngayDi - ngayDen;
+    const millisecondsDiff = ngayDi - ngayDen+1;
 
     const daysDiff = Math.ceil(millisecondsDiff / (1000 * 60 * 60 * 24));
 
     const millisecondsDiff1 =
-      new Date(booking?.ngayDi) - new Date(booking?.ngayDen);
+      new Date(booking?.ngayDi) - new Date(booking?.ngayDen)+1;
     const daysDiff1 = Math.ceil(millisecondsDiff1 / (1000 * 60 * 60 * 24));
     setTotal((daysDiff * booking?.totalPrice) / daysDiff1);
   }, [newStartDate, newEndDate]);
