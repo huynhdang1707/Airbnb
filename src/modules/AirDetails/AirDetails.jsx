@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import AirInfo from './AirInfo/AirInfo';
 import AirIntro from './AirIntro/AirIntro';
+import AirComment from './AirComment/AirComment';
 
 function AirDetails() {
   const { id } = useParams();
@@ -9,6 +10,7 @@ function AirDetails() {
     <>
       <AirIntro id={id}/>
       <AirInfo id={id}/>
+      <AirComment id={id}/>
     </>
   )
 }
