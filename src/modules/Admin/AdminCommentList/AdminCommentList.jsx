@@ -91,7 +91,7 @@ function AdminCommentList() {
         };
         fetch();
         swal({
-          title: `Xóa booking thành công`,
+          title: `Xóa bình luận thành công`,
           text: "Nhấn Ok để tiếp tục!",
           icon: "success",
         }).then((willSuccess) => {

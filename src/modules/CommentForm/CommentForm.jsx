@@ -53,7 +53,6 @@ function CommentForm({ onShow, handleShow, onUpdateComment }) {
   );
   const onSubmit = async (value) => {
     const data = await dispatch(updateComment(value));
-    console.log(data);
     if (data?.payload?.statusCode === 200) {
       swal({
         title: `Cập nhật bình luận thành công`,
