@@ -44,6 +44,9 @@ const BookingLayout = lazy(() =>
 const UserBookingList = lazy(() =>
   import("./modules/User/UserBookingList/UserBookingList.jsx")
 );
+const UserCommentList = lazy(() =>
+  import("./modules/User/UserCommentList/UserCommentList.jsx")
+);
 
 function App() {
   return (
@@ -82,6 +85,7 @@ function App() {
           >
             <Route index element={<UserInfoLayout />} />
             <Route path="booking-list" element={<UserBookingList />} />
+            <Route path="comment-list" element={<UserCommentList />} />
           </Route>
 
           <Route
