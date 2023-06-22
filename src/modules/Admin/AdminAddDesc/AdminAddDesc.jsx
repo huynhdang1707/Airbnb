@@ -62,7 +62,7 @@ function AdminAddDesc() {
       </div>
     );
   return (
-    <div className="createRoom">
+    <div className="createDesc">
       <h2>Thêm vị trí mới</h2>
       <div className="body">
         <form onSubmit={handleSubmit(onSubmit, onError)}>

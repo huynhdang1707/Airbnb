@@ -65,7 +65,7 @@ function Signup() {
       rePassword: "",
       phone: "",
       birthday: "",
-      gender: null,
+      gender: false,
       role: "",
     },
     mode: "onTouched",

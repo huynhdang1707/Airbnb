@@ -90,7 +90,7 @@ function CommentForm({ onShow, handleShow, onUpdateComment }) {
           id: onUpdateComment?.id,
           maPhong: onUpdateComment?.maPhong,
           ngayBinhLuan: onUpdateComment?.ngayBinhLuan,
-          maNguoiBinhLuan: onUpdateComment?.ngayDi,
+          maNguoiBinhLuan: onUpdateComment?.maNguoiBinhLuan,
           noiDung: onUpdateComment?.noiDung,
           saoBinhLuan: onUpdateComment?.saoBinhLuan,
         });

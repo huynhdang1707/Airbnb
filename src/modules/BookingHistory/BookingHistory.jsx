@@ -39,7 +39,6 @@ function BookingHistory() {
           const data = await apiGetBookingListBookingId(searchInput1);
           setBookingList([data.content]);
         } catch (error) {
-          console.log(error);
         }
       };
       fetch();
@@ -62,7 +61,6 @@ function BookingHistory() {
           const data = await apiGetBookingListUserId(searchInput2);
           setBookingList(data.content);
         } catch (error) {
-          console.log(error);
         }
       };
       fetch();

@@ -7,8 +7,19 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { userCreateBooking } from "../../../slices/userCreateBooking";
 import "./UserBooking.scss";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function UserBooking() {
+  //
+  const dayjs = require("dayjs");
+  const utc = require("dayjs/plugin/utc");
+  const timezone = require("dayjs/plugin/timezone");
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
+  //
+  const [newStartDate, setNewStartDate] = useState(new Date());
+  const [newEndDate, setNewEndDate] = useState(new Date());
   const { booking, isLoading, error } = useSelector(
     (state) => state.createBooking
   );
@@ -19,8 +30,8 @@ function UserBooking() {
     soLuongKhach: yup
       .number()
       .max(
-        booking.soLuongKhach,
-        `Số lượng khách không vượt quá lượng khách tối đa: ${booking.soLuongKhach}`
+        booking?.soLuongKhach,
+        `Số lượng khách không vượt quá lượng khách tối đa: ${booking?.soLuongKhach}`
       )
       .min(1, "Số lượng khách ít nhất là 1")
       .typeError("Số lượng khách phair là 1 số"),
@@ -55,32 +66,52 @@ function UserBooking() {
     isLoading: isLoading1,
     error: error1,
   } = useSelector((state) => state.user);
-  console.log(user?.user);
+
   useEffect(() => {
-    const den = new Date(booking?.ngayDen);
-    const di = new Date(booking?.ngayDi);
-    reset({
-      // id: booking?.id,
-      maPhong: booking?.maPhong,
-      ngayDen: den,
-      ngayDi: di,
-      soLuongKhach: booking?.soLuongKhach,
-      maNguoiDung: user?.user?.id,
-    });
+    if(booking?.ngayDen&&booking?.ngayDi){
+      const den = new Date(booking?.ngayDen);
+      const di = new Date(booking?.ngayDi);
+      setNewStartDate(new Date(booking?.ngayDen));
+      setNewEndDate(new Date(booking?.ngayDi));
+      reset({
+        // id: booking?.id,
+        maPhong: booking?.maPhong,
+        ngayDen: den,
+        ngayDi: di,
+        soLuongKhach: booking?.soLuongKhach,
+        maNguoiDung: user?.user?.id,
+      });
+    }
+    
   }, []);
   const [addBooking, setAddBooking] = useState(null);
   const onSubmit = async (value) => {
-    const newValue = {
-      ...value,
-      ngayDen: booking.ngayDen,
-      ngayDi: booking.ngayDi,
-    };
-    const data = await dispatch(userCreateBooking(newValue));
+    // const newValue = {
+    //   ...value,
+    //   ngayDen: booking.ngayDen,
+    //   ngayDi: booking.ngayDi,
+    // };
+    const data = await dispatch(userCreateBooking(value));
     setAddBooking(data);
   };
+  useEffect(() => {
+    setValue(
+      "ngayDen",
+      dayjs(newStartDate)
+        .utcOffset(7) // Chuyển đổi sang múi giờ UTC
+        .format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z"
+    );
+    setValue(
+      "ngayDi",
+      dayjs(newEndDate)
+        .utcOffset(7) // Chuyển đổi sang múi giờ UTC
+        .format("YYYY-MM-DDTHH:mm:ss.SSS") + "Z"
+    );
+  }, [newStartDate, newEndDate]);
   const onError = (errors) => {
     console.log(errors);
   };
+  const [startDate, setStartDat] = useState(new Date());
   if (addBooking?.payload?.statusCode === 201) {
     swal({
       title: "Đặt phòng thành công",
@@ -101,7 +132,7 @@ function UserBooking() {
     );
 
   return (
-    <div className="createUser">
+    <div className="createBooking">
       <div className="body">
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <div className="container mb-2">
@@ -157,10 +188,18 @@ function UserBooking() {
             <div className="row mb-2 mt-2 align-items-top input-group">
               <div className="col-2 text-end">Ngày nhận phòng</div>
               <div className="col-10">
-                <input
+                {/* <input
                   type="text"
                   className="w-100 form-control"
                   {...register("ngayDen")}
+                /> */}
+                <DatePicker
+                  showIcon
+                  selected={newStartDate}
+                  minDate={startDate}
+                  dateFormat="dd/MM/yyyy"
+                  onChange={(date) => setNewStartDate(date)}
+                  className="datePicker"
                 />
                 {errors.ngayDen && (
                   <p className="ms-3 fs-7 text-danger fst-italic">
@@ -173,10 +212,18 @@ function UserBooking() {
             <div className="row mb-2 mt-2 align-items-top input-group">
               <div className="col-2 text-end">Ngày trả phòng</div>
               <div className="col-10">
-                <input
+                {/* <input
                   type="text"
                   className="w-100 form-control"
                   {...register("ngayDi")}
+                /> */}
+                <DatePicker
+                  showIcon
+                  selected={newEndDate}
+                  minDate={newStartDate}
+                  dateFormat="dd/MM/yyyy"
+                  onChange={(date) => setNewEndDate(date)}
+                  className="datePicker"
                 />
                 {errors.ngayDi && (
                   <p className="ms-3 fs-7 text-danger fst-italic">

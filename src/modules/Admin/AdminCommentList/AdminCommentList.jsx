@@ -23,9 +23,13 @@ function AdminCommentList() {
   const { comments, isLoading, error } = useSelector(
     (state) => state.commentList
   );
+  const today = new Date();
+  const tmr = new Date();
+  tmr.setDate(today.getDate() + 2);
   const length = comments.filter(
-    (obj) => new Date(obj.ngayBinhLuan) <= new Date()
+    (obj) => new Date(obj.ngayBinhLuan) < tmr
   ).length;
+
   const { updated } = useSelector((state) => state.updateComment);
   useEffect(() => {
     if (searchInput !== "") {
@@ -33,19 +37,20 @@ function AdminCommentList() {
         try {
           const data = await apiGetCommentListRoomId(searchInput);
           const tryyy = data.content.filter(
-            (obj) => new Date(obj.ngayBinhLuan) <= new Date()
+            (obj) => new Date(obj.ngayBinhLuan) < tmr
           );
           setCommentList(tryyy);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       };
       fetch();
     } else {
       const fetch = async () => {
         const data = await dispatch(getCommentList());
+
         const tryyy = data.payload.filter(
-          (obj) => new Date(obj.ngayBinhLuan) <= new Date()
+          (obj) => new Date(obj.ngayBinhLuan) < tmr
         );
         setCommentList(tryyy);
       };
@@ -56,7 +61,7 @@ function AdminCommentList() {
     const fetch = async () => {
       const data = await dispatch(getCommentList());
       const tryyy = data.payload.filter(
-        (obj) => new Date(obj.ngayBinhLuan) <= new Date()
+        (obj) => new Date(obj.ngayBinhLuan) < tmr
       );
       setCommentList(tryyy);
     };
@@ -137,7 +142,7 @@ function AdminCommentList() {
                     <th scope="col">Mã người dùng</th>
                     <th scope="col">Ngày bình luận</th>
                     <th scope="col">Nội dung</th>
-                    <th scope="col">Số sao bình luận</th>
+                    <th scope="col">Số sao đánh giá</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -189,7 +194,7 @@ function AdminCommentList() {
                     <th scope="col">Avatar</th>
                     <th scope="col">Ngày bình luận</th>
                     <th scope="col">Nội dung</th>
-                    <th scope="col">Số sao bình luận</th>
+                    <th scope="col">Số sao đánh giá</th>
                   </tr>
                 </thead>
                 <tbody>

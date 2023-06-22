@@ -253,18 +253,20 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
                   {errors.phone.message}
                 </p>
               )}
-              <div className={`input-group ${style.input}`}>
-                <span className="input-group-text">Loại người dùng</span>
-                <select
-                  type="text"
-                  className="form-control"
-                  placeholder="Mã loại người dùng"
-                  {...register("role")}
-                >
-                  <option value="ADMIN">Quản trị</option>
-                  <option value="USER">Khách hàng</option>
-                </select>
-              </div>
+              {userPre?.user?.id !== onUpdateUser?.id ? (
+                <div className={`input-group ${style.input}`}>
+                  <span className="input-group-text">Loại người dùng</span>
+                  <select
+                    type="text"
+                    className="form-control"
+                    placeholder="Mã loại người dùng"
+                    {...register("role")}
+                  >
+                    <option value="ADMIN">Quản trị</option>
+                    <option value="USER">Khách hàng</option>
+                  </select>
+                </div>
+              ) : null}
               {errors.role && (
                 <p className="fs-7 text-danger fst-italic">
                   {errors.role.message}
