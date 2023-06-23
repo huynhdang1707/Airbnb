@@ -17,7 +17,7 @@ import swal from "sweetalert";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const schema = yup.object({
-  noiDung: yup.string().required("(*)Nội dung không được để trống"),
+  noiDung: yup.string(),
   saoBinhLuan: yup.number(),
 });
 
@@ -84,7 +84,12 @@ function AirComment({ id }) {
   const [reloadChild, setReloadChild] = useState(false);
   const [addCmt, setAddCmt] = useState(null);
   const [flagAdd, setFlagAdd] = useState(false);
+  const [errCmt, setErrCmt] = useState(null);
+  const [cmt, setCmt] = useState(null);
   const onSubmit = async () => {
+    setCmt(getValues("noiDung"));
+
+    //
     if (!user) {
       swal({
         title: "Bạn chưa đăng nhập!",
@@ -96,31 +101,39 @@ function AirComment({ id }) {
         }
       });
     } else {
-      if (rating === 0 && !flagRating) {
-        swal({
-          title: "Thêm đánh giá thất bại",
-          text: `Có vẻ bạn chưa đánh giá số sao`,
-          icon: "error",
-        }).then((willSuccess) => {
-          if (willSuccess) {
-            setAddCmt(null);
-            setFlagRating(true);
-          }
-        });
+      if (cmt === "") {
+        setErrCmt("(*)Nội dung không được để trống");
       } else {
-        setFlagRating(false);
-        const value1 = {
-          id: 0,
-          maPhong: id,
-          ngayBinhLuan: new Date(),
-          maNguoiBinhLuan: user?.user?.id,
-          saoBinhLuan: rating,
-          noiDung: getValues("noiDung"),
-        };
-        const data = await dispatch(userCreateComment(value1));
-        setAddCmt(data);
-        setReloadChild(!reloadChild);
-        setFlagAdd(true);
+        if (rating === 0 && !flagRating) {
+          swal({
+            title: "Thêm đánh giá thất bại",
+            text: `Có vẻ bạn chưa đánh giá số sao`,
+            icon: "error",
+          }).then((willSuccess) => {
+            if (willSuccess) {
+              setAddCmt(null);
+              setFlagRating(true);
+            }
+          });
+        } else {
+          setFlagRating(false);
+          const value1 = {
+            id: 0,
+            maPhong: id,
+            ngayBinhLuan: new Date(),
+            maNguoiBinhLuan: user?.user?.id,
+            saoBinhLuan: rating,
+            noiDung: getValues("noiDung"),
+          };
+          const data = await dispatch(userCreateComment(value1));
+          setAddCmt(data);
+          setReloadChild(!reloadChild);
+          setFlagAdd(true);
+          setErrCmt(null);
+          setValue("noiDung", "");
+          setCmt(null);
+          setRating(0);
+        }
       }
     }
   };
@@ -136,6 +149,7 @@ function AirComment({ id }) {
       }
     });
   }
+  useEffect(() => {}, [reloadChild, cmt]);
 
   return (
     <div className="batDau">
@@ -158,11 +172,7 @@ function AirComment({ id }) {
             Đánh giá
           </Button>
         </InputGroup>
-        {errors.noiDung && (
-          <p className="ms-3 fs-7 text-danger fst-italic">
-            {errors.noiDung.message}
-          </p>
-        )}
+        {errCmt && <p className="ms-3 fs-7 text-danger fst-italic">{errCmt}</p>}
         <div className="mt-3">
           <Row>
             <Col>
