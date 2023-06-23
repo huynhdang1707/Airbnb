@@ -20,7 +20,7 @@ function Header({
   const { infoUser } = useSelector((state) => state.infoUser);
   useEffect(() => {
     dispatch(getInfoUser(user?.user?.id));
-  }, [user?.user?.id]);
+  }, [user?.user?.id, user]);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -91,10 +91,7 @@ function Header({
                   </a>
                   <a href="#" className="danhMuc">
                     {infoUser?.avatar ? (
-                      <img
-                        src={infoUser?.avatar}
-                        className="mx-1 mb-1"
-                      />
+                      <img src={infoUser?.avatar} className="mx-1 mb-1" />
                     ) : (
                       <i className="bi bi-person-circle mx-1"></i>
                     )}
@@ -104,16 +101,17 @@ function Header({
               id="basic-nav-dropdown"
             >
               {user ? (
-                 <>
-                  <NavDropdown.Item className="item" onClick={() =>
-                      navigate(`/user`)
-                    }> 
+                <>
+                  <NavDropdown.Item
+                    className="item"
+                    onClick={() => navigate(`/user`)}
+                  >
                     Tài khoản
                   </NavDropdown.Item>
                   <NavDropdown.Item className="item" onClick={handleSignOut}>
                     Đăng xuất
                   </NavDropdown.Item>
-               </>
+                </>
               ) : (
                 <>
                   <NavDropdown.Item

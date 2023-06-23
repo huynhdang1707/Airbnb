@@ -44,9 +44,6 @@ function Comment({ roomId, cmted }) {
   const renderStars = () => {
     const maxStars = 5;
     const stars = [];
-    // if (updateComment1?.saoBinhLuan) {
-    //   setRating(updateComment1?.saoBinhLuan);
-    // }
     for (let i = 1; i <= maxStars; i++) {
       const starClass = i <= rating ? "bi-star-fill" : "bi-star";
 
@@ -289,7 +286,12 @@ function Comment({ roomId, cmted }) {
             <div key={index} className="userComment">
               <div className="mx-3 mt-3">
                 <span className="me-2">
-                  <img src={item?.avatar} alt="" className="hinhAnh" />
+                  {item?.avatar === "" ? (
+                    <i className="bi bi-person-circle mx-1 hinhAnh1"></i>
+                  ) : (
+                    <img src={item?.avatar} alt="" className="hinhAnh" />
+                  )}
+                  {/* <img src={item?.avatar} alt="" className="hinhAnh" /> */}
                 </span>
                 <span>{item?.tenNguoiBinhLuan}</span>
               </div>
