@@ -8,6 +8,7 @@ import "./BookingHistory.scss";
 import BookingForm from "../BookingForm/BookingForm";
 import { apiGetBookingListBookingId } from "../../apis/bookingManagementAPI";
 import { apiGetBookingListUserId } from "../../apis/bookingManagementAPI";
+import { Container } from "react-bootstrap";
 
 function BookingHistory() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function BookingHistory() {
           const data = await apiGetBookingListBookingId(searchInput1);
           setBookingList([data.content]);
         } catch (error) {
+          console.log(error);
         }
       };
       fetch();
@@ -61,6 +63,7 @@ function BookingHistory() {
           const data = await apiGetBookingListUserId(searchInput2);
           setBookingList(data.content);
         } catch (error) {
+          console.log(error);
         }
       };
       fetch();
@@ -135,10 +138,10 @@ function BookingHistory() {
 
   return (
     <>
-      <div className="bookingManagement">
-        <h2>Danh sách booking còn hiệu lực</h2>
-        <div className="d-flex justify-content-around">
-          <div className="input-group w-75">
+      <Container>
+        <h2 className="tieuDeBK">Danh sách booking còn hiệu lực</h2>
+        <div className="d-flex justify-content-around mt-3">
+          <div className="w-75">
             <input
               type="text"
               className="form-control me-2"
@@ -148,34 +151,27 @@ function BookingHistory() {
             />
             <input
               type="text"
-              className="form-control"
+              className="form-control mt-2"
               placeholder="Nhập mã người dùng và Enter"
               name="inputValue"
               onKeyDown={handleInput2}
             />
-            {/* <button
-            className="button"
-            onClick={() => navigate("/admin/add-room")}
-          >
-            Thêm phòng thuê mới
-          </button> */}
           </div>
         </div>
-
-        <div className="body">
+        <div className="body mt-2">
           <div className="container">
             <div className="row">
               <table className="table">
                 <thead>
-                  <tr className="th1">
-                    <th scope="col">#</th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Mã phòng</th>
-                    <th scope="col">Mã người dùng</th>
-                    <th scope="col">Ngày đến</th>
-                    <th scope="col">Ngày đi</th>
-                    <th scope="col">Số lượng khách</th>
-                    <th scope="col">Actions</th>
+                  <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Mã phòng</th>
+                    <th>Mã người dùng</th>
+                    <th>Ngày đến</th>
+                    <th>Ngày đi</th>
+                    <th>Số lượng khách</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -183,7 +179,7 @@ function BookingHistory() {
                     const den = new Date(item.ngayDen);
                     const di = new Date(item.ngayDi);
                     return (
-                      <tr key={index} className="th2">
+                      <tr key={index}>
                         <th>{index + 1}</th>
                         <td>{item.id}</td>
                         <td>{item.maPhong}</td>
@@ -232,7 +228,7 @@ function BookingHistory() {
           handleShow={handleShow}
           onUpdateBooking={updateBooking}
         />
-      </div>
+      </Container>
     </>
   );
 }

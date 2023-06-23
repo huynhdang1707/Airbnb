@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Pagination from "rc-pagination";
+import { Container, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
@@ -80,6 +81,7 @@ function AdminDescList() {
   const handleShow = (value) => {
     setShow(value);
   };
+  console.log(descs);
   if (isLoading)
     return (
       <div className="h-100 d-flex justify-content-center align-items-center">
@@ -92,88 +94,88 @@ function AdminDescList() {
     );
 
   return (
-    <div className="descManagement">
-      <h2>Danh sách phòng thuê</h2>
-      <div className="d-flex justify-content-around">
-        <div className="input-group w-75">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Nhập tên phòng thuê và nhấn Enter..."
-            name="inputValue"
-            onKeyDown={handleInput}
-          />
-          <button
-            className="button"
-            onClick={() => navigate("/admin/add-room")}
-          >
-            Thêm phòng thuê mới
-          </button>
-        </div>
-      </div>
-
-      <div className="body">
-        <div className="container">
-          <div className="row">
-            <table className="table">
-              <thead>
-                <tr className="th1">
-                  <th scope="col">#</th>
-                  <th scope="col">ID</th>
-                  <th scope="col">Hình ảnh</th>
-                  <th scope="col">Tên vị trí</th>
-                  <th scope="col">Tỉnh thành</th>
-                  <th scope="col">Quốc gia</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {descs?.data?.map((item, index) => {
-                  return (
-                    <tr key={index} className="th2">
-                      <th>{index + 1 + (current - 1) * 10}</th>
-                      <td>{item.id}</td>
-                      <td>
-                        <img src={item.hinhAnh} alt={item.id} />
-                      </td>
-                      <td>{item.tenViTri}</td>
-                      <td>{item.tinhThanh}</td>
-                      <td>{item.quocGia}</td>
-                      <td>
-                        <button
-                          className="btn text-secondary me-1 border-warning mt-1"
-                          onClick={() => handleUpdateDesc(index)}
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          className="btn text-danger border-success mt-1"
-                          onClick={() => handleDeleteDesc(item.id, index)}
-                        >
-                          <i className="bi bi-trash3"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            <Pagination
-              onChange={PaginationChange}
-              total={Math.ceil(descs.totalRow / 10)}
-              current={current}
-              pageSize={1}
-              className="pagination2"
-            />
+    <>
+      <div>
+        <Container>
+          <h2 className="tieuDeVT">Danh sách vị trí</h2>
+          <div>
+          <div className="d-flex mb-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Nhập tên vị trí và nhấn Enter..."
+                name="inputValue"
+                onKeyDown={handleInput}
+              />
+                <div className="input-group-append">
+                  <Button variant="outline-secondary" onClick={() => navigate("/admin/add-desc")}>Thêm vị trí mới</Button>{' '}
+                </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <DescForm
-        onShow={show}
-        handleShow={handleShow}
-        onUpdateDesc={updateDesc}
-      />
-    </div>
+          <div className="body">
+            <div className="container">
+              <div className="row">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>ID</th>
+                      <th>Hình ảnh</th>
+                      <th>Tên vị trí</th>
+                      <th>Tỉnh thành</th>
+                      <th>Quốc gia</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {descs?.data?.map((item, index) => {
+                      return (
+                        <tr key={index}>
+                          <th>{index + 1 + (current - 1) * 10}</th>
+                          <td>{item.id}</td>
+                          <td>
+                            <img src={item.hinhAnh} alt={item.id} className="hinhAnh"/>
+                          </td>
+                          <td>{item.tenViTri}</td>
+                          <td>{item.tinhThanh}</td>
+                          <td>{item.quocGia}</td>
+                          <td>
+                            <button
+                              className="btn text-secondary me-1 border-warning mt-1"
+                              onClick={() => handleUpdateDesc(index)}
+                            >
+                              <i className="bi bi-pencil-square"></i>
+                            </button>
+                            <button
+                              className="btn text-danger border-success mt-1"
+                              onClick={() => handleDeleteDesc(item.id, index)}
+                            >
+                              <i className="bi bi-trash3"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <Pagination
+                  onChange={PaginationChange}
+                  total={Math.ceil(descs.totalRow / 10)}
+                  current={current}
+                  pageSize={1}
+                  className="pagination2"
+                />
+              </div>
+            </div>
+          </div>  
+          <DescForm
+            onShow={show}
+            handleShow={handleShow}
+            onUpdateDesc={updateDesc}
+          />
+        </Container>
+      </div>  
+    </>
   );
 }
 

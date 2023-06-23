@@ -84,18 +84,11 @@ function UserBookingList() {
     );
 
   return <div className="bookingManagement">
-  <h2>Danh sách phòng bạn đã booking</h2>
+  <h2 className="danhSachPhong">Danh sách phòng bạn đã đặt</h2>
   <div className="d-flex justify-content-around">
     <div className="input-group w-75">
-      {/* <button
-      className="button"
-      onClick={() => navigate("/admin/add-room")}
-    >
-      Thêm phòng thuê mới
-    </button> */}
     </div>
   </div>
-
   <div className="body">
     <div className="container">
       <div className="row">

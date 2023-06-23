@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector} from "react-redux";
 import UserInfo from "../../modules/UserInfo/UserInfo";
-import style from "./UserInfoLayout.module.scss";
+import Button from 'react-bootstrap/Button';
+import "./UserInfoLayout.scss"
 
 function UserInfoLayout() {
   const navigate = useNavigate();
@@ -16,22 +17,18 @@ function UserInfoLayout() {
   if (user) {
     return (
       <>
-        <div className={`${style.cont}`}>
-          <div className="">
-            <h1 className="text-center py-4 bg-dark text-light ">
-              Thông tin người dùng
-            </h1>
-            <UserInfo />{" "}
-            {role === "ADMIN" && location.pathname !== "/admin" ? (
-              <div className="d-flex justify-content-end m-3">
-                <button className={style.btn} onClick={handleClick}>
-                  Admin Page
-                </button>
+        <div className="container">
+          <h2 className="py-4 bg-white tieuDeUS">
+            Thông tin người dùng
+          </h2>
+          {role === "ADMIN" && location.pathname !== "/admin" ? (
+              <div className="py-4">
+                  <Button variant="outline-secondary" onClick={handleClick}>Admin Page</Button>{' '}
               </div>
             ) : null}
-          </div>
+          <UserInfo />{" "}
         </div>
-      </>
+      </> 
     );
   } else
     return (

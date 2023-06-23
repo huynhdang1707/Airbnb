@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Container } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -62,90 +63,77 @@ function AdminAddDesc() {
       </div>
     );
   return (
-    <div className="createDesc">
-      <h2>Thêm vị trí mới</h2>
-      <div className="body">
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <div className="container mb-2">
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Tên vị trí</div>
-              <div className="col-10">
-                <input
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("tenViTri")}
-                />
-                {errors.tenViTri && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.tenViTri.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Tỉnh thành</div>
-              <div className="col-10">
-                <input
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("tinhThanh")}
-                />
-                {errors.tinhThanh && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.tinhThanh.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Quốc gia</div>
-              <div className="col-10">
-                <input
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("quocGia")}
-                />
-                {errors.quocGia && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.quocGia.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Hình ảnh</div>
-              <div className="col-10">
-                <input
-                  placeholder="Url"
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("hinhAnh")}
-                />
-                {errors.hinhAnh && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.hinhAnh.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="text-center">
-              <button className="add" disabled={isLoading ? true : false}>
-                Thêm vị trí
-              </button>
-              {error && (
-                <p className="text-center fs-7 text-danger fst-italic">
-                  {error}
-                </p>
-              )}
-            </div>
-          </div>
-        </form>
+    <>
+      <div>
+        <Container>
+          <h2 className="tieuDeVT">Thêm vị trí</h2>
+          <form className="mt-4" onSubmit={handleSubmit(onSubmit, onError)}>
+                  <div>
+                    <input
+                      type="text"
+                      className="w-100 form-control"
+                      {...register("tenViTri")}
+                      placeholder="Vị trí"
+                    />
+                    {errors.tenViTri && (
+                      <p className="ms-3 fs-7 text-danger fst-italic">
+                        {errors.tenViTri.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      className="w-100 form-control"
+                      {...register("tinhThanh")}
+                      placeholder="Tỉnh thành"
+                    />
+                    {errors.tinhThanh && (
+                      <p className="ms-3 fs-7 text-danger fst-italic">
+                        {errors.tinhThanh.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      className="w-100 form-control"
+                      {...register("quocGia")}
+                      placeholder="Quốc gia"
+                    />
+                    {errors.quocGia && (
+                      <p className="ms-3 fs-7 text-danger fst-italic">
+                        {errors.quocGia.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="mt-2">
+                    <input
+                      placeholder="Hình ảnh (URL)"
+                      type="text"
+                      className="w-100 form-control"
+                      {...register("hinhAnh")}
+                    />
+                    {errors.hinhAnh && (
+                      <p className="ms-3 fs-7 text-danger fst-italic">
+                        {errors.hinhAnh.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="text-end lamMoi">
+                    <button className="addVT" disabled={isLoading ? true : false}>
+                      Thêm vị trí
+                    </button>
+                    {error && (
+                      <p className="text-center fs-7 text-danger fst-italic">
+                        {error}
+                      </p>
+                    )}
+                  </div>
+          </form>
+        </Container>
       </div>
-    </div>
+    </>
   );
 }
 

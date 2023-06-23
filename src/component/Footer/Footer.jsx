@@ -71,9 +71,9 @@ function Footer() {
             <span><a href="#" className='tiengViet'><i className="bi bi-globe mx-2"></i>Tiếng Việt (VN)</a></span>
             <span className='mx-2'>₫</span>
             <span className='tiengViet me-2'>VND</span>
-            <span className='mx-2'><a href="https://www.facebook.com/airbnb" target='_blank'><i class="bi bi-facebook icon"></i></a></span>
-            <span className='mx-2'><a href="https://twitter.com/airbnb" target='_blank'><i class="bi bi-twitter icon"></i></a></span>
-            <span className='mx-2'><a href="https://www.instagram.com/airbnb/" target='_blank'><i class="bi bi-instagram icon"></i></a></span>
+            <span className='mx-2'><a href="https://www.facebook.com/airbnb" target='_blank'><i className="bi bi-facebook icon"></i></a></span>
+            <span className='mx-2'><a href="https://twitter.com/airbnb" target='_blank'><i className="bi bi-twitter icon"></i></a></span>
+            <span className='mx-2'><a href="https://www.instagram.com/airbnb/" target='_blank'><i className="bi bi-instagram icon"></i></a></span>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Container } from "react-bootstrap";
 import * as yup from "yup";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
@@ -99,144 +100,104 @@ function AdminAddUser() {
     );
 
   return (
-    <div className="createUser">
-      <h2>Thêm người dùng mới</h2>
-      <div className="body">
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <div className="container mb-2">
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Email</div>
-              <div className="col-10">
-                <input
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("email")}
+    <>
+    <Container>
+      <h2 className="tieuDeUS pb-3">Thêm người dùng</h2>
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
+        <div className="mt-4">
+          <input
+            type="text"
+            className="w-100 form-control"
+            {...register("email")}
+            placeholder="Email"
+          />
+          {errors.email && (
+          <p className="ms-3 fs-7 text-danger fst-italic">
+          {errors.email.message}
+          </p>
+          )}
+        </div>
+        <div className="mt-2">
+          <input
+            type="text"
+            className="w-100 form-control"
+            {...register("password")}
+            placeholder="Mật khẩu"
+            />
+            {errors.password && (
+              <p className="ms-3 fs-7 text-danger fst-italic">
+            {errors.password.message}
+              </p>
+            )}
+        </div>
+        <div className="mt-2">
+          <input
+                type="text"
+                className=" w-100 form-control"
+                {...register("name")}
+                placeholder="Họ tên"
+              />
+              {errors?.name && (
+                <p className="ms-3 fs-7 text-danger fst-italic">
+                  {errors?.name.message}
+                </p>
+              )}
+        </div>
+        <div className="mt-2">
+            <input
+                type="text"
+                className="w-100 form-control"
+                {...register("phone")}
+                placeholder="Số điện thoại"
+              />
+              {errors.phone && (
+                <p className="ms-3 fs-7 text-danger fst-italic">
+                  {errors.phone.message}
+                </p>
+              )}
+        </div>
+        <div className="mt-2">
+              <select
+                className="form-control"
+                name="mySelect"
+                {...register("role")}
+              >
+                <option value="">Chọn loại người dùng</option>
+                <option value="USER">Khách hàng</option>
+                <option value="ADMIN">Quản trị</option>
+              </select>
+              {errors.role && (
+                <p className="ms-3 fs-7 text-danger fst-italic">
+                  {errors.role.message}
+                </p>
+              )}
+        </div>
+        <div className="mt-2 row">
+          <div className="col mt-2 ngaySinh">Ngày sinh</div>
+          <div className="col-10">
+              <DatePicker
+                  showIcon
+                  selected={selectedDate}
+                  maxDate={startDate}
+                  onChange={(date) => setSelectedDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  className="datePicker"
                 />
-                {errors.email && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-            </div>
 
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Mật khẩu</div>
-              <div className="col-10">
-                <input
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("password")}
-                />
-                {errors.password && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
+              {errors.birthday && (
+                <p className="ms-3 fs-7 text-danger fst-italic">
+                  {errors.birthday.message}
+                </p>
+              )}
             </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <spa className="col-2 text-end">Họ & tên</spa>
-              <div className="col-10">
-                <input
-                  type="text"
-                  className="form-control"
-                  {...register("name")}
-                />
-                {errors?.name && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors?.name.message}
-                  </p>
-                )}
-              </div>
-            </div>
-{/* 
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Email</div>
-              <div className="col-10">
-                <input
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("email")}
-                />
-                {errors.email && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-            </div> */}
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Số điện thoại</div>
-              <div className="col-10">
-                <input
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("phone")}
-                />
-                {errors.phone && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.phone.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Loại người dùng</div>
-              <div className="col-10">
-                <select
-                  className="form-control"
-                  name="mySelect"
-                  {...register("role")}
+        </div>
+        <div className="mt-2">
+              <select
+                className="form-control"
+                name="mySelect"
+                {...register("gender")}
                 >
-                  <option value="USER">Khách hàng</option>
-                  <option value="ADMIN">Quản trị</option>
-                </select>
-                {errors.role && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.role.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Ngày sinh</div>
-              <div className="col-10">
-                {/* <input
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("birthday")}
-                >
-                </input> */}
-                <DatePicker
-                    showIcon
-                    selected={selectedDate}
-                    maxDate={startDate}
-                    onChange={(date) => setSelectedDate(date)}
-                    dateFormat="dd/MM/yyyy"
-                    className="datePicker"
-                  />
-
-                {errors.birthday && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.birthday.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Giới tính</div>
-              <div className="col-10">
-                <select
-                  className="form-control"
-                  name="mySelect"
-                  {...register("gender")}
-                >
+                  <option value="">Chọn giới tính</option>
                   <option value={true}>Nam</option>
                   <option value={false}>Nữ</option>
                 </select>
@@ -245,22 +206,20 @@ function AdminAddUser() {
                     {errors.gender.message}
                   </p>
                 )}
-              </div>
-            </div>
-            <div className="text-center">
-              <button className="add" disabled={isLoading ? true : false}>
-                Thêm người dùng
-              </button>
-              {error && (
-                <p className="text-center fs-7 text-danger fst-italic">
-                  {error}
-                </p>
-              )}
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+        </div>     
+        <div className="text-end taoMoi">
+            <button className="add" disabled={isLoading ? true : false}>
+              Thêm người dùng
+            </button>
+            {error && (
+              <p className="text-center fs-7 text-danger fst-italic">
+            {error}
+              </p>
+            )}
+        </div>
+      </form>
+    </Container>
+  </>
   );
 }
 

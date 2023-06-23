@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./AdminUserList.scss";
 import Pagination from "rc-pagination";
+import { Container, Button } from "react-bootstrap";
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
@@ -95,97 +98,89 @@ function AdminUserList() {
       </div>
     );
   return (
-    <div className="userManagement">
-      <h2>Danh sách người dùng</h2>
-      <div className="d-flex justify-content-around">
-        <div className="input-group w-75">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Nhập tên người dùng và nhấn Enter..."
-            name="inputValue"
-            onKeyDown={handleInput}
-          />
-          <button
-            className="button"
-            onClick={() => navigate("/admin/add-user")}
-          >
-            Thêm người dùng mới
-          </button>
-        </div>
-      </div>
-
-      <div className="body">
-        <div className="container">
-          <div className="row">
-            <table className="table">
-              <thead>
-                <tr className="th1">
-                  <th scope="col">#</th>
-                  <th scope="col">ID</th>
-                  <th scope="col">Hình ảnh</th>
-                  <th scope="col">Họ tên</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Giới tính</th>
-                  <th scope="col">Ngày sinh</th>
-                  <th scope="col">Số điện thoại</th>
-                  <th scope="col">Loại người dùng</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users?.data?.map((item, index) => {
-                  const regex = /^\d{2}\/\d{2}\/\d{4}$/;
-                  return (
-                    <tr key={index} className="th2">
-                      <th>{index + 1 + (current - 1) * 10}</th>
-                      <td>{item.id}</td>
-                      <td>
-                        <img src={ item.avatar} alt={item.id} />
-                      </td>
-                      <td>{item.name}</td>
-                      <td>{item.email}</td>
-                      <td>{item.gender ? "Nam" : "Nữ"}</td>
-                      <td>{regex.test(item.birthday) ? item.birthday : ""}</td>
-                      <td>{item.phone}</td>
-                      <td>
-                        {item.role === "ADMIN" ? "Quản trị" : "Khách hàng"}
-                      </td>
-                      <td>
-                        <button
-                          className="btn text-secondary me-1 border-warning"
-                          onClick={() => handleUpdateUser(index)}
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          className="btn text-danger border-success"
-                          onClick={() => handleDeleteUser(item.id, index)}
-                        >
-                          <i className="bi bi-trash3"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            <Pagination
-              onChange={PaginationChange}
-              total={Math.ceil(users.totalRow / 10)}
-              current={current}
-              pageSize={1}
-              className="pagination1"
-            />
+    <>
+      <div>
+        <Container>
+          <h2 className="tieuDeDS">Danh sách người dùng</h2>
+            <div className="d-flex">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Nhập tên người dùng và nhấn Enter..."
+                name="inputValue"
+                onKeyDown={handleInput}
+              />
+                <div className="input-group-append">
+                  <Button variant="outline-secondary" onClick={() => navigate("/admin/add-user")}>Thêm người dùng mới</Button>{' '}
+                </div>
+            </div>
+          <div className="table mt-3">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Hình ảnh</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Giới tính</th>
+                <th>Ngày sinh</th>
+                <th>SĐT</th>
+                <th>Loại người dùng</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                  {users?.data?.map((item, index) => {
+                    const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+                    return (
+                      <tr key={index}>
+                        <th>{index + 1 + (current - 1) * 10}</th>
+                        <td>{item.id}</td>
+                        <td>
+                          <img className="hinhAnh" src={ item.avatar} alt={item.id} />
+                        </td>
+                        <td>{item.name}</td>
+                        <td>{item.email}</td>
+                        <td>{item.gender ? "Nam" : "Nữ"}</td>
+                        <td>{regex.test(item.birthday) ? item.birthday : ""}</td>
+                        <td>{item.phone}</td>
+                        <td>
+                          {item.role === "ADMIN" ? "Quản trị" : "Khách hàng"}
+                        </td>
+                        <td>
+                          <button
+                            className="btn text-secondary me-1 border-warning"
+                            onClick={() => handleUpdateUser(index)}
+                          >
+                            <i className="bi bi-pencil-square"></i>
+                          </button>
+                          <button
+                            className="btn text-danger border-success"
+                            onClick={() => handleDeleteUser(item.id, index)}
+                          >
+                            <i className="bi bi-trash3"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+                <Pagination
+                  onChange={PaginationChange}
+                  total={Math.ceil(users.totalRow / 10)}
+                  current={current}
+                  pageSize={1}
+                  className="pagination1"
+                />
+                <UserForm
+                  onShow={show}
+                  handleShow={handleShow}
+                  onUpdateUser={updateUser}
+                />
           </div>
-        </div>
+        </Container>
       </div>
-      <UserForm
-        onShow={show}
-        handleShow={handleShow}
-        onUpdateUser={updateUser}
-      />
-    </div>
+    </>
   );
 }
 

@@ -6,6 +6,7 @@ import "react-calendar/dist/Calendar.css";
 import { useNavigate } from "react-router-dom";
 import { createBooking } from "../../../slices/userCreateBooking";
 import { useDispatch } from "react-redux";
+import { differenceInDays } from 'date-fns';
 
 import "./AirInfo.scss";
 
@@ -27,7 +28,7 @@ function AirInfo({ id }) {
   ]);
   const startDate = selectedDateRange[0];
   const endDate = selectedDateRange[1];
-  const diffInTime = endDate.getDate() - startDate.getDate() + 1;
+  const diffInTime = differenceInDays(endDate, startDate) + 1;
   const totalPrice = phongThue.giaTien * diffInTime;
   const [showFullDescription, setShowFullDescription] = useState(false);
   const toggleShowFullDescription = () => {
@@ -172,13 +173,6 @@ function AirInfo({ id }) {
             <div className="tongQuat">
               <div>
                 <span className="giaTien">{totalPrice}.000.000đ</span>
-              </div>
-              <div className="danhGia">
-                <span>
-                  <i class="bi bi-star-fill"></i>
-                </span>
-                <span> .</span>
-                <span> đánh giá</span>
               </div>
             </div>
             <div className="mt-3">

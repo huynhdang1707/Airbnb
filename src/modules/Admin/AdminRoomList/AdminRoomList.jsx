@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./AdminRoomList.scss";
 import Pagination from "rc-pagination";
+import { Container, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
@@ -99,87 +100,83 @@ function AdminRoomList() {
     );
 
   return (
-    <div className="roomManagement">
-      <h2>Danh sách phòng thuê</h2>
-      <div className="d-flex justify-content-around">
-        <div className="input-group w-75">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Nhập tên phòng thuê và nhấn Enter..."
-            name="inputValue"
-            onKeyDown={handleInput}
-          />
-          <button
-            className="button"
-            onClick={() => navigate("/admin/add-room")}
-          >
-            Thêm phòng thuê mới
-          </button>
-        </div>
-      </div>
-
-      <div className="body">
-        <div className="container">
-          <div className="row">
-            <table className="table">
-              <thead>
-                <tr className="th1">
-                  <th scope="col">#</th>
-                  <th scope="col">ID</th>
-                  <th scope="col">Hình ảnh</th>
-                  <th scope="col">Tên Phòng</th>
-                  <th scope="col">Mô tả</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rooms?.data?.map((item, index) => {
-                  return (
-                    <tr key={index} className="th2">
-                      <th>{index + 1 + (current - 1) * 10}</th>
-                      <td>{item.id}</td>
-                      <td>
-                        <img src={ item.hinhAnh} alt={item.id} />
-                      </td>
-                      <td>{item.tenPhong}</td>
-                      <td>{item.moTa}</td>
-                      <td>
-                        <button
-                          className="btn text-secondary me-1 border-warning mt-1"
-                          onClick={() => handleUpdateRoom(index)}
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          className="btn text-danger border-success mt-1"
-                          onClick={() => handleDeleteRoom(item.id, index)}
-                        >
-                          <i className="bi bi-trash3"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            <Pagination
-              onChange={PaginationChange}
-              total={Math.ceil(rooms.totalRow / 10)}
-              current={current}
-              pageSize={1}
-              className="pagination2"
-            />
+    <>
+      <Container>
+        <h2 className="tieuDePT">Danh sách phòng thuê</h2>
+        <div className="d-flex">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Nhập tên phòng thuê và nhấn Enter..."
+                name="inputValue"
+                onKeyDown={handleInput}
+              />
+                <div className="input-group-append">
+                  <Button variant="outline-secondary" onClick={() => navigate("/admin/add-room")}>Thêm phòng thuê mới</Button>{' '}
+                </div>
+            </div>
+        <div className="body">
+          <div className="container">
+            <div className="row">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Hình ảnh</th>
+                    <th>Tên Phòng</th>
+                    <th>Mô tả</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rooms?.data?.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <th>{index + 1 + (current - 1) * 10}</th>
+                        <td>{item.id}</td>
+                        <td>
+                          <img src={ item.hinhAnh} alt={item.id} className="hinhAnh" />
+                        </td>
+                        <td>{item.tenPhong}</td>
+                        <td>{item.moTa}</td>
+                        <td>
+                          <button
+                            className="btn text-secondary me-1 border-warning mt-1"
+                            onClick={() => handleUpdateRoom(index)}
+                          >
+                            <i className="bi bi-pencil-square"></i>
+                          </button>
+                          <button
+                            className="btn text-danger border-success mt-1"
+                            onClick={() => handleDeleteRoom(item.id, index)}
+                          >
+                            <i className="bi bi-trash3"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              <Pagination
+                onChange={PaginationChange}
+                total={Math.ceil(rooms.totalRow / 10)}
+                current={current}
+                pageSize={1}
+                className="pagination2"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <RoomForm
-        onShow={show}
-        handleShow={handleShow}
-        onUpdateRoom={updateRoom}
-        onHandleUploaded={handleUploaded}
-      />
-    </div>
+        <RoomForm
+          onShow={show}
+          handleShow={handleShow}
+          onUpdateRoom={updateRoom}
+          onHandleUploaded={handleUploaded}
+        />
+      </Container>
+    </>
   );
 }
 
