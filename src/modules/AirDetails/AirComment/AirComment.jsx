@@ -40,6 +40,7 @@ function AirComment({ id }) {
     resolver: yupResolver(schema),
   });
   const [rating, setRating] = useState(0);
+  const [flagRating, setFlagRating] = useState(false);
 
   const handleMouseOver = (starIndex) => {
     setRating(starIndex);
@@ -79,22 +80,36 @@ function AirComment({ id }) {
   };
   const [reloadChild, setReloadChild] = useState(false);
   const [addCmt, setAddCmt] = useState(null);
+  const [flagAdd, setFlagAdd] = useState(false);
   const onSubmit = async () => {
-    const value1 = {
-      id: 0,
-      maPhong: id,
-      ngayBinhLuan: new Date(),
-      maNguoiBinhLuan: user?.user?.id,
-      saoBinhLuan: rating,
-      noiDung: getValues("noiDung"),
-    };
-    const data = await dispatch(userCreateComment(value1));
-    setAddCmt(data);
-    setReloadChild(!reloadChild);
+    if (rating === 0 && !flagRating) {
+      swal({
+        title: "Thêm đánh giá thất bại",
+        text: `Bạn chưa đánh giá sao`,
+        icon: "error",
+      }).then((willSuccess) => {
+        if (willSuccess) {
+          setAddCmt(null);
+          setFlagRating(true);
+        }
+      });
+    } else {
+      setFlagRating(false);
+      const value1 = {
+        id: 0,
+        maPhong: id,
+        ngayBinhLuan: new Date(),
+        maNguoiBinhLuan: user?.user?.id,
+        saoBinhLuan: rating,
+        noiDung: getValues("noiDung"),
+      };
+      const data = await dispatch(userCreateComment(value1));
+      setAddCmt(data);
+      setReloadChild(!reloadChild);
+      setFlagAdd(true);
+    }
   };
-  console.log(reloadChild);
-
-  if (addCmt?.payload?.statusCode === 201) {
+  if (addCmt?.payload?.statusCode === 201 && flagAdd) {
     swal({
       title: "Thêm đánh giá thành công",
       text: "Nhấn Ok để tiếp tục!",
@@ -102,6 +117,7 @@ function AirComment({ id }) {
     }).then((willSuccess) => {
       if (willSuccess) {
         setAddCmt(null);
+        setFlagAdd(false);
       }
     });
   }
@@ -118,11 +134,7 @@ function AirComment({ id }) {
             as="textarea"
             aria-label="With textarea"
           />
-          {errors.noiDung && (
-            <p className="ms-3 fs-7 text-danger fst-italic">
-              {errors.noiDung.message}
-            </p>
-          )}
+
           <Button
             onClick={onSubmit}
             variant="outline-secondary"
@@ -131,6 +143,11 @@ function AirComment({ id }) {
             Đánh giá
           </Button>
         </InputGroup>
+        {errors.noiDung && (
+          <p className="ms-3 fs-7 text-danger fst-italic">
+            {errors.noiDung.message}
+          </p>
+        )}
         <div className="mt-3">
           <Row>
             <Col>

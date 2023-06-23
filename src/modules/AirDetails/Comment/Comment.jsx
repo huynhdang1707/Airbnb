@@ -254,7 +254,7 @@ function Comment({ roomId, cmted }) {
               </div>
               <div className="mx-4 mt-1">
                 <div>
-                  {item.saoBinhLuan >= 1 && item.saoBinhLuan <= 5 && (
+                  {item.saoBinhLuan >= 0 && item.saoBinhLuan <= 5 && (
                     <>
                       {[...Array(item.saoBinhLuan)].map((_, index) => (
                         <i key={index} className="bi bi-star-fill"></i>
