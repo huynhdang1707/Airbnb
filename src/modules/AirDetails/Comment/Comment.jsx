@@ -44,7 +44,9 @@ function Comment({ roomId, cmted }) {
   const renderStars = () => {
     const maxStars = 5;
     const stars = [];
-
+    // if (updateComment1?.saoBinhLuan) {
+    //   setRating(updateComment1?.saoBinhLuan);
+    // }
     for (let i = 1; i <= maxStars; i++) {
       const starClass = i <= rating ? "bi-star-fill" : "bi-star";
 
@@ -120,6 +122,7 @@ function Comment({ roomId, cmted }) {
       setIdDel(cmtDelId[0]?.id);
     };
     fetch();
+    setRating(updateComment1?.saoBinhLuan);
   }, [updateComment1, deleteCmt, deletedCmt, flagDel]);
   useEffect(() => {
     if (updateComment1) {
