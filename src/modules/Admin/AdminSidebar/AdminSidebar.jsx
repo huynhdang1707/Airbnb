@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate,useLocation } from "react-router-dom";
 import style from "./AdminSidebar.module.scss";
 import Collapse from "react-bootstrap/Collapse";
 
 function AdminSidebar() {
+  const location = useLocation();
   const [activeFooterItem, setActiveFooterItem] = useState(1);
   const navigate = useNavigate();
   const handleFooterItem = (itemId) => {
@@ -21,6 +22,17 @@ function AdminSidebar() {
     handleFooterItem(6);
     navigate("comment-list");
   };
+  useEffect(() => {
+    if (location.pathname === "/admin/room-list") {
+      setActiveFooterItem(4);
+    }
+    if (location.pathname === "/admin/user-list") {
+      setActiveFooterItem(2);
+    }
+    if (location.pathname === "/admin/desc-list") {
+      setActiveFooterItem(3);
+    }
+  }, []);
   return (
     <div className={style.sideBar}>
       <ul className={style.footer}>

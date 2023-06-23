@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Collapse from "react-bootstrap/Collapse";
 import style from "./UserSidebar.module.scss";
 import { useSelector } from "react-redux";
 
 function UserSidebar() {
+  const location = useLocation();
   const [activeFooterItem, setActiveFooterItem] = useState(1);
   const navigate = useNavigate();
   const handleFooterItem = (itemId) => {
@@ -21,9 +22,15 @@ function UserSidebar() {
   const handleComment = () => {
     handleFooterItem(3);
     navigate("comment-list");
-  }
+  };
   const { user } = useSelector((state) => state.user);
-  
+  useEffect(() => {
+    console.log(location.pathname);
+    if (location.pathname === "/user/booking-list") {
+      setActiveFooterItem(2);
+    }
+  }, []);
+
   return (
     <div className={style.sideBar}>
       <div className={style.userPage}>

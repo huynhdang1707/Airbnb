@@ -3,7 +3,6 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import UserInfo from "../../modules/UserInfo/UserInfo";
 import style from "./UserInfoLayout.module.scss";
-import AdminHeader from "../../modules/Admin/AdminHeader/AdminHeader";
 
 function UserInfoLayout() {
   const navigate = useNavigate();
