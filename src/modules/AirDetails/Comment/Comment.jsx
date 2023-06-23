@@ -360,7 +360,7 @@ function Comment({ roomId, cmted }) {
                   )}
                 </div>
               </div>
-              {show ? (
+              {show && user?.user?.role ==="ADMIN" ? (
                 <div className="userButton">
                   {cancel && indexx === index ? (
                     <button
