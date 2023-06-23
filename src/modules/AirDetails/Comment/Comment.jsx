@@ -16,7 +16,7 @@ const schema = yup.object({
   saoBinhLuan: yup.number(),
 });
 
-function Comment({ roomId, cmted}) {
+function Comment({ roomId, cmted }) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [comments, setComments] = useState(null);
@@ -35,6 +35,7 @@ function Comment({ roomId, cmted}) {
   const [idDel, setIdDel] = useState(null);
   const [deleteCmt, setDeleteCmt] = useState(null);
   const [deletedCmt, setDeletedCmt] = useState(null);
+  const [flagDel, setFlagDel] = useState(false);
   const {
     register,
     handleSubmit,
@@ -81,7 +82,7 @@ function Comment({ roomId, cmted}) {
       setIdDel(cmtDelId[0]?.id);
     };
     fetch();
-  }, [updateComment1, deleteCmt, deletedCmt]);
+  }, [updateComment1, deleteCmt, deletedCmt, flagDel]);
   useEffect(() => {
     if (updateComment1) {
       if (updated) {
@@ -96,7 +97,7 @@ function Comment({ roomId, cmted}) {
         });
       }
     }
-  }, [updateComment1, updated, cancel, cmted]);
+  }, [updateComment1, updated, cancel]);
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
@@ -120,8 +121,7 @@ function Comment({ roomId, cmted}) {
       }
     };
     fetch();
-  }, [roomId, updated, deleteComment]);
-
+  }, [roomId, updated, deleteComment, cmted, deletedCmt]);
   const handleUpdateComment = (index) => {
     if (inputRef.current && inputRef.current.key === index) {
       inputRef.current.focus();
@@ -133,7 +133,7 @@ function Comment({ roomId, cmted}) {
 
   const handleDeleteComment = async (index) => {
     setDeleteCmt(comments[index]);
-
+    setFlagDel(!flagDel);
     //
     await swal({
       title: "Bạn có muốn xóa đánh giá?",
@@ -141,25 +141,28 @@ function Comment({ roomId, cmted}) {
       icon: "warning",
       buttons: true,
     }).then((willSuccess) => {
-      if (willSuccess) {
-        const fetch = async () => {
-          try {
-            const data = await apiDeleteComment(idDel);
-            setDeletedCmt(data);
-            deleteComment.current = data;
-          } catch (error) {
-            console.log(error);
+      setFlagDel(!flagDel);
+      if (idDel) {
+        if (willSuccess) {
+          const fetch = async () => {
+            try {
+              const data = await apiDeleteComment(idDel);
+              setDeletedCmt(data);
+              deleteComment.current = data;
+            } catch (error) {
+              console.log(error);
+            }
+          };
+          fetch();
+          if (deletedCmt) {
+            swal({
+              title: `Xóa đánh giá thành công`,
+              text: "Nhấn Ok để tiếp tục!",
+              icon: "success",
+            }).then((willSuccess) => {
+              deleteComment.current = null;
+            });
           }
-        };
-        fetch();
-        if (deletedCmt) {
-          swal({
-            title: `Xóa đánh giá thành công`,
-            text: "Nhấn Ok để tiếp tục!",
-            icon: "success",
-          }).then((willSuccess) => {
-            deleteComment.current = null;
-          });
         }
       }
     });
@@ -221,7 +224,11 @@ function Comment({ roomId, cmted}) {
         <div className="mx-2 mt-3">
           <h4 className=" d-inline-flex align-items-center ms-2">
             <div className="d-inline-flex align-items-center">
-              Rate: {(comments?.length > 0 ? total / comments?.length : 0/5).toFixed(1)}
+              Rate:{" "}
+              {(comments?.length > 0
+                ? total / comments?.length
+                : 0 / 5
+              ).toFixed(1)}
             </div>
             <div className="d-inline-flex align-items-center ms-1 pb-1">
               <i style={{ fontSize: "1.2rem" }} className="bi bi-star-fill"></i>

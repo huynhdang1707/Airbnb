@@ -77,6 +77,7 @@ function AirComment({ id }) {
 
     return stars;
   };
+  const [reloadChild, setReloadChild] = useState(false);
   const [addCmt, setAddCmt] = useState(null);
   const onSubmit = async () => {
     const value1 = {
@@ -91,14 +92,16 @@ function AirComment({ id }) {
     setAddCmt(data);
     setReloadChild(!reloadChild);
   };
-  const [reloadChild, setReloadChild] = useState(false);
+  console.log(reloadChild);
+
   if (addCmt?.payload?.statusCode === 201) {
     swal({
-      title: "Thêm người dùng mới thành công",
+      title: "Thêm đánh giá thành công",
       text: "Nhấn Ok để tiếp tục!",
       icon: "success",
     }).then((willSuccess) => {
       if (willSuccess) {
+        setAddCmt(null);
       }
     });
   }
