@@ -41,8 +41,7 @@ function Signin() {
   };
 
   if (user) {
-    // const url = searchParams.get("redirectUrl") || "/";
-    // console.log(url);
+    const url = searchParams.get("redirectUrl");
     swal({
       title: "Bạn đã đăng nhập thành công",
       text: "Nhấn Ok để tiếp tục!",
@@ -50,7 +49,7 @@ function Signin() {
     }).then((willSuccess) => {
       if (willSuccess) {
         const redirectUrl = location.state?.redirectUrl;
-        navigate(redirectUrl || "/");
+        navigate(url || redirectUrl || "/");
       }
     });
   }
