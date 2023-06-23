@@ -14,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { userCreateComment } from "../../../slices/userCreateComment";
 import swal from "sweetalert";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const schema = yup.object({
   noiDung: yup.string().required("(*)Nội dung không được để trống"),
@@ -21,6 +22,8 @@ const schema = yup.object({
 });
 
 function AirComment({ id }) {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const {
@@ -82,31 +85,43 @@ function AirComment({ id }) {
   const [addCmt, setAddCmt] = useState(null);
   const [flagAdd, setFlagAdd] = useState(false);
   const onSubmit = async () => {
-    if (rating === 0 && !flagRating) {
+    if (!user) {
       swal({
-        title: "Thêm đánh giá thất bại",
-        text: `Có vẻ bạn chưa đánh giá số sao`,
-        icon: "error",
+        title: "Bạn chưa đăng nhập!",
+        text: "Nhấn Ok để tiếp tục!",
+        icon: "warning",
       }).then((willSuccess) => {
         if (willSuccess) {
-          setAddCmt(null);
-          setFlagRating(true);
+          navigate(`/signin?redirectUrl=${pathname}`, { replace: true });
         }
       });
     } else {
-      setFlagRating(false);
-      const value1 = {
-        id: 0,
-        maPhong: id,
-        ngayBinhLuan: new Date(),
-        maNguoiBinhLuan: user?.user?.id,
-        saoBinhLuan: rating,
-        noiDung: getValues("noiDung"),
-      };
-      const data = await dispatch(userCreateComment(value1));
-      setAddCmt(data);
-      setReloadChild(!reloadChild);
-      setFlagAdd(true);
+      if (rating === 0 && !flagRating) {
+        swal({
+          title: "Thêm đánh giá thất bại",
+          text: `Có vẻ bạn chưa đánh giá số sao`,
+          icon: "error",
+        }).then((willSuccess) => {
+          if (willSuccess) {
+            setAddCmt(null);
+            setFlagRating(true);
+          }
+        });
+      } else {
+        setFlagRating(false);
+        const value1 = {
+          id: 0,
+          maPhong: id,
+          ngayBinhLuan: new Date(),
+          maNguoiBinhLuan: user?.user?.id,
+          saoBinhLuan: rating,
+          noiDung: getValues("noiDung"),
+        };
+        const data = await dispatch(userCreateComment(value1));
+        setAddCmt(data);
+        setReloadChild(!reloadChild);
+        setFlagAdd(true);
+      }
     }
   };
   if (addCmt?.payload?.statusCode === 201 && flagAdd) {
