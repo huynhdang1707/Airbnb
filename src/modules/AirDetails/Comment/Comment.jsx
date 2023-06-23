@@ -36,6 +36,44 @@ function Comment({ roomId, cmted }) {
   const [deleteCmt, setDeleteCmt] = useState(null);
   const [deletedCmt, setDeletedCmt] = useState(null);
   const [flagDel, setFlagDel] = useState(false);
+  const [rating, setRating] = useState(0);
+  //
+  const handleMouseOver = (starIndex) => {
+    setRating(starIndex);
+  };
+  const renderStars = () => {
+    const maxStars = 5;
+    const stars = [];
+
+    for (let i = 1; i <= maxStars; i++) {
+      const starClass = i <= rating ? "bi-star-fill" : "bi-star";
+
+      stars.push(
+        <i
+          key={i}
+          className={`bi ${starClass}`}
+          onMouseOver={() => handleMouseOver(i)}
+          onMouseOut={handleMouseOut}
+          onClick={() => handleRatingClick(i)}
+        ></i>
+      );
+    }
+
+    return stars;
+  };
+
+  const handleMouseOut = () => {
+    // Kiểm tra nếu rating là 0, thì không thay đổi giá trị
+    if (rating === 0) {
+      return;
+    }
+    setRating(rating);
+  };
+  const handleRatingClick = (starIndex) => {
+    setRating(starIndex);
+  };
+  //
+
   const {
     register,
     handleSubmit,
@@ -185,7 +223,7 @@ function Comment({ roomId, cmted }) {
       maPhong: roomId,
       ngayBinhLuan: updateComment1?.ngayBinhLuan,
       maNguoiBinhLuan: user?.user?.id,
-      saoBinhLuan: updateComment1?.saoBinhLuan,
+      saoBinhLuan: rating > 0 ? rating : updateComment1?.saoBinhLuan,
       noiDung: getValues("noiDung"),
     };
     const data = await dispatch(updateComment(value1));
@@ -254,16 +292,24 @@ function Comment({ roomId, cmted }) {
               </div>
               <div className="mx-4 mt-1">
                 <div>
-                  {item.saoBinhLuan >= 0 && item.saoBinhLuan <= 5 && (
-                    <>
-                      {[...Array(item.saoBinhLuan)].map((_, index) => (
-                        <i key={index} className="bi bi-star-fill"></i>
-                      ))}
-                      {[...Array(5 - item.saoBinhLuan)].map((_, index) => (
-                        <i key={index} className="bi bi-star"></i>
-                      ))}
-                    </>
-                  )}
+                  {item.saoBinhLuan >= 0 &&
+                    item.saoBinhLuan <= 5 &&
+                    (cancel && indexx === index ? (
+                      <>
+                        <div key={index} className="rating-stars">
+                          {renderStars()}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {[...Array(item.saoBinhLuan)].map((_, index) => (
+                          <i key={index} className="bi bi-star-fill"></i>
+                        ))}
+                        {[...Array(5 - item.saoBinhLuan)].map((_, index) => (
+                          <i key={index} className="bi bi-star"></i>
+                        ))}
+                      </>
+                    ))}
                 </div>
                 <div style={{ fontSize: "0.8rem" }}>{`${
                   ngay.getDate() < 10 ? "0" + ngay.getDate() : ngay.getDate()

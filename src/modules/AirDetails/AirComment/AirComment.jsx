@@ -85,7 +85,7 @@ function AirComment({ id }) {
     if (rating === 0 && !flagRating) {
       swal({
         title: "Thêm đánh giá thất bại",
-        text: `Bạn chưa đánh giá sao`,
+        text: `Có vẻ bạn chưa đánh giá số sao`,
         icon: "error",
       }).then((willSuccess) => {
         if (willSuccess) {
