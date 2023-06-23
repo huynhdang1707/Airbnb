@@ -13,18 +13,20 @@ function UserCommentList() {
     (state) => state.commentList
   );
   const [commentList, setCommentList] = useState(null);
+  const [isL, setIsL] = useState(false);
   useEffect(() => {
-    const xxx = comments?.filter(
-      (it) => it?.maNguoiBinhLuan === user?.user?.id
-    );
-    setCommentList(xxx);
-
+    setIsL(true);
     const fetch = async () => {
       const data = await dispatch(getCommentList());
+      const xxx = data?.payload?.filter(
+        (it) => it?.maNguoiBinhLuan === user?.user?.id
+      );
+      setCommentList(xxx);
+      setIsL(false);
     };
     fetch();
   }, []);
-  if (isLoading)
+  if (isLoading || isL)
     return (
       <div className="h-100 d-flex justify-content-center align-items-center">
         <img

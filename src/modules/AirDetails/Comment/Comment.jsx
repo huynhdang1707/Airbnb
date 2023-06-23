@@ -142,8 +142,6 @@ function Comment({ roomId, cmted }) {
       try {
         const data = await apiGetCommentListRoomId(roomId);
         setComments(data.content?.reverse());
-        setIsLoading(false);
-
         if (data.content) {
           let sum = 0;
           data.content?.forEach((obj) => {
@@ -152,6 +150,7 @@ function Comment({ roomId, cmted }) {
             }
           });
           setTotal(sum);
+          setIsLoading(false);
         }
       } catch (error) {
         setError(error);

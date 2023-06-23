@@ -10,24 +10,24 @@ import { adminCreateRoom } from "../../../slices/adminCreateRoom";
 import "./AdminAddRoom.scss";
 
 
-const schema = yup.object({
+const schema = yup.object().shape({
   tenPhong: yup.string().required("(*)Tên phòng không được để trống"),
-  khach: yup.number().required("(*)Lượng khách không được để trống"),
-  phongNgu: yup.number().required("(*)Số phòng ngủ không được để trống"),
-  giuong: yup.number().required("(*)Số giường không được để trống"),
-  phongTam: yup.number().required("(*)Số phòng tắm không được để trống"),
+  khach: yup.number().nullable().required("(*)Lượng khách không được để trống").typeError("(*)Lượng khách phải là một số").min(0, "(*)Lượng khách phải là số lớn hơn hoặc bằng 0"),
+  phongNgu:  yup.number().nullable().required("(*)Phòng ngủ không được để trống").typeError("(*)Phòng ngủ phải là một số").min(0, "(*)Phòng ngủ phải là số lớn hơn hoặc bằng 0"),
+  giuong:  yup.number().nullable().required("(*)Số giường không được để trống").typeError("(*)Số giường phải là một số").min(0, "(*)Số giường phải là số lớn hơn hoặc bằng 0"),
+  phongTam: yup.number().nullable().required("(*)Phòng tắm không được để trống").typeError("(*)Phòng tắm phải là một số").min(0, "(*)Phòng tắm phải là số lớn hơn hoặc bằng 0"),
   moTa: yup.string().required("(*)Mô tả không được để trống"),
-  giaTien: yup.number().required("(*)Giá tiền không được để trống"),
-  mayGiat: yup.boolean(),
-  banLa: yup.boolean(),
-  tivi: yup.boolean(),
-  dieuHoa: yup.boolean(),
-  wifi: yup.boolean(),
-  bep: yup.boolean(),
-  doXe: yup.boolean(),
-  hoBoi: yup.boolean(),
-  banUi: yup.boolean(),
-  maViTri: yup.number().required("(*)Mã vị trí không được để trống"),
+  giaTien: yup.number().nullable().required("(*)Giá tiền không được để trống").typeError("(*)Giá tiền phải là một số").min(0, "(*)Giá tiền phải là số lớn hơn hoặc bằng 0"),
+  mayGiat: yup.boolean().nullable().required("(*)Máy giặt không được để trống"),
+  banLa:yup.boolean().nullable().required("(*)Bàn là không được để trống"),
+  tivi:yup.boolean().nullable().required("(*)Tivi không được để trống"),
+  dieuHoa:yup.boolean().nullable().required("(*)Điều không được để trống"),
+  wifi: yup.boolean().nullable().required("(*)Wifi không được để trống"),
+  bep: yup.boolean().nullable().required("(*)Bếp không được để trống"),
+  doXe: yup.boolean().nullable().required("(*)Đỗ xe không được để trống"),
+  hoBoi:yup.boolean().nullable().required("(*)Hồ bơi không được để trống"),
+  banUi: yup.boolean().nullable().required("(*)Bàn ủi không được để trống"),
+  maViTri:yup.number().nullable().required("(*)Mã vị trí không được để trống").typeError("(*)Mã vị trí phải là một số").min(0, "(*)Mã vị trí phải là số lớn hơn hoặc bằng 0"),
   hinhAnh: yup.string(),
 });
 
@@ -99,7 +99,7 @@ function AdminAddRoom() {
       <Container>
         <h2 className="tieuDePT">Thêm phòng thuê mới</h2>
         <form className="mt-3" onSubmit={handleSubmit(onSubmit, onError)}>
-            <div>
+            {/* <div>
               <input
                     type="text"
                     className="w-100 form-control"
@@ -111,7 +111,7 @@ function AdminAddRoom() {
                       {errors.id.message}
                     </p>
                   )}
-            </div>
+            </div> */}
             <div className="mt-2">
               <input
                     type="text"
