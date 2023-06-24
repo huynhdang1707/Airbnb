@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { getInfoUser } from "../../slices/infoUserSlice";
-import "./UserInfo.scss"
+import "./UserInfo.scss";
 
 import UserForm from "../UserForm/UserForm";
 
@@ -56,7 +56,7 @@ function UserInfo() {
     resolver: yupResolver(schema),
   });
   const { infoUser, isLoading, error } = useSelector((state) => state.infoUser);
-  
+
   useEffect(() => {
     dispatch(getInfoUser(user?.user?.id));
   }, [user?.user?.id]);
@@ -96,50 +96,52 @@ function UserInfo() {
 
   return (
     <>
-    <div className="mt-3">
-      <ul>
-        <li>
-          <a href="#">   
+      <div className="mt-3">
+        <ul>
+          <li>
+            <a href="#">
               <div
                 className="me-3"
                 onClick={() => setShow(infoUser?.id ? true : false)}
               >
-                <span className="me-3 chinhSua">Chỉnh sửa thông tin cá nhân</span>
+                <span className="me-3 chinhSua">
+                  Chỉnh sửa thông tin cá nhân
+                </span>
                 <i className="bi bi-pencil-square"></i>
               </div>
-          </a>
-        </li>
-        <hr className="text-dark" />
-        <li>
-          <a href="#">
-            <span className="name">Tên: </span>
-            <span>{infoUser?.name}</span>
-          </a>
-        </li>
-        <hr className="text-dark" />
-        <li>
-          <span className="email">Email: </span>
-          <span>{infoUser?.email}</span>
-        </li>
-        <hr className="text-dark" />
-        <li>
-          <span className="password">Mật khẩu: </span>
-          <span className="">{infoUser?.password}**********</span>
-        </li>
-        <hr className="text-dark" />
-        <li>
-          <span className="phone">Số điện thoại: </span>
-          <span>{infoUser?.phone}</span>
-        </li>
-        <hr className="text-dark" />
-        <li>
-          <span className="role">Loại người dùng: </span>
-          <span>{infoUser?.role}</span>
-        </li>
-        <hr className="text-dark" />
-      </ul>
-    </div>
-    <UserForm onShow={show} handleShow={handleShow} onUpdateUser={infoUser} />
+            </a>
+          </li>
+          <hr className="text-dark" />
+          <li>
+            <a href="#">
+              <span className="name">Tên: </span>
+              <span>{infoUser?.name}</span>
+            </a>
+          </li>
+          <hr className="text-dark" />
+          <li>
+            <span className="email">Email: </span>
+            <span>{infoUser?.email}</span>
+          </li>
+          <hr className="text-dark" />
+          <li>
+            <span className="password">Mật khẩu: </span>
+            <span className="">{infoUser?.password}**********</span>
+          </li>
+          <hr className="text-dark" />
+          <li>
+            <span className="phone">Số điện thoại: </span>
+            <span>{infoUser?.phone}</span>
+          </li>
+          <hr className="text-dark" />
+          <li>
+            <span className="role">Loại người dùng: </span>
+            <span>{infoUser?.role}</span>
+          </li>
+          <hr className="text-dark" />
+        </ul>
+      </div>
+      <UserForm onShow={show} handleShow={handleShow} onUpdateUser={infoUser} />
     </>
   );
 }

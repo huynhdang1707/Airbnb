@@ -26,7 +26,7 @@ function UserInfoLayout() {
                   <Button variant="outline-secondary" onClick={handleClick}>Admin Page</Button>{' '}
               </div>
             ) : null}
-          <UserInfo />{" "}
+          <UserInfo />
         </div>
       </> 
     );

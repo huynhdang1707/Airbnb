@@ -18,7 +18,7 @@ function AdminLayout() {
           </Col>}
           {toggle && <Col className="col-4 col-md-2"></Col>}
           <Col className="px-3">
-            <AdminHeader Toggle={Toggle}/>
+            <AdminHeader toggle={toggle} Toggle={Toggle}/>
             <Outlet Toggle={Toggle}/>
           </Col>
         </Row>
