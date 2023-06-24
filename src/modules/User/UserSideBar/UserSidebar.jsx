@@ -7,6 +7,7 @@ import { removeUser } from "../../../slices/signUpSlice";
 import { Nav, Navbar } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Container } from "react-bootstrap";
+import "./UserSideBar.scss";
 
 function UserSidebar() {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ function UserSidebar() {
   const [activeFooterItem, setActiveFooterItem] = useState(1);
   const navigate = useNavigate();
   const handleSignOut = async () => {
+    handleHideNavbar();
     await swal({
       title: "Bạn có muốn đăng xuất!",
       text: "Nhấn Ok để tiếp tục!",
@@ -36,15 +38,27 @@ function UserSidebar() {
   const handleFooterItem = (itemId) => {
     setActiveFooterItem(itemId);
   };
+  const handleHideNavbar = () => {
+    if (window.innerWidth <= 992) {
+      const navbarCollapse = document.getElementById("navbar-nav");
+      const navbarToggle = document.querySelector(".navbar-toggler");
+
+      navbarCollapse.classList.remove("show");
+      navbarToggle.classList.add("collapsed");
+    }
+  };
   const handleThongTin = () => {
+    handleHideNavbar();
     handleFooterItem(1);
     navigate("/user");
   };
   const handleHistory = () => {
+    handleHideNavbar();
     handleFooterItem(2);
     navigate("booking-list");
   };
   const handleComment = () => {
+    handleHideNavbar();
     handleFooterItem(3);
     navigate("comment-list");
   };
@@ -57,7 +71,7 @@ function UserSidebar() {
 
   return (
     <>
-<div className="sticky-top bg-white">
+      <div className="sticky-top bg-white">
         <Container>
           <Navbar expand="lg">
             <Navbar.Toggle aria-controls="navbar-nav" />
@@ -95,7 +109,6 @@ function UserSidebar() {
           </Navbar>
         </Container>
       </div>
-
 
       {/* <div className="bg-white sidebar p-2">
         <div className="m-2">

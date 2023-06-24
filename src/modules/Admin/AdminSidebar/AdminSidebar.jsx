@@ -16,6 +16,7 @@ function AdminSidebar() {
   const [activeFooterItem, setActiveFooterItem] = useState(1);
   const navigate = useNavigate();
   const handleSignOut = async () => {
+    handleHideNavbar();
     await swal({
       title: "Bạn có muốn đăng xuất!",
       text: "Nhấn Ok để tiếp tục!",
@@ -35,18 +36,30 @@ function AdminSidebar() {
       }
     });
   };
+  const handleHideNavbar = () => {
+    if (window.innerWidth <= 992) {
+      const navbarCollapse = document.getElementById("navbar-nav");
+      const navbarToggle = document.querySelector(".navbar-toggler");
+
+      navbarCollapse.classList.remove("show");
+      navbarToggle.classList.add("collapsed");
+    }
+  };
   const handleFooterItem = (itemId) => {
     setActiveFooterItem(itemId);
   };
   const handleThongTin = () => {
+    handleHideNavbar();
     handleFooterItem(1);
     navigate("/admin");
   };
   const handleHistory = () => {
+    handleHideNavbar();
     handleFooterItem(5);
     navigate("booking-list");
   };
   const handleComment = () => {
+    handleHideNavbar();
     handleFooterItem(6);
     navigate("comment-list");
   };
@@ -87,13 +100,13 @@ function AdminSidebar() {
                 >
                   <NavDropdown.Item
                     eventKey="4.1"
-                    onClick={() => navigate("user-list")}
+                    onClick={() => {navigate("user-list");handleHideNavbar()}}
                   >
                     Danh sách user
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     eventKey="4.2"
-                    onClick={() => navigate("add-user")}
+                    onClick={() => {navigate("add-user");handleHideNavbar()}}
                   >
                     Thêm user mới
                   </NavDropdown.Item>
@@ -110,13 +123,13 @@ function AdminSidebar() {
                 >
                   <NavDropdown.Item
                     eventKey="4.1"
-                    onClick={() => navigate("desc-list")}
+                    onClick={() =>{navigate("desc-list");handleHideNavbar()} }
                   >
                     Danh sách vị trí
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     eventKey="4.2"
-                    onClick={() => navigate("add-desc")}
+                    onClick={() =>{navigate("add-list");handleHideNavbar()}}
                   >
                     Thêm vị trí mới
                   </NavDropdown.Item>
@@ -133,13 +146,13 @@ function AdminSidebar() {
                 >
                   <NavDropdown.Item
                     eventKey="4.1"
-                    onClick={() => navigate("room-list")}
+                    onClick={() => {navigate("room-list");handleHideNavbar()}}
                   >
                     Danh sách phòng thuê
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     eventKey="4.2"
-                    onClick={() => navigate("add-room")}
+                    onClick={() => {navigate("add-room");handleHideNavbar()}}
                   >
                     Thêm phòng thuê mới
                   </NavDropdown.Item>
