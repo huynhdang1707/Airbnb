@@ -82,14 +82,14 @@ function Header({
               placement="end"
             >
               <Offcanvas.Header closeButton>
-                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`} className="mt-3">
                   {user ? (
                   <>
-                    <span>Xin chào {infoUser?.name}. Chúc bạn một ngày may mắn!</span>
+                    <span className="title">Xin chào {infoUser?.name}. Chúc bạn một ngày may mắn!</span>
                   </>
                 ) : (
                   <>
-                    <span>Xin chào rất vui được gặp bạn!</span>
+                    <span className="title">Xin chào rất vui được gặp bạn!</span>
                   </>
                 )}
                 </Offcanvas.Title>
