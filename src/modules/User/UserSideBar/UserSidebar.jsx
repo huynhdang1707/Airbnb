@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { signout } from "../../../slices/userSlice";
 import swal from "sweetalert";
 import { removeUser } from "../../../slices/signUpSlice";
+import { Nav, Navbar } from "react-bootstrap";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { Container } from "react-bootstrap";
 
 function UserSidebar() {
   const dispatch = useDispatch();
@@ -54,7 +57,47 @@ function UserSidebar() {
 
   return (
     <>
-      <div className="bg-white sidebar p-2">
+<div className="sticky-top bg-white">
+        <Container>
+          <Navbar expand="lg">
+            <Navbar.Toggle aria-controls="navbar-nav" />
+            <Navbar.Collapse id="navbar-nav">
+              <Nav>
+                <Nav.Item>
+                  <Nav.Link onClick={handleThongTin}>
+                    <i className="bi bi-person-circle fs-5 me-3"></i>
+                    <span>Thông tin cá nhân</span>
+                  </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Nav.Link onClick={handleHistory}>
+                    <i className="bi bi-book fs-5 me-3"></i>
+                    <span>Danh sách phòng đã đặt</span>
+                  </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Nav.Link onClick={handleComment}>
+                    <i className="bi bi-chat-dots fs-5 me-3"></i>
+                    <span>Bình luận của bạn</span>
+                  </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Nav.Link onClick={handleSignOut}>
+                    <i className="bi bi-power fs-5 me-3"></i>
+                    <span>Đăng xuất</span>
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+        </Container>
+      </div>
+
+
+      {/* <div className="bg-white sidebar p-2">
         <div className="m-2">
           <a href="/">
             <svg
@@ -112,7 +155,7 @@ function UserSidebar() {
             </a>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

@@ -19,6 +19,9 @@
     border-left: none;
     border-right: none;
     padding: 0px;
-  }
-}
-
+    &:first-child{
+        border-left: none;
+        border-right: none;
+        padding: 0px;
+    }
+} }
