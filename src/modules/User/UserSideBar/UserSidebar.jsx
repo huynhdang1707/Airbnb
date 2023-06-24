@@ -39,12 +39,13 @@ function UserSidebar() {
     setActiveFooterItem(itemId);
   };
   const handleHideNavbar = () => {
-    if (window.innerWidth <= 992) {
-      const navbarCollapse = document.getElementById("navbar-nav");
+    if (window.innerWidth <= 1200) {
+      const navbarCollapse = document.getElementById("navbar-nav-1");
       const navbarToggle = document.querySelector(".navbar-toggler");
 
       navbarCollapse.classList.remove("show");
       navbarToggle.classList.add("collapsed");
+     
     }
   };
   const handleThongTin = () => {
@@ -144,7 +145,7 @@ function UserSidebar() {
               </svg>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbar-nav" />
-            <Navbar.Collapse id="navbar-nav">
+            <Navbar.Collapse id="navbar-nav-1">
               <Nav>
                 <Nav.Item>
                   <Nav.Link onClick={handleThongTin}>
