@@ -49,12 +49,6 @@
     content: none;
 }
 
-
-.dropdown-item{
-    width: auto;
-}
-
-
 @media only screen and (max-width:1024px) {
     .nav-link{
         margin: 10px 0;
@@ -63,9 +57,12 @@
   
 .dropdown-item.active, .dropdown-item:active {
     background-color: #717171;
+    width: auto;
 }
 
-.dropdown-item{
+.item.dropdown-item{
+    font-size: 14px;
+    width: auto;
     &:active{
         background-color: #717171;
     }

@@ -1,7 +1,6 @@
 import React from "react";
+import Header from "../../component/Header/Header.jsx"
 import { Outlet } from "react-router-dom";
-import Header from "../../component/Header/Header";
-
 function AuthLayout() {
   return (
     <div>
