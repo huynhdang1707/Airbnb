@@ -25,3 +25,7 @@
         padding: 0px;
     }
 } }
+
+.dropdown-item:hover, .dropdown-item:focus {
+  width: auto;
+}
