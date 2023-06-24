@@ -1,0 +1,36 @@
+@import "../../../index.scss";
+
+.template {
+  min-height: calc(100vh - 100px);
+}
+
+
+.form_container{
+  width: 30%;
+}
+
+@media screen and (max-width:1000px){
+  .form_container{
+    width: 45%;
+  }
+}
+
+@media screen and (max-width:700px){
+  .form_container{
+    width: 60%;
+  }
+}
+
+@media screen and (max-width:500px){
+  .form_container{
+    width: 70%;
+  }
+}
+
+.datePicker{
+  width: 100%;
+}
+
+.btn-primary{
+  @extend .btnPrimary;
+}

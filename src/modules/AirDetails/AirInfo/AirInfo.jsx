@@ -168,7 +168,7 @@ function AirInfo({ id }) {
             </div>
           </div>
         </div>
-        <div className="col-sm-4" style={{ marginTop: "47px" }}>
+        <div className="col" style={{marginTop: "47px", height:"416px", width:"480px", display: "flex", justifyContent: "center", alignItems: "center"  }}>
           <div className="datPhong">
             <div className="tongQuat">
               <div>

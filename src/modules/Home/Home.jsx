@@ -150,8 +150,9 @@ function Home() {
 
   return (
     <Container>
+      <div className="d-flex justify-content-center search mt-3">
       <div>
-        <select className="form-select" value={selectedQuocGia} onChange={handleQuocGiaChange}>
+        <select className="form-select chonQuocGia" value={selectedQuocGia} onChange={handleQuocGiaChange}>
           <option value="">Chọn quốc gia</option>
           {uniqueQuocGia.map((quocGia, index) => {
             return (
@@ -163,7 +164,7 @@ function Home() {
         </select>
       </div>
       <div>
-        <select className="form-select" value={selectedTinhThanh} onChange={handleTinhThanhChange} disabled={!selectedQuocGia}>
+        <select className="form-select chonTinhThanh" value={selectedTinhThanh} onChange={handleTinhThanhChange} disabled={!selectedQuocGia}>
           <option value="">Chọn tỉnh thành</option>
           {uniqueTinhThanh
             .filter((tinhThanh) => {
@@ -185,7 +186,7 @@ function Home() {
         </select>
       </div>
       <div>
-        <select className="form-select" value={selectedViTri} onChange={handleViTriChange} disabled={!selectedQuocGia || !selectedTinhThanh}>
+        <select className="form-select chonViTri" value={selectedViTri} onChange={handleViTriChange} disabled={!selectedQuocGia || !selectedTinhThanh}>
           <option value="">Chọn vị trí</option>
           {uniqueTenViTri
             .filter((tenViTri) => {
@@ -207,6 +208,7 @@ function Home() {
               );
             })}
         </select>
+      </div>
       </div>
       <Row className="phongThue mt-4">{displayData}</Row>
       <div className="d-flex justify-content-center my-2 page">
