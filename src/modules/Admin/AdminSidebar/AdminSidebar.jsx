@@ -7,7 +7,7 @@ import swal from "sweetalert";
 import Collapse from "react-bootstrap/Collapse";
 import { Nav, Navbar } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
-// import "./AdminSidebar.scss";
+import "./AdminSidebar.scss";
 
 function AdminSidebar() {
   const dispatch = useDispatch();
