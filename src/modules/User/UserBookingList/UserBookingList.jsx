@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Container } from "react-bootstrap";
 import { apiGetBookingListUserId } from "../../../apis/bookingManagementAPI";
 import { apiDeleteBooking } from "../../../apis/bookingManagementAPI";
 import BookingForm from "../../BookingForm/BookingForm";
@@ -83,83 +84,83 @@ function UserBookingList() {
       </div>
     );
 
-  return <div className="bookingManagement">
-  <h2 className="danhSachPhong">Danh sách phòng bạn đã đặt</h2>
-  <div className="d-flex justify-content-around">
-    <div className="input-group w-75">
-    </div>
-  </div>
-  <div className="body">
-    <div className="container">
-      <div className="row">
-        <table className="table">
-          <thead>
-            <tr className="th1">
-              <th scope="col">#</th>
-              <th scope="col">ID</th>
-              <th scope="col">Mã phòng</th>
-              {/* <th scope="col">Mã người dùng</th> */}
-              <th scope="col">Ngày đến</th>
-              <th scope="col">Ngày đi</th>
-              <th scope="col">Số lượng khách</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookingList?.map((item, index) => {
-              const den = new Date(item.ngayDen);
-              const di = new Date(item.ngayDi);
-              return (
-                <tr key={index} className="th2">
-                  <th>{index + 1}</th>
-                  <td>{item.id}</td>
-                  <td>{item.maPhong}</td>
-                  {/* <td>{item.maNguoiDung}</td> */}
-                  <td>{`${
-                    den.getDate() < 10
-                      ? "0" + den.getDate()
-                      : den.getDate()
-                  }/${
-                    den.getMonth() + 1 < 10
-                      ? "0" + (den.getMonth() + 1)
-                      : den.getMonth() + 1
-                  }/${den.getFullYear()}`}</td>
-                  <td>{`${
-                    di.getDate() < 10 ? "0" + di.getDate() : di.getDate()
-                  }/${
-                    di.getMonth() + 1 < 10
-                      ? "0" + (di.getMonth() + 1)
-                      : di.getMonth() + 1
-                  }/${di.getFullYear()}`}</td>
-                  <td>{item.soLuongKhach}</td>
-                  <td>
-                    <button
-                      className="btn text-secondary me-1 border-warning mt-1"
-                      onClick={() => handleUpdateBooking(index)}
-                    >
-                      <i className="bi bi-pencil-square"></i>
-                    </button>
-                    <button
-                      className="btn text-danger border-success mt-1"
-                      onClick={() => handleDeleteBooking(item.id, index)}
-                    >
-                      <i className="bi bi-trash3"></i>
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <BookingForm
-    onShow={show}
-    handleShow={handleShow}
-    onUpdateBooking={updateBooking}
-  />
-</div>;
+  return (
+    <>
+      <div>
+        <Container>
+          <h2 className="danhSachPhong">Danh sách phòng đã đặt</h2>
+          <div className="body">
+            <div className="container">
+              <div className="row">
+                <table className="table">
+                  <thead>
+                    <tr className="th1">
+                      <th scope="col">#</th>
+                      <th scope="col">ID</th>
+                      <th scope="col">Mã phòng</th>
+                      <th scope="col">Ngày đến</th>
+                      <th scope="col">Ngày đi</th>
+                      <th scope="col">Số lượng khách</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bookingList?.map((item, index) => {
+                      const den = new Date(item.ngayDen);
+                      const di = new Date(item.ngayDi);
+                      return (
+                        <tr key={index} className="th2">
+                          <th>{index + 1}</th>
+                          <td>{item.id}</td>
+                          <td>{item.maPhong}</td>
+                          <td>{`${
+                            den.getDate() < 10
+                              ? "0" + den.getDate()
+                              : den.getDate()
+                          }/${
+                            den.getMonth() + 1 < 10
+                              ? "0" + (den.getMonth() + 1)
+                              : den.getMonth() + 1
+                          }/${den.getFullYear()}`}</td>
+                          <td>{`${
+                            di.getDate() < 10 ? "0" + di.getDate() : di.getDate()
+                          }/${
+                            di.getMonth() + 1 < 10
+                              ? "0" + (di.getMonth() + 1)
+                              : di.getMonth() + 1
+                          }/${di.getFullYear()}`}</td>
+                          <td>{item.soLuongKhach}</td>
+                          <td>
+                            <button
+                              className="btn text-secondary me-1 border-warning mt-1"
+                              onClick={() => handleUpdateBooking(index)}
+                            >
+                              <i className="bi bi-pencil-square"></i>
+                            </button>
+                            <button
+                              className="btn text-danger border-success mt-1"
+                              onClick={() => handleDeleteBooking(item.id, index)}
+                            >
+                              <i className="bi bi-trash3"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <BookingForm
+            onShow={show}
+            handleShow={handleShow}
+            onUpdateBooking={updateBooking}
+          />
+        </Container>    
+      </div>;
+    </>
+  )
 }
 
 export default UserBookingList;

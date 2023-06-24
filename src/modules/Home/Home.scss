@@ -35,3 +35,24 @@
         font-weight: 600;
       }
 }
+
+.search{
+    .chonQuocGia{
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        padding: 10px 36px 10px 15px;
+    }
+    .chonTinhThanh{
+        border-radius: 0;
+        padding: 10px 36px 10px 15px;
+    }
+    .chonViTri{
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        padding: 10px 36px 10px 15px;
+    }
+}

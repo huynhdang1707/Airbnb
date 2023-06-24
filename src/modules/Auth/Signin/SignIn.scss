@@ -1,0 +1,26 @@
+@import "../../../index.scss";
+
+.template {
+  min-height: calc(100vh - 115px);
+}
+
+
+.form_container{
+  width: 30%;
+}
+
+@media screen and (max-width:1000px){
+  .form_container{
+    width: 45%;
+  }
+}
+
+@media screen and (max-width:700px){
+  .form_container{
+    width: 45%;
+  }
+}
+
+.btn-primary{
+  @extend .btnPrimary;
+}

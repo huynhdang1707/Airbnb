@@ -21,8 +21,8 @@
     }
 }
 
-.user{  
-    padding: 5px 5px 5px 12px;
+.danhMuc{  
+    padding: 10px;
     background: transparent;
     margin: 0;
     text-align: inherit;
@@ -32,38 +32,28 @@
     transition: box-shadow 0.2s ease;
     &:hover{
         box-shadow:0 2px 4px rgba(0,0,0,0.18);
-    }
-    .item{
-        font-size: 14px;
-        &:active{
-            background-color: #717171;
-        }
-    }
+    } 
     i{
-        color: #717171;
-    }
-    .danhMuc i{
         width: 16px;
         height: 16px;
+        color: #717171;
     }
-    .danhMuc img{
+   img{
         width: 16px;
         height: 16px;
         border-radius: 50%;
     }
 }
 
-#basic-nav-dropdown::after {
+#offcanvasNavbarDropdown-expand-lg:after {
     content: none;
 }
 
-#basic-nav-dropdown::after {
-    content: none;
-}
 
 .dropdown-item{
     width: auto;
 }
+
 
 @media only screen and (max-width:1024px) {
     .nav-link{
@@ -71,3 +61,12 @@
     }
 }
   
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #717171;
+}
+
+.dropdown-item{
+    &:active{
+        background-color: #717171;
+    }
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import style from "./Signup.module.scss";
+import "./Signup.scss"
 import { Modal, Form, InputGroup } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -120,139 +120,99 @@ function Signup() {
       </div>
     );
   return (
-    <div className="bg-light p-5">
-      <h2 style={{textAlign:"center"}}>Đăng ký</h2>
-      <div className="w-50 m-auto">
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <Modal.Body>
-            <InputGroup className="mb-2">
-              <Form.Control {...register("email")} placeholder="Email" />
-            </InputGroup>
-            {errors.email && (
-              <p className="ms-3 fs-7 text-danger fst-italic">
-                {errors.email.message}
-              </p>
-            )}
-            <InputGroup className="mb-2">
-              <Form.Control
-                type={passShow ? "text" : "password"}
-                {...register("password")}
-                placeholder="Mật khẩu"
-              />
-              <div
-                className={`input-group-text ${style.cursor}`}
-                onClick={() => setPassShow(!passShow)}
-              >
-                {passShow ? (
-                  <i class="bi bi-eye-slash"></i>
-                ) : (
-                  <i class="bi bi-eye"></i>
-                )}
-              </div>
-            </InputGroup>
-            {errors.password && (
-              <p className="ms-3 fs-7 text-danger fst-italic">
-                {errors.password.message}
-              </p>
-            )}
-            <InputGroup className="mb-2">
-              <Form.Control
-                type={passShow ? "text" : "password"}
-                {...register("rePassword")}
-                placeholder="Nhập lại mật khẩu"
-              />
-              <div
-                className={`input-group-text ${style.cursor}`}
-                onClick={() => setPassShow(!passShow)}
-              >
-                {passShow ? (
-                  <i class="bi bi-eye-slash"></i>
-                ) : (
-                  <i class="bi bi-eye"></i>
-                )}
-              </div>
-            </InputGroup>
-            {errors.rePassword && (
-              <p className="ms-3 fs-7 text-danger fst-italic">
-                {errors.rePassword.message}
-              </p>
-            )}
-            <InputGroup className="mb-2">
-              <Form.Control {...register("name")} placeholder="Họ và tên"/>
-            </InputGroup>
-            {errors.name && (
-              <p className="ms-3 fs-7 text-danger fst-italic">
-                {errors.name.message}
-              </p>
-            )}
-            <InputGroup className="mb-2">
-              <Form.Control {...register("phone")} placeholder="Số điện thoại" />
-            </InputGroup>
-            {errors.phone && (
-              <p className="ms-3 fs-7 text-danger fst-italic">
-                {errors.phone.message}
-              </p>
-            )}
-            <InputGroup className="mb-2">
-              <InputGroup.Text className="row col-sm-4 mx-1">
-                Ngày sinh
-              </InputGroup.Text>
-              <div className="row">
-                <div className={`col-sm-8 form-control ${style.date}`}>
-                  <DatePicker
-                    showIcon
-                    selected={selectedDate}
-                    maxDate={startDate}
-                    onChange={(date) => setSelectedDate(date)}
-                    dateFormat="dd/MM/yyyy"
-                    className={`datePicker ${style.datePicker}`}
-                  />
-                </div>  
-              </div>
-            </InputGroup>
-            <InputGroup className="mb-2">
-              <select
-                className="col-8 form-control"
-                name=""
-                {...register("gender")}
-              >
-                <option value="">Giới tính</option>
-                <option value={true}>Nam</option>
-                <option value={false}>Nữ</option>
-              </select>
-            </InputGroup>
-            {errors.gender && (
-              <p className="ms-3 fs-7 text-danger fst-italic">
-                {errors.gender.message}
-              </p>
-            )}
-          </Modal.Body>
-          <Modal.Footer className="w-100 justify-content-end">
-            <div className="w-100 mt-2 ">
-              <button
-                type="submit"
-                className={`${style.btnPrimary} w-100`}
-                disabled={isLoading ? true : false}
-              >
-                Đăng ký
-              </button>
+    <>
+       <div className="signup template d-flex justify-content-center align-items-center 100-w 100-vh bg-light">
+        <div className="form_container p-5 rounded bg-white">
+          <Form onSubmit={handleSubmit(onSubmit, onError)}>
+            <h3 className="text-center">Đăng kí</h3>
+            <div className="mb-2">
+              <label htmlFor="name" {...register("name")} >Họ tên</label>
+              <input type="text" placeholder="Nhập họ tên" className="form-control" />
+              {errors.name && (
+                <p className="ms-3 fs-7 text-danger fst-italic">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
-            <div className="ms-4 text-end">
-              <a
-                onClick={() => handleLoginRedirect()}
-                disabled={isLoading ? true : false}
-                className={style.login}
-              >
-                Đã có tài khoản, đăng nhập.
-              </a>
+            <div className="mb-2">
+              <label htmlFor="email">Email</label>
+              <input  {...register("email")} 
+               type="email" placeholder="Nhập email" className="form-control" />
+                   {errors.email && (
+                      <p className="ms-3 fs-7 text-danger fst-italic">
+                        {errors.email.message}
+                      </p>
+                    )}
             </div>
-          </Modal.Footer>
-          {error && (
-            <p className="text-center fs-7 text-danger fst-italic">{error}</p>
-          )}
-        </form>
+            <div className="mb-2">
+              <label htmlFor="password">Mật khẩu</label>
+              <input {...register("password")}    
+              type="password" placeholder="Nhập mật khẩu" className="form-control"/>
+              {errors.password && (
+                <p className="ms-3 fs-7 text-danger fst-italic">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+            <div className="mb-2">
+              <label htmlFor="password">Nhập lại mật khẩu</label>
+              <input {...register("rePassword")}    
+              type="password" placeholder="Nhập lại mật khẩu" className="form-control"/>
+               {errors.rePassword && (
+                <p className="ms-3 fs-7 text-danger fst-italic">
+                  {errors.rePassword.message}
+                </p>
+              )}
+            </div>
+            <div className="mb-2">
+              <label htmlFor="phone" {...register("phone")}>Số điện thoại</label>
+              <input type="tel" placeholder="Nhập số điện thoại" className="form-control"/>
+              {errors.phone && (
+                <p className="ms-3 fs-7 text-danger fst-italic">
+                  {errors.phone.message}
+                </p>
+              )}
+            </div>
+            <div className="mb-2">
+            <label htmlFor="datePicker">Ngày sinh</label>
+            <br />
+            <DatePicker
+              showIcon
+              selected={selectedDate}
+              maxDate={startDate}
+              onChange={(date) => setSelectedDate(date)}
+              dateFormat="dd/MM/yyyy"
+              customInput={<input type="text"/>}
+              className="datePicker"
+            />
+            </div>
+            <div className="mb-2">
+                <select
+                  className="form-control"
+                  name=""
+                  {...register("gender")}
+                >
+                  <option value="">Chọn giới tính</option>
+                  <option value={true}>Nam</option>
+                  <option value={false}>Nữ</option>
+                </select>
+                {errors.gender && (
+                <p className="ms-3 fs-7 text-danger fst-italic">
+                  {errors.gender.message}
+                </p>
+              )}
+            </div>
+            <div className="d-grid">
+              <button className="btn btn-primary" disabled={isLoading ? true : false}>Đăng kí</button>
+            </div>
+            <p className="text-end mt-2">
+              <a onClick={() => handleLoginRedirect()}
+                disabled={isLoading ? true : false}>Đã có tài khoản, đăng nhập</a>
+            </p>
+          </Form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
