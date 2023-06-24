@@ -101,13 +101,13 @@ function Header({
                       <a>Cho thuê chỗ ở qua Airbnb</a>
                     </span>
                   </Nav.Link>
-                  <Nav.Link href="#action2" className="mt-2">
+                  {/* <Nav.Link href="#action2" className="mt-2">
                     <span className="ngonNgu">
                       <a>
                         <i className="bi bi-globe mx-2"></i>
                       </a>
                     </span>                   
-                  </Nav.Link>
+                  </Nav.Link> */}
                   <NavDropdown
                     title={
                       <span className="danhMuc">

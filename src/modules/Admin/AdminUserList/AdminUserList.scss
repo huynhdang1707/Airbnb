@@ -84,20 +84,13 @@
   .tableuser td:nth-child(1) {
     display: none;
   }
-  
-  .tableuser th:nth-child(7),
-  .tableuser td:nth-child(7) {
-    display: none;
-  }
-  .tableuser th:nth-child(3),
-  .tableuser td:nth-child(3) {
+  .tableuser th:nth-child(6),
+  .tableuser td:nth-child(6) {
     display: none;
   }
   
-  .tableuser th:nth-child(8),
-  .tableuser td:nth-child(8) {
-    display: none;
-  }
+}
+@media (max-width: 768px){
   .tableuser th:nth-child(5),
   .tableuser td:nth-child(5) {
     display: none;
@@ -106,6 +99,14 @@
 @media (max-width: 992px){
   .tableuser th:nth-child(1),
   .tableuser td:nth-child(1) {
+    display: none;
+  }
+  .tableuser th:nth-child(8),
+  .tableuser td:nth-child(8) {
+    display: none;
+  }
+  .tableuser th:nth-child(7),
+  .tableuser td:nth-child(7) {
     display: none;
   }
 }
