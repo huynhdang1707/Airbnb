@@ -78,7 +78,6 @@ function Signup() {
   const { user, isLoading, error } = useSelector((state) => state.signup);
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(signup(data));
   };
 
@@ -93,7 +92,6 @@ function Signup() {
       "success"
     );
   const location = useLocation();
-  console.log(location);
   if (user) {
     const userSignin = {
       email: user.email,
@@ -107,7 +105,6 @@ function Signup() {
     // Lấy giá trị redirectUrl từ query parameters
     const redirectUrl = location.state?.redirectUrl;
     // searchParams.set('redirectUrl', window.location.pathname);
-    console.log(redirectUrl);
 
     // Chuyển hướng đến trang đăng nhập và truyền redirectUrl qua state
     navigate("/signin", { state: { redirectUrl } });
