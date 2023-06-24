@@ -175,7 +175,7 @@ function AirInfo({ id }) {
                 <span className="giaTien">{totalPrice}.000.000đ</span>
               </div>
             </div>
-            <div className="mt-3">
+            <div className="mt-3" style={{color:"black"}}>
               <Calendar
                 onChange={handleDateChange}
                 value={selectedDateRange}
