@@ -106,7 +106,7 @@ function Signin() {
             )}
             </div>
             <div className="d-grid">
-              <button className="btn btn-primary" disabled={isLoading ? true : false}>Đăng nhập</button>
+              <button className="btn nut" disabled={isLoading ? true : false}>Đăng nhập</button>
             </div>
             <p className="text-end mt-2">
               <a href="#">Quên mật khẩu?</a>

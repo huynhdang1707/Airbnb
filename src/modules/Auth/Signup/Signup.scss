@@ -31,6 +31,8 @@
   width: 100%;
 }
 
-.btn-primary{
+.nut{
   @extend .btnPrimary;
+  transition: box-shadow 0.2s ease;
+
 }
