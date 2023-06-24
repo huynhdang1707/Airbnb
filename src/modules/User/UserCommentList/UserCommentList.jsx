@@ -48,7 +48,8 @@ function UserCommentList() {
           <div className="body">
             <div className="container">
               <div className="row">
-                <table className="table">
+               <div className="table-responsive">
+               <table className="table tableusercmt">
                   <thead>
                     <tr className="th1">
                       <th scope="col">#</th>
@@ -94,6 +95,7 @@ function UserCommentList() {
                     })}
                   </tbody>
                 </table>
+               </div>
               </div>
             </div>
           </div>

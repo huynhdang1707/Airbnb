@@ -11,18 +11,11 @@ function UserLayout() {
   }
   return (
     <div>
-      <Container fluid className="bg-bg-secondary min-vh-100">
-        <Row>
-          {!toggle &&<Col className=" col-2 col-md-0 bg-white vh-100 position-fixed">
-            {/* <UserSidebar /> */}
-          </Col>}
-          {!toggle && <Col className="col-4 col-md-2"></Col>}
-          <Col className="px-3">
-            <AdminHeader Toggle={Toggle} />
-            <UserSidebar />
-            <Outlet Toggle={Toggle}/>
-          </Col>
-        </Row>
+        <Container fluid className="bg-bg-secondary min-vh-100">
+        <AdminHeader toggle={toggle} Toggle={Toggle} />
+        <UserSidebar />
+
+        <Outlet Toggle={Toggle} />
       </Container>
     </div>
   );
