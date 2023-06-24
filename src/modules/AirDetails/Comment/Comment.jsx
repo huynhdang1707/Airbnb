@@ -261,7 +261,7 @@ function Comment({ roomId, cmted }) {
         <div className="mx-2 mt-3">
           <h4 className=" d-inline-flex align-items-center ms-2">
             <div className="d-inline-flex align-items-center">
-              Rate:{" "}
+              Đánh giá:{" "}
               {(comments?.length > 0
                 ? total / comments?.length
                 : 0 / 5

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import swal from "sweetalert";
+import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { userCreateBooking } from "../../../slices/userCreateBooking";
@@ -34,7 +35,7 @@ function UserBooking() {
         `Số lượng khách không vượt quá lượng khách tối đa: ${booking?.soLuongKhach}`
       )
       .min(1, "Số lượng khách ít nhất là 1")
-      .typeError("Số lượng khách phair là 1 số"),
+      .typeError("Số lượng khách phải là 1 số"),
     maNguoiDung: yup.number(),
   });
   const dispatch = useDispatch();
@@ -74,7 +75,6 @@ function UserBooking() {
       setNewStartDate(new Date(booking?.ngayDen));
       setNewEndDate(new Date(booking?.ngayDi));
       reset({
-        // id: booking?.id,
         maPhong: booking?.maPhong,
         ngayDen: getValues("ngayDen"),
         ngayDi: getValues("ngayDi"),
@@ -85,11 +85,6 @@ function UserBooking() {
   }, []);
   const [addBooking, setAddBooking] = useState(null);
   const onSubmit = async (value) => {
-    // const newValue = {
-    //   ...value,
-    //   ngayDen: booking.ngayDen,
-    //   ngayDi: booking.ngayDi,
-    // };
     const data = await dispatch(userCreateBooking(value));
     setAddBooking(data);
   };
@@ -149,135 +144,111 @@ function UserBooking() {
   }
 
   return (
-    <div className="createBooking">
-      <div className="body">
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <div className="container mb-2">
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Tên người dùng</div>
-              <div className="col-10">
+    <> 
+      <div>
+        <Container>
+            <h2>Thông tin phòng</h2>
+            <form onSubmit={handleSubmit(onSubmit, onError)}>
+              <div>
+                <label htmlFor="text">Tên người dùng</label>
                 <input
-                  type="text"
-                  className="w-100 form-control"
-                  value={user?.user?.name}
-                />
+                    type="text"
+                    className="w-100 form-control"
+                    value={user?.user?.name}
+                  />
               </div>
-            </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Tên phòng</div>
-              <div className="col-10">
+              <div>
+                <label htmlFor="text">Tên phòng</label>
                 <input
-                  type="text"
-                  className="w-100 form-control"
-                  value={booking?.tenPhong}
-                />
+                    type="text"
+                    className="w-100 form-control"
+                    value={booking?.tenPhong}
+                  />
               </div>
-            </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <spa className="col-2 text-end">Hình phòng</spa>
-              <div className="col-10">
+              <div>
+                <label htmlFor="text">Hình ảnh</label>
+                <br />
                 <img
-                  style={{ maxWidth: "150px" }}
-                  src={booking?.hinhPhong}
-                  alt={booking?.tenPhong}
-                />
+                    style={{ maxWidth: "150px" }}
+                    src={booking?.hinhPhong}
+                    alt={booking?.tenPhong}
+                  />
               </div>
-            </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Số lượng khách</div>
-              <div className="col-10">
+              <div>
+                <label htmlFor="text">Số lượng khách</label>
                 <input
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("soLuongKhach")}
-                />
-                {errors.soLuongKhach && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.soLuongKhach.message}
-                  </p>
-                )}
+                    type="text"
+                    className="w-100 form-control"
+                    {...register("soLuongKhach")}
+                  />
+                  {errors.soLuongKhach && (
+                    <p className="ms-3 fs-7 text-danger fst-italic">
+                      {errors.soLuongKhach.message}
+                    </p>
+                  )}
               </div>
-            </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Ngày nhận phòng</div>
-              <div className="col-10">
-                {/* <input
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("ngayDen")}
-                /> */}
-                <DatePicker
-                  showIcon
-                  selected={newStartDate}
-                  minDate={startDate}
-                  dateFormat="dd/MM/yyyy"
-                  onChange={(date) => setNewStartDate(date)}
-                  className="datePicker"
-                />
-                {errors.ngayDen && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.ngayDen.message}
-                  </p>
-                )}
+              <div className="d-flex">
+                <div className="me-2">
+                  <label htmlFor="text">Ngày nhận phòng</label>
+                  <br />
+                  <DatePicker
+                      showIcon
+                      selected={newStartDate}
+                      minDate={startDate}
+                      dateFormat="dd/MM/yyyy"
+                      onChange={(date) => setNewStartDate(date)}
+                      className="datePicker w-100"
+                    />
+                    {errors.ngayDen && (
+                      <p className="ms-3 fs-7 text-danger fst-italic">
+                        {errors.ngayDen.message}
+                      </p>
+                    )}
+                </div>
+                <div>
+                  <label htmlFor="text">Ngày trả phòng</label>
+                  <br />
+                  <DatePicker
+                    showIcon
+                    selected={newEndDate}
+                    minDate={newStartDate}
+                    dateFormat="dd/MM/yyyy"
+                    onChange={(date) => setNewEndDate(date)}
+                    className="datePicker w-100"
+                  />
+                  {errors.ngayDi && (
+                    <p className="ms-3 fs-7 text-danger fst-italic">
+                      {errors.ngayDi.message}
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
-
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Ngày trả phòng</div>
-              <div className="col-10">
-                {/* <input
-                  type="text"
-                  className="w-100 form-control"
-                  {...register("ngayDi")}
-                /> */}
-                <DatePicker
-                  showIcon
-                  selected={newEndDate}
-                  minDate={newStartDate}
-                  dateFormat="dd/MM/yyyy"
-                  onChange={(date) => setNewEndDate(date)}
-                  className="datePicker"
-                />
-                {errors.ngayDi && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.ngayDi.message}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="row mb-2 mt-2 align-items-top input-group">
-              <div className="col-2 text-end">Tổng thanh toán</div>
-              <div className="col-10">
+              <div>
+                <label htmlFor="">Tổng tiền</label>
                 <input
-                  type="text"
-                  className="w-100 form-control"
-                  value={
-                    total
-                      ? `${total}.000.000đ`
-                      : `${booking?.totalPrice}.000.000đ`
-                  }
+                type="text"
+                className="w-100 form-control"
+                value={
+                total
+                ? `${total}.000.000đ`
+                : `${booking?.totalPrice}.000.000đ`
+                }
                 />
               </div>
-            </div>
-
-            <div className="text-center">
-              <button className="add" disabled={isLoading ? true : false}>
-                Đặt phòng
-              </button>
-              {error && (
-                <p className="text-center fs-7 text-danger fst-italic">
-                  {error}
-                </p>
-              )}
-            </div>
-          </div>
-        </form>
+              <div className="text-center mt-3">
+                <button className="add" disabled={isLoading ? true : false}>
+                  Đặt phòng
+                </button>
+                {error && (
+                  <p className="text-center fs-7 text-danger fst-italic">
+                    {error}
+                  </p>
+                )}
+              </div>
+            </form>
+        </Container>
       </div>
-    </div>
+    </>
   );
 }
 
