@@ -208,6 +208,11 @@ function Signup() {
               <a onClick={() => handleLoginRedirect()}
                 disabled={isLoading ? true : false}>Đã có tài khoản, đăng nhập</a>
             </p>
+            {error && (
+                <p className="ms-3 fs-7 text-danger fst-italic text-center">
+                  {error}
+                </p>
+              )}
           </Form>
         </div>
       </div>

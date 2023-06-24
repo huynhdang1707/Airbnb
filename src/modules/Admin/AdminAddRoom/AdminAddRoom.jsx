@@ -380,7 +380,7 @@ function AdminAddRoom() {
                 Thêm phòng thuê
               </button>
               {error && (
-                <p className="text-center fs-7 text-danger fst-italic">
+                <p className="text-center fs-7 text-danger fst-italic text-center">
                   {error}
                 </p>
               )}

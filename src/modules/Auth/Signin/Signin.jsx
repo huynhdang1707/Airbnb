@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import "./SignIn.scss"
+import "./SignIn.scss";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -67,7 +67,8 @@ function Signin() {
             <h3 className="text-center">Đăng nhập</h3>
             <div className="mb-2">
               <label htmlFor="email">Email</label>
-              <input {...register("email", {
+              <input
+                {...register("email", {
                   required: {
                     value: true,
                     message: "(*)Email không được để trống",
@@ -78,16 +79,20 @@ function Signin() {
                     message: "(*)Email không đúng định dạng",
                   },
                 })}
-               type="email" placeholder="Nhập email" className="form-control" />
-                {errors.email && (
-                  <p className="ms-3 fs-7 text-danger fst-italic">
-                    {errors.email.message}
-                  </p>
-                )}
+                type="email"
+                placeholder="Nhập email"
+                className="form-control"
+              />
+              {errors.email && (
+                <p className="ms-3 fs-7 text-danger fst-italic">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
             <div className="mb-2">
               <label htmlFor="password">Mật khẩu</label>
-              <input {...register("password", {
+              <input
+                {...register("password", {
                   required: {
                     value: true,
                     message: "(*)Mật khẩu không được để trống",
@@ -97,21 +102,35 @@ function Signin() {
                     message:
                       "(*)Mật khẩu có ít nhất 8 ký tự bao gồm 1 ký tự hoa, thường và ký tự đặc biệt.",
                   },
-                })}     
-              type="password" placeholder="Nhập mật khẩu" className="form-control"/>
+                })}
+                type="password"
+                placeholder="Nhập mật khẩu"
+                className="form-control"
+              />
               {errors.password && (
-              <p className="ms-3 fs-7 text-danger fst-italic">
-                {errors.password.message}
-              </p>
-            )}
+                <p className="ms-3 fs-7 text-danger fst-italic">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
             <div className="d-grid">
-              <button className="btn nut" disabled={isLoading ? true : false}>Đăng nhập</button>
+              <button className="btn nut" disabled={isLoading ? true : false}>
+                Đăng nhập
+              </button>
             </div>
             <p className="text-end mt-2">
               <a href="#">Quên mật khẩu?</a>
-              <a className="ms-2" onClick={handleSignUpRedirect} disabled={isLoading ? true : false}>Đăng ký</a>
+              <a
+                className="ms-2"
+                onClick={handleSignUpRedirect}
+                disabled={isLoading ? true : false}
+              >
+                Đăng ký
+              </a>
             </p>
+            {error && (
+              <p className="ms-3 fs-7 text-danger fst-italic text-center">{error}</p>
+            )}
           </Form>
         </div>
       </div>
