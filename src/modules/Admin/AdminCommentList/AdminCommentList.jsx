@@ -210,6 +210,7 @@ function AdminCommentList() {
                                   <img
                                     src={item.avatar}
                                     alt={item.tenNguoiBinhLuan}
+                                    style={{width:"30px", height:"30px"}}
                                   />
                                 </td>
                                 <td>{`${
