@@ -13,7 +13,7 @@ function UserLayout() {
     <div>
       <Container fluid className="bg-bg-secondary min-vh-100">
         <Row>
-          {!toggle &&<Col className=" col-4 col-md-2 bg-white vh-100 position-fixed">
+          {!toggle &&<Col className=" col-2 col-md-0 bg-white vh-100 position-fixed">
             <UserSidebar />
           </Col>}
           {!toggle && <Col className="col-4 col-md-2"></Col>}
