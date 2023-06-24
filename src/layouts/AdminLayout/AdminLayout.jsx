@@ -22,9 +22,11 @@ function AdminLayout() {
             )}
             {toggle && <Col className="col-4 col-md-2"></Col>}
             <Col className="px-3">
-              <AdminHeader Toggle={Toggle} />
-              <AdminHeader toggle={toggle} Toggle={Toggle} />
-              <Outlet Toggle={Toggle} />
+              <AdminHeader />
+              <AdminHeader  />
+              <div className="mt-2">
+                <Outlet  />
+              </div>
             </Col>
           </Row>
         </Container>

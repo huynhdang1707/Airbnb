@@ -5,21 +5,18 @@ import AdminHeader from "../../modules/Admin/AdminHeader/AdminHeader";
 import UserSidebar from "../../modules/User/UserSideBar/UserSidebar";
 
 function UserLayout() {
- 
   return (
     <div>
       <div className="divvvvvvv2">
         <Container fluid className="bg-bg-secondary min-vh-100">
           <Row>
-           
-              <Col className=" col-4 col-md-2 bg-white vh-100 position-fixed">
-                <UserSidebar />
-              </Col>
-           
+            <Col className=" col-4 col-md-2 bg-white vh-100 position-fixed">
+              <UserSidebar />
+            </Col>
             && <Col className="col-4 col-md-2"></Col>
             <Col className="px-3">
-              <AdminHeader  />
-              <AdminHeader/>
+              <AdminHeader />
+              <AdminHeader />
               <Outlet />
             </Col>
           </Row>
@@ -27,10 +24,12 @@ function UserLayout() {
       </div>
       <div className="divvvvvvv1">
         <Container fluid className="bg-bg-secondary min-vh-100">
-          <AdminHeader  />
+          <AdminHeader />
           <UserSidebar />
 
-          <Outlet />
+          <div className="mt-2">
+            <Outlet />
+          </div>
         </Container>
       </div>
     </div>
