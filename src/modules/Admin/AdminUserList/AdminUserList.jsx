@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import "./AdminUserList.scss";
 import Pagination from "rc-pagination";
 import { Container, Button } from "react-bootstrap";
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
@@ -99,10 +99,11 @@ function AdminUserList() {
     );
   return (
     <>
-      <div>
+      <div className="wrapper">
         <Container>
           <h2 className="tieuDeDS">Danh sách người dùng</h2>
-            <div className="d-flex">
+          <div className="d-flex flex-wrap align-items-center justify-content-between">
+            <div className="w-100 mb-3">
               <input
                 type="text"
                 className="form-control"
@@ -110,39 +111,53 @@ function AdminUserList() {
                 name="inputValue"
                 onKeyDown={handleInput}
               />
-                <div className="input-group-append">
-                  <Button variant="outline-secondary" onClick={() => navigate("/admin/add-user")}>Thêm người dùng mới</Button>{' '}
-                </div>
             </div>
-          <div className="table mt-3">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>ID</th>
-                <th>Hình ảnh</th>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Giới tính</th>
-                <th>Ngày sinh</th>
-                <th>SĐT</th>
-                <th>Loại người dùng</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
+            <div className="mb-3">
+              <Button
+                variant="outline-secondary"
+                onClick={() => navigate("/admin/add-user")}
+              >
+                Thêm người dùng mới
+              </Button>
+            </div>
+          </div>
+          <div className="table-responsive">
+            <div className="scrollable-table">
+              <table className="table tableuser mt-3">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Hình ảnh</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Giới tính</th>
+                    <th>Ngày sinh</th>
+                    <th>SĐT</th>
+                    <th>Loại người dùng</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
                   {users?.data?.map((item, index) => {
                     const regex = /^\d{2}\/\d{2}\/\d{4}$/;
                     return (
                       <tr key={index}>
-                        <th>{index + 1 + (current - 1) * 10}</th>
+                        <td>{index + 1 + (current - 1) * 10}</td>
                         <td>{item.id}</td>
                         <td>
-                          <img className="hinhAnh" src={ item.avatar} alt={item.id} />
+                          <img
+                            className="hinhAnh"
+                            src={item.avatar}
+                            alt={item.id}
+                          />
                         </td>
                         <td>{item.name}</td>
                         <td>{item.email}</td>
                         <td>{item.gender ? "Nam" : "Nữ"}</td>
-                        <td>{regex.test(item.birthday) ? item.birthday : ""}</td>
+                        <td>
+                          {regex.test(item.birthday) ? item.birthday : ""}
+                        </td>
                         <td>{item.phone}</td>
                         <td>
                           {item.role === "ADMIN" ? "Quản trị" : "Khách hàng"}
@@ -165,21 +180,115 @@ function AdminUserList() {
                     );
                   })}
                 </tbody>
-                <Pagination
-                  onChange={PaginationChange}
-                  total={Math.ceil(users.totalRow / 10)}
-                  current={current}
-                  pageSize={1}
-                  className="pagination1"
-                />
-                <UserForm
-                  onShow={show}
-                  handleShow={handleShow}
-                  onUpdateUser={updateUser}
-                />
+              </table>
+            </div>
           </div>
+          <Pagination
+            onChange={PaginationChange}
+            total={Math.ceil(users.totalRow / 10)}
+            current={current}
+            pageSize={1}
+            className="pagination1"
+          />
+          <UserForm
+            onShow={show}
+            handleShow={handleShow}
+            onUpdateUser={updateUser}
+          />
         </Container>
       </div>
+      {/* <div>
+        <Container>
+          <h2 className="tieuDeDS">Danh sách người dùng</h2>
+          <div className="d-flex flex-wrap align-items-center justify-content-between">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Nhập tên người dùng và nhấn Enter..."
+              name="inputValue"
+              onKeyDown={handleInput}
+            />
+            <div className="input-group-append">
+              <Button
+                variant="outline-secondary"
+                onClick={() => navigate("/admin/add-user")}
+              >
+                Thêm người dùng mới
+              </Button>{" "}
+            </div>
+          </div>
+          <div className="table-responsive">
+            <div className="table mt-3">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>ID</th>
+                  <th>Hình ảnh</th>
+                  <th>Họ tên</th>
+                  <th>Email</th>
+                  <th>Giới tính</th>
+                  <th>Ngày sinh</th>
+                  <th>SĐT</th>
+                  <th>Loại người dùng</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users?.data?.map((item, index) => {
+                  const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+                  return (
+                    <tr key={index}>
+                      <th>{index + 1 + (current - 1) * 10}</th>
+                      <td>{item.id}</td>
+                      <td>
+                        <img
+                          className="hinhAnh"
+                          src={item.avatar}
+                          alt={item.id}
+                        />
+                      </td>
+                      <td>{item.name}</td>
+                      <td>{item.email}</td>
+                      <td>{item.gender ? "Nam" : "Nữ"}</td>
+                      <td>{regex.test(item.birthday) ? item.birthday : ""}</td>
+                      <td>{item.phone}</td>
+                      <td>
+                        {item.role === "ADMIN" ? "Quản trị" : "Khách hàng"}
+                      </td>
+                      <td>
+                        <button
+                          className="btn text-secondary me-1 border-warning"
+                          onClick={() => handleUpdateUser(index)}
+                        >
+                          <i className="bi bi-pencil-square"></i>
+                        </button>
+                        <button
+                          className="btn text-danger border-success"
+                          onClick={() => handleDeleteUser(item.id, index)}
+                        >
+                          <i className="bi bi-trash3"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+              <Pagination
+                onChange={PaginationChange}
+                total={Math.ceil(users.totalRow / 10)}
+                current={current}
+                pageSize={1}
+                className="pagination1"
+              />
+              <UserForm
+                onShow={show}
+                handleShow={handleShow}
+                onUpdateUser={updateUser}
+              />
+            </div>
+          </div>
+        </Container>
+      </div> */}
     </>
   );
 }

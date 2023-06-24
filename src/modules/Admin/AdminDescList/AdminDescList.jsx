@@ -99,7 +99,7 @@ function AdminDescList() {
         <Container>
           <h2 className="tieuDeVT">Danh sách vị trí</h2>
           <div>
-          <div className="d-flex mb-3">
+            <div className="d-flex flex-column flex-md-row align-items-md-center mb-3">
               <input
                 type="text"
                 className="form-control"
@@ -107,57 +107,69 @@ function AdminDescList() {
                 name="inputValue"
                 onKeyDown={handleInput}
               />
-                <div className="input-group-append">
-                  <Button variant="outline-secondary" onClick={() => navigate("/admin/add-desc")}>Thêm vị trí mới</Button>{' '}
-                </div>
+              <div className="input-group-append">
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => navigate("/admin/add-desc")}
+                >
+                  Thêm vị trí mới
+                </Button>{" "}
+              </div>
             </div>
           </div>
           <div className="body">
             <div className="container">
-              <div className="row">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>ID</th>
-                      <th>Hình ảnh</th>
-                      <th>Tên vị trí</th>
-                      <th>Tỉnh thành</th>
-                      <th>Quốc gia</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {descs?.data?.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <th>{index + 1 + (current - 1) * 10}</th>
-                          <td>{item.id}</td>
-                          <td>
-                            <img src={item.hinhAnh} alt={item.id} className="hinhAnh"/>
-                          </td>
-                          <td>{item.tenViTri}</td>
-                          <td>{item.tinhThanh}</td>
-                          <td>{item.quocGia}</td>
-                          <td>
-                            <button
-                              className="btn text-secondary me-1 border-warning mt-1"
-                              onClick={() => handleUpdateDesc(index)}
-                            >
-                              <i className="bi bi-pencil-square"></i>
-                            </button>
-                            <button
-                              className="btn text-danger border-success mt-1"
-                              onClick={() => handleDeleteDesc(item.id, index)}
-                            >
-                              <i className="bi bi-trash3"></i>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+              <div className="row ">
+                <div className="table-responsive">
+                  <table className="table tabledesc">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Hình ảnh</th>
+                        <th>Tên vị trí</th>
+                        <th>Tỉnh thành</th>
+                        <th>Quốc gia</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {descs?.data?.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <th>{index + 1 + (current - 1) * 10}</th>
+                            <td>{item.id}</td>
+                            <td>
+                              <img
+                                src={item.hinhAnh}
+                                alt={item.id}
+                                className="hinhAnh"
+                              />
+                            </td>
+                            <td>{item.tenViTri}</td>
+                            <td>{item.tinhThanh}</td>
+                            <td>{item.quocGia}</td>
+                            <td>
+                              <button
+                                className="btn text-secondary me-1 border-warning mt-1"
+                                onClick={() => handleUpdateDesc(index)}
+                              >
+                                <i className="bi bi-pencil-square"></i>
+                              </button>
+                              <button
+                                className="btn text-danger border-success mt-1"
+                                onClick={() => handleDeleteDesc(item.id, index)}
+                              >
+                                <i className="bi bi-trash3"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
                 <Pagination
                   onChange={PaginationChange}
                   total={Math.ceil(descs.totalRow / 10)}
@@ -167,14 +179,14 @@ function AdminDescList() {
                 />
               </div>
             </div>
-          </div>  
+          </div>
           <DescForm
             onShow={show}
             handleShow={handleShow}
             onUpdateDesc={updateDesc}
           />
         </Container>
-      </div>  
+      </div>
     </>
   );
 }

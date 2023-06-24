@@ -129,7 +129,7 @@ function AdminSidebar() {
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     eventKey="4.2"
-                    onClick={() =>{navigate("add-list");handleHideNavbar()}}
+                    onClick={() =>{navigate("add-desc");handleHideNavbar()}}
                   >
                     Thêm vị trí mới
                   </NavDropdown.Item>

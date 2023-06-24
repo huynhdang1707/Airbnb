@@ -66,3 +66,43 @@
     font-weight: 600;
   }
 }
+@media (max-width: 375px) {
+  .w-100 {
+    width: 100%;
+  }
+}
+@media (max-width: 375px) {
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  .table th,
+  .table td {
+    white-space: normal;
+  }
+  .tabledesc th:nth-child(1),
+  .tabledesc td:nth-child(1) {
+    display: none;
+  }
+  
+  .tabledesc th:nth-child(6),
+  .tabledesc td:nth-child(6) {
+    display: none;
+  }
+  .tabledesc th:nth-child(5),
+  .tabledesc td:nth-child(5) {
+    display: none;
+  }
+
+}
+@media (max-width: 992px){
+  .tabledesc th:nth-child(1),
+  .tabledesc td:nth-child(1) {
+    display: none;
+  }
+}

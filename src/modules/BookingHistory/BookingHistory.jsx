@@ -161,7 +161,8 @@ function BookingHistory() {
         <div className="body mt-2">
           <div className="container">
             <div className="row">
-              <table className="table">
+              <div className="table-responsive">
+              <table className="table tablebooking">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -220,6 +221,7 @@ function BookingHistory() {
                   })}
                 </tbody>
               </table>
+              </div>
             </div>
           </div>
         </div>
