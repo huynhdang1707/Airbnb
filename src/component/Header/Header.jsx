@@ -85,17 +85,18 @@ function Header({
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`} className="mt-3">
                   {user ? (
                   <>
-                    <span className="title">Xin chào {infoUser?.name}. Chúc bạn một ngày may mắn!</span>
+                    <span className="title mx-3">Chào {infoUser?.name}</span>
+                    <img src={infoUser?.avatar} style={{width:"30px", height:"30px", borderRadius:"50%"}} />
                   </>
                 ) : (
                   <>
-                    <span className="title">Xin chào rất vui được gặp bạn!</span>
+                    <div></div>
                   </>
                 )}
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
+                <Nav className="justify-content-end flex-grow-1 pe-5">
                   <Nav.Link href="/" className="mt-2">
                     <span className="choThue">
                       <a>Cho thuê chỗ ở qua Airbnb</a>
