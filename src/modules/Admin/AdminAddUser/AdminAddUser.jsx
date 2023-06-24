@@ -36,7 +36,7 @@ const schema = yup.object().shape({
     ),
   birthday: yup.string().required("(*)Ngày sinh không được để trống"),
   gender: yup.boolean().nullable().required("(*)Gới tính không được để trống"),
-  role: yup.string().nullable().required("(*)Loại người dùng không được để trống"),
+  role: yup.string().nullable().required("(*)Loại người dùng không được để trống").typeError("(*)Loại người dùng không được để trống"),
   // .required("((*)Loại người dùng không được để trốn")
 });
 function AdminAddUser() {

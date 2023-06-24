@@ -40,7 +40,7 @@ const schema = yup.object().shape({
       "(*)Số điện thoại phải là dãy số bắt đầu là 0 và ít nhất 10 chữ số"
     ),
   birthday: yup.string().required("(*)Ngày sinh không được để trống"),
-  gender: yup.boolean().nullable().required("(*)Giới tính không được để trống"),
+  gender: yup.boolean().nullable().required("(*)Giới tính không được để trống").typeError("(*)Giới tính không được để trống"),
 });
 
 function Signup() {
