@@ -12,7 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const schema = yup.object({
+const schema = yup.object().shape({
   email: yup
     .string()
     .required("(*)Email không được để trống")
@@ -40,7 +40,7 @@ const schema = yup.object({
       "(*)Số điện thoại phải là dãy số bắt đầu là 0 và ít nhất 10 chữ số"
     ),
   birthday: yup.string().required("(*)Ngày sinh không được để trống"),
-  gender: yup.boolean().required("(*)Giới tính không được để trống"),
+  gender: yup.boolean().nullable().required("(*)Giới tính không được để trống"),
 });
 
 function Signup() {
@@ -65,7 +65,7 @@ function Signup() {
       rePassword: "",
       phone: "",
       birthday: "",
-      gender: false,
+      gender: null,
       role: "",
     },
     mode: "onTouched",
