@@ -45,7 +45,6 @@ const schema = yup.object({
 
 function Signup() {
   const dayjs = require("dayjs");
-  const [passShow, setPassShow] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -126,8 +125,8 @@ function Signup() {
           <Form onSubmit={handleSubmit(onSubmit, onError)}>
             <h3 className="text-center">Đăng kí</h3>
             <div className="mb-2">
-              <label htmlFor="name" {...register("name")} >Họ tên</label>
-              <input type="text" placeholder="Nhập họ tên" className="form-control" />
+              <label htmlFor="name">Họ tên</label>
+              <input type="text" placeholder="Nhập họ tên" className="form-control"  {...register("name")}  />
               {errors.name && (
                 <p className="ms-3 fs-7 text-danger fst-italic">
                   {errors.name.message}
@@ -165,8 +164,8 @@ function Signup() {
               )}
             </div>
             <div className="mb-2">
-              <label htmlFor="phone" {...register("phone")}>Số điện thoại</label>
-              <input type="tel" placeholder="Nhập số điện thoại" className="form-control"/>
+              <label htmlFor="phone">Số điện thoại</label>
+              <input type="tel" placeholder="Nhập số điện thoại" className="form-control" {...register("phone")}/>
               {errors.phone && (
                 <p className="ms-3 fs-7 text-danger fst-italic">
                   {errors.phone.message}
@@ -203,7 +202,7 @@ function Signup() {
               )}
             </div>
             <div className="d-grid">
-              <button className="btn btn-primary" disabled={isLoading ? true : false}>Đăng kí</button>
+              <button className="btn nut" disabled={isLoading ? true : false}>Đăng kí</button>
             </div>
             <p className="text-end mt-2">
               <a onClick={() => handleLoginRedirect()}
