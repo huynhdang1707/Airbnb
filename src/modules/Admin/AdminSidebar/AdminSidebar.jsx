@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signout } from "../../../slices/userSlice";
+import { Container } from "react-bootstrap";
 import { removeUser } from "../../../slices/signUpSlice";
 import swal from "sweetalert";
 import Collapse from "react-bootstrap/Collapse";
@@ -63,109 +64,111 @@ function AdminSidebar() {
   return (
     <>
       <div className="sticky-top bg-white">
-      <Navbar expand="lg">
-        <Navbar.Toggle aria-controls="navbar-nav" />
-        <Navbar.Collapse id="navbar-nav">
-          <Nav>
-            <Nav.Item>
-              <Nav.Link onClick={handleThongTin}>
-                <i className="bi bi-person-circle fs-5 me-3"></i>
-                <span>Thông tin cá nhân</span>
-              </Nav.Link>
-            </Nav.Item>
+        <Container>
+          <Navbar expand="lg">
+            <Navbar.Toggle aria-controls="navbar-nav" />
+            <Navbar.Collapse id="navbar-nav">
+              <Nav>
+                <Nav.Item>
+                  <Nav.Link onClick={handleThongTin}>
+                    <i className="bi bi-person-circle fs-5 me-3"></i>
+                    <span>Thông tin cá nhân</span>
+                  </Nav.Link>
+                </Nav.Item>
 
-            <NavDropdown
-              title={
-                <>
-                  <i className="bi bi-person-fill-check fs-5 me-3"></i>
-                  <span className="me-4">Quản lý user</span>
-                </>
-              }
-              id="nav-dropdown"
-            >
-              <NavDropdown.Item
-                eventKey="4.1"
-                onClick={() => navigate("user-list")}
-              >
-                Danh sách user
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                eventKey="4.2"
-                onClick={() => navigate("add-user")}
-              >
-                Thêm user mới
-              </NavDropdown.Item>
-            </NavDropdown>
+                <NavDropdown
+                  title={
+                    <>
+                      <i className="bi bi-person-fill-check fs-5 me-3"></i>
+                      <span className="me-4">Quản lý user</span>
+                    </>
+                  }
+                  id="nav-dropdown"
+                >
+                  <NavDropdown.Item
+                    eventKey="4.1"
+                    onClick={() => navigate("user-list")}
+                  >
+                    Danh sách user
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    eventKey="4.2"
+                    onClick={() => navigate("add-user")}
+                  >
+                    Thêm user mới
+                  </NavDropdown.Item>
+                </NavDropdown>
 
-            <NavDropdown
-              title={
-                <>
-                  <i className="bi bi-geo-alt-fill fs-5 me-3"></i>
-                  <span className="me-4">Quản lý vị trí</span>
-                </>
-              }
-              id="nav-dropdown"
-            >
-              <NavDropdown.Item
-                eventKey="4.1"
-                onClick={() => navigate("desc-list")}
-              >
-                Danh sách vị trí
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                eventKey="4.2"
-                onClick={() => navigate("add-desc")}
-              >
-                Thêm vị trí mới
-              </NavDropdown.Item>
-            </NavDropdown>
+                <NavDropdown
+                  title={
+                    <>
+                      <i className="bi bi-geo-alt-fill fs-5 me-3"></i>
+                      <span className="me-4">Quản lý vị trí</span>
+                    </>
+                  }
+                  id="nav-dropdown"
+                >
+                  <NavDropdown.Item
+                    eventKey="4.1"
+                    onClick={() => navigate("desc-list")}
+                  >
+                    Danh sách vị trí
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    eventKey="4.2"
+                    onClick={() => navigate("add-desc")}
+                  >
+                    Thêm vị trí mới
+                  </NavDropdown.Item>
+                </NavDropdown>
 
-            <NavDropdown
-              title={
-                <>
-                  <i className="bi bi-house-check-fill fs-5 me-3"></i>
-                  <span className="me-2">Quản lý phòng</span>
-                </>
-              }
-              id="nav-dropdown"
-            >
-              <NavDropdown.Item
-                eventKey="4.1"
-                onClick={() => navigate("room-list")}
-              >
-                Danh sách phòng thuê
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                eventKey="4.2"
-                onClick={() => navigate("add-room")}
-              >
-                Thêm phòng thuê mới
-              </NavDropdown.Item>
-            </NavDropdown>
+                <NavDropdown
+                  title={
+                    <>
+                      <i className="bi bi-house-check-fill fs-5 me-3"></i>
+                      <span className="me-2">Quản lý phòng</span>
+                    </>
+                  }
+                  id="nav-dropdown"
+                >
+                  <NavDropdown.Item
+                    eventKey="4.1"
+                    onClick={() => navigate("room-list")}
+                  >
+                    Danh sách phòng thuê
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    eventKey="4.2"
+                    onClick={() => navigate("add-room")}
+                  >
+                    Thêm phòng thuê mới
+                  </NavDropdown.Item>
+                </NavDropdown>
 
-            <Nav.Item>
-              <Nav.Link onClick={handleHistory}>
-                <i className="bi bi-book fs-5 me-3"></i>
-                <span>Quản lý đặt phòng</span>
-              </Nav.Link>
-            </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link onClick={handleHistory}>
+                    <i className="bi bi-book fs-5 me-3"></i>
+                    <span>Quản lý đặt phòng</span>
+                  </Nav.Link>
+                </Nav.Item>
 
-            <Nav.Item>
-              <Nav.Link onClick={handleComment}>
-                <i className="bi bi-chat-dots fs-5 me-3"></i>
-                <span>Quản lý bình luận</span>
-              </Nav.Link>
-            </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link onClick={handleComment}>
+                    <i className="bi bi-chat-dots fs-5 me-3"></i>
+                    <span>Quản lý bình luận</span>
+                  </Nav.Link>
+                </Nav.Item>
 
-            <Nav.Item>
-              <Nav.Link onClick={handleSignOut}>
-                <i className="bi bi-power fs-5 me-3"></i>
-                <span>Đăng xuất</span>
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+                <Nav.Item>
+                  <Nav.Link onClick={handleSignOut}>
+                    <i className="bi bi-power fs-5 me-3"></i>
+                    <span>Đăng xuất</span>
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+        </Container>
       </div>
     </>
   );

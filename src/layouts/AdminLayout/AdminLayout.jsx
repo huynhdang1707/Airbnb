@@ -12,16 +12,12 @@ function AdminLayout() {
   return (
     <div>
       <Container fluid className="bg-bg-secondary min-vh-100">
-        <Row>
-          {toggle &&<Col className=" col-4 col-md-2 bg-white vh-100 position-fixed">
+
             <AdminSidebar />
-          </Col>}
-          {toggle && <Col className="col-4 col-md-2"></Col>}
-          <Col className="px-3">
+    
             <AdminHeader toggle={toggle} Toggle={Toggle}/>
             <Outlet Toggle={Toggle}/>
-          </Col>
-        </Row>
+
       </Container>
     </div>
   );
