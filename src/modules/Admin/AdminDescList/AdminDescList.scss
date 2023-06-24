@@ -1,4 +1,4 @@
-.tieuDeVT{
+.tieuDeVT {
   color: #1c1e21;
   padding-bottom: 30px;
   font-size: 20px;
@@ -6,7 +6,7 @@
   line-height: 24px;
   border-bottom: 1px solid #c7c8c9;
 }
-.taiSuDung{
+.taiSuDung {
   border: none;
   margin: 0 0.5rem;
   height: 2rem;
@@ -19,8 +19,8 @@
   border-radius: 0.5rem;
 }
 
-.hinhAnh{
-  height:35px;
+.hinhAnh {
+  height: 35px;
   width: 35px;
 }
 
@@ -89,18 +89,20 @@
   .tabledesc td:nth-child(1) {
     display: none;
   }
-  
-  .tabledesc th:nth-child(6),
-  .tabledesc td:nth-child(6) {
-    display: none;
-  }
+
   .tabledesc th:nth-child(5),
   .tabledesc td:nth-child(5) {
     display: none;
   }
-
 }
-@media (max-width: 992px){
+@media (max-width: 576px) {
+  .tabledesc th:nth-child(6),
+  .tabledesc td:nth-child(6) {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
   .tabledesc th:nth-child(1),
   .tabledesc td:nth-child(1) {
     display: none;

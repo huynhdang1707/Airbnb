@@ -71,9 +71,48 @@ function UserSidebar() {
 
   return (
     <>
-      <div className="sticky-top bg-white">
+ <div className="divvvvvvv2 bg-white">
         <Container>
-          <Navbar expand="lg">
+          <Navbar expand="xl">
+            <Navbar.Toggle aria-controls="navbar-nav" />
+            <Navbar.Collapse id="navbar-nav">
+              <Nav className="flex-column">
+                <Nav.Item>
+                  <Nav.Link onClick={handleThongTin}>
+                    <i className="bi bi-person-circle fs-5 me-3"></i>
+                    <span>Thông tin cá nhân</span>
+                  </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Nav.Link onClick={handleHistory}>
+                    <i className="bi bi-book fs-5 me-3"></i>
+                    <span>Danh sách phòng đã đặt</span>
+                  </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Nav.Link onClick={handleComment}>
+                    <i className="bi bi-chat-dots fs-5 me-3"></i>
+                    <span>Bình luận của bạn</span>
+                  </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Nav.Link onClick={handleSignOut}>
+                    <i className="bi bi-power fs-5 me-3"></i>
+                    <span>Đăng xuất</span>
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+        </Container>
+      </div>
+
+      <div className="divvvvvvv1 sticky-top bg-white">
+        <Container>
+          <Navbar expand="xl">
             <Navbar.Toggle aria-controls="navbar-nav" />
             <Navbar.Collapse id="navbar-nav">
               <Nav>
