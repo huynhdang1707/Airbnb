@@ -14,6 +14,8 @@ function AdminCommentList() {
   const [show, setShow] = useState(false);
   const [searchInput, setSearchInput] = useState(null);
   const [commentList, setCommentList] = useState(null);
+  const [del, setDel] = useState(false);
+  const [delCmt, setDelCmt] = useState(null);
   const deleteComment = useRef(null);
   //Search by name
   const handleInput = (evt) => {
@@ -62,7 +64,7 @@ function AdminCommentList() {
       setCommentList(tryyy);
     };
     fetch();
-  }, [updated, deleteComment]);
+  }, [updated, del]);
   const [updateComment, setUpdateComment] = useState();
   const handleUpdateComment = (index) => {
     setUpdateComment(commentList[index]);
@@ -80,23 +82,28 @@ function AdminCommentList() {
         const fetch = async () => {
           try {
             const data = await apiDeleteComment(commentId);
-            deleteComment.current = data;
+            setDelCmt(data);
           } catch (error) {
             console.log(error);
           }
         };
         fetch();
-        swal({
-          title: `Xóa booking thành công`,
-          text: "Nhấn Ok để tiếp tục!",
-          icon: "success",
-        }).then((willSuccess) => {
-          dispatch(getCommentList());
-          deleteComment.current = null;
-        });
       }
     });
   };
+  useEffect(() => {
+    if (delCmt) {
+      swal({
+        title: `Xóa booking thành công`,
+        text: "Nhấn Ok để tiếp tục!",
+        icon: "success",
+      }).then((willSuccess) => {
+        
+      });
+    }
+    setDel(!del);
+    setDelCmt(null);
+  }, [delCmt]);
   const handleShow = (value) => {
     setShow(value);
   };
@@ -131,7 +138,6 @@ function AdminCommentList() {
               <div className="row">
                 <div className="table-responsive">
                   <div className="scrollable-table">
-                   
                     {commentList?.length === length ? (
                       <table className="table tablecmt">
                         <thead>
@@ -210,7 +216,7 @@ function AdminCommentList() {
                                   <img
                                     src={item.avatar}
                                     alt={item.tenNguoiBinhLuan}
-                                    style={{width:"30px", height:"30px"}}
+                                    style={{ width: "30px", height: "30px" }}
                                   />
                                 </td>
                                 <td>{`${

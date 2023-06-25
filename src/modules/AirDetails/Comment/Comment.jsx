@@ -268,7 +268,7 @@ function Comment({ roomId, cmted }) {
     };
     fetch();
     setIdDel(null);
-  }, idDel);
+  }, [idDel]);
   useEffect(() => {
     if (deletedCmt) {
       swal({
