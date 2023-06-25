@@ -3,13 +3,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import swal from "sweetalert";
-import { Container } from "react-bootstrap";
+import { Container,Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { userCreateBooking } from "../../../slices/userCreateBooking";
 import "./UserBooking.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 
 function UserBooking() {
   //
@@ -195,6 +196,7 @@ function UserBooking() {
                       showIcon
                       selected={newStartDate}
                       minDate={startDate}
+                      maxDate={newEndDate}
                       dateFormat="dd/MM/yyyy"
                       onChange={(date) => setNewStartDate(date)}
                       className="datePicker w-100"
@@ -236,9 +238,9 @@ function UserBooking() {
                 />
               </div>
               <div className="text-center mt-3">
-                <button className="add" disabled={isLoading ? true : false}>
+                <Button variant="outline-primary" disabled={isLoading ? true : false}>
                   Đặt phòng
-                </button>
+                </Button>
                 {error && (
                   <p className="text-center fs-7 text-danger fst-italic">
                     {error}

@@ -114,39 +114,55 @@ function Comment({ roomId, cmted }) {
   const handleDeleteComment = async (index) => {
     setDeleteCmt(comments[index]);
     setFlagDel(!flagDel);
-    //
-    await swal({
-      title: "Bạn có muốn xóa đánh giá?",
-      text: "Nhấn Ok để tiếp tục!",
-      icon: "warning",
-      buttons: true,
-    }).then((willSuccess) => {
-      setFlagDel(!flagDel);
-      if (idDel) {
-        if (willSuccess) {
-          const fetch = async () => {
-            try {
-              const data = await apiDeleteComment(idDel);
-              setDeletedCmt(data);
-              deleteComment.current = data;
-            } catch (error) {
-              console.log(error);
+    try {
+      const data = await dispatch(getCommentList());
+      console.log(data);
+      console.log(deleteCmt);
+      const cmtDelId = data?.payload.filter(
+        (item) =>
+          item.maPhong == roomId &&
+          item.maNguoiBinhLuan === user?.user?.id &&
+          item.noiDung === deleteCmt?.noiDung &&
+          item.ngayBinhLuan === deleteCmt?.ngayBinhLuan
+      );
+      setIdDel(cmtDelId[0]?.id);
+      console.log(cmtDelId);
+      //
+      await swal({
+        title: "Bạn có muốn xóa đánh giá?",
+        text: "Nhấn Ok để tiếp tục!",
+        icon: "warning",
+        buttons: true,
+      }).then((willSuccess) => {
+        setFlagDel(!flagDel);
+        if (idDel) {
+          if (willSuccess) {
+            const fetch = async () => {
+              try {
+                const data = await apiDeleteComment(idDel);
+                setDeletedCmt(data);
+                deleteComment.current = data;
+              } catch (error) {
+                console.log(error);
+              }
+            };
+            fetch();
+            if (deletedCmt) {
+              swal({
+                title: `Xóa đánh giá thành công`,
+                text: "Nhấn Ok để tiếp tục!",
+                icon: "success",
+              }).then((willSuccess) => {
+                deleteComment.current = null;
+              });
             }
-          };
-          fetch();
-          if (deletedCmt) {
-            swal({
-              title: `Xóa đánh giá thành công`,
-              text: "Nhấn Ok để tiếp tục!",
-              icon: "success",
-            }).then((willSuccess) => {
-              deleteComment.current = null;
-            });
           }
         }
-      }
-    });
-    //
+      });
+      //
+    } catch (error) {
+      console.log(error)
+    }
   };
   const handleCancelComment = (index) => {
     setCancel(false);
@@ -198,16 +214,15 @@ function Comment({ roomId, cmted }) {
           item.noiDung === updateComment1?.noiDung &&
           item.ngayBinhLuan === updateComment1?.ngayBinhLuan
       );
-      const cmtDelId = data?.payload.filter(
-        (item) =>
-          item.maPhong == roomId &&
-          item.maNguoiBinhLuan === user?.user?.id &&
-          item.noiDung === deleteCmt?.noiDung &&
-          item.ngayBinhLuan === deleteCmt?.ngayBinhLuan
-      );
       setIdCmt(cmtHaveId[0]?.id);
-
-      setIdDel(cmtDelId[0]?.id);
+      // const cmtDelId = data?.payload.filter(
+      //   (item) =>
+      //     item.maPhong == roomId &&
+      //     item.maNguoiBinhLuan === user?.user?.id &&
+      //     item.noiDung === deleteCmt?.noiDung &&
+      //     item.ngayBinhLuan === deleteCmt?.ngayBinhLuan
+      // );
+      // setIdDel(cmtDelId[0]?.id);
     };
     fetch();
     setRating(updateComment1?.saoBinhLuan);
@@ -262,10 +277,7 @@ function Comment({ roomId, cmted }) {
       const vl1 = { user: vl, token: storedValue.token };
       localStorage.setItem("user", JSON.stringify(vl1));
     }
-    console.log(user);
   }, [roomId, updated, deleteComment, cmted, deletedCmt]);
-  console.log(storedValue);
-  console.log(infoUser);
   if (isLoading || isLoad)
     return (
       <div className="h-100 d-flex justify-content-center align-items-center">
