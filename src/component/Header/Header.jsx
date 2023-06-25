@@ -12,6 +12,7 @@ import { signout } from "../../slices/userSlice";
 import { removeUser } from "../../slices/signUpSlice";
 import { getInfoUser } from "../../slices/infoUserSlice";
 
+
 function Header({
   onLoginRedirect,
   onHandleSignUpRedirect,

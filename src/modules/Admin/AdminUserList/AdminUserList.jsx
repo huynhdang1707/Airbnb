@@ -164,13 +164,13 @@ function AdminUserList() {
                         </td>
                         <td>
                           <button
-                            className="btn text-secondary me-1 border-warning"
+                            className="btn text-secondary me-1 border-warning mt-1"
                             onClick={() => handleUpdateUser(index)}
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>
                           <button
-                            className="btn text-danger border-success"
+                            className="btn text-danger border-success mt-1"
                             onClick={() => handleDeleteUser(item.id, index)}
                           >
                             <i className="bi bi-trash3"></i>

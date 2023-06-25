@@ -10,6 +10,8 @@ import { getCommentList } from "../../../slices/commentListSlice";
 import swal from "sweetalert";
 import { updateComment } from "../../../slices/updateCommentSlice";
 import { apiDeleteComment } from "../../../apis/commentManagementAPI";
+import { getInfoUser } from "../../../slices/infoUserSlice";
+import { signin } from "../../../slices/userSlice";
 
 const schema = yup.object({
   noiDung: yup.string().required("(*)Nội dung không được để trống"),
@@ -37,6 +39,8 @@ function Comment({ roomId, cmted }) {
   const [deletedCmt, setDeletedCmt] = useState(null);
   const [flagDel, setFlagDel] = useState(false);
   const [rating, setRating] = useState(0);
+  const { infoUser } = useSelector((state) => state.infoUser);
+  const storedValue = JSON.parse(localStorage.getItem("user"));
   //
   const handleMouseOver = (starIndex) => {
     setRating(starIndex);
@@ -97,68 +101,7 @@ function Comment({ roomId, cmted }) {
   } = useSelector((state) => state.updateComment);
 
   const [idCmt, setIdCmt] = useState(null);
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await dispatch(getCommentList());
-      const cmtHaveId = data?.payload.filter(
-        (item) =>
-          item.maPhong == roomId &&
-          item.maNguoiBinhLuan === user?.user?.id &&
-          item.noiDung === updateComment1?.noiDung &&
-          item.ngayBinhLuan === updateComment1?.ngayBinhLuan
-      );
-      const cmtDelId = data?.payload.filter(
-        (item) =>
-          item.maPhong == roomId &&
-          item.maNguoiBinhLuan === user?.user?.id &&
-          item.noiDung === deleteCmt?.noiDung &&
-          item.ngayBinhLuan === deleteCmt?.ngayBinhLuan
-      );
-      setIdCmt(cmtHaveId[0]?.id);
 
-      setIdDel(cmtDelId[0]?.id);
-    };
-    fetch();
-    setRating(updateComment1?.saoBinhLuan);
-  }, [updateComment1, deleteCmt, deletedCmt, flagDel]);
-  useEffect(() => {
-    if (updateComment1) {
-      if (updated) {
-        reset({
-          noiDung: updateComment1?.noiDung,
-          saoBinhLuan: comment?.saoBinhLuan,
-        });
-      } else {
-        reset({
-          noiDung: updateComment1?.noiDung,
-          saoBinhLuan: updateComment1?.saoBinhLuan,
-        });
-      }
-    }
-  }, [updateComment1, updated, cancel]);
-  useEffect(() => {
-    const fetch = async () => {
-      setIsLoading(true);
-      try {
-        const data = await apiGetCommentListRoomId(roomId);
-        setComments(data.content?.reverse());
-        if (data.content) {
-          let sum = 0;
-          data.content?.forEach((obj) => {
-            if (obj.hasOwnProperty("saoBinhLuan")) {
-              sum += obj.saoBinhLuan;
-            }
-          });
-          setTotal(sum);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        setError(error);
-        setIsLoading(false);
-      }
-    };
-    fetch();
-  }, [roomId, updated, deleteComment, cmted, deletedCmt]);
   const handleUpdateComment = (index) => {
     if (inputRef.current && inputRef.current.key === index) {
       inputRef.current.focus();
@@ -245,6 +188,84 @@ function Comment({ roomId, cmted }) {
   const handleUpdateSendComment = (index) => {
     // setValue("noiDung", inputRef.current.value);
   };
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await dispatch(getCommentList());
+      const cmtHaveId = data?.payload.filter(
+        (item) =>
+          item.maPhong == roomId &&
+          item.maNguoiBinhLuan === user?.user?.id &&
+          item.noiDung === updateComment1?.noiDung &&
+          item.ngayBinhLuan === updateComment1?.ngayBinhLuan
+      );
+      const cmtDelId = data?.payload.filter(
+        (item) =>
+          item.maPhong == roomId &&
+          item.maNguoiBinhLuan === user?.user?.id &&
+          item.noiDung === deleteCmt?.noiDung &&
+          item.ngayBinhLuan === deleteCmt?.ngayBinhLuan
+      );
+      setIdCmt(cmtHaveId[0]?.id);
+
+      setIdDel(cmtDelId[0]?.id);
+    };
+    fetch();
+    setRating(updateComment1?.saoBinhLuan);
+  }, [updateComment1, deleteCmt, deletedCmt, flagDel]);
+  useEffect(() => {
+    if (updateComment1) {
+      if (updated) {
+        reset({
+          noiDung: updateComment1?.noiDung,
+          saoBinhLuan: comment?.saoBinhLuan,
+        });
+      } else {
+        reset({
+          noiDung: updateComment1?.noiDung,
+          saoBinhLuan: updateComment1?.saoBinhLuan,
+        });
+      }
+    }
+  }, [updateComment1, updated, cancel]);
+  useEffect(() => {
+    const fetch = async () => {
+      setIsLoading(true);
+      try {
+        const data = await apiGetCommentListRoomId(roomId);
+        setComments(data.content?.reverse());
+        if (data?.content) {
+          let sum = 0;
+          data.content?.forEach((obj) => {
+            if (obj.hasOwnProperty("saoBinhLuan")) {
+              sum += obj.saoBinhLuan;
+            }
+          });
+          setTotal(sum);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        setError(error);
+        setIsLoading(false);
+      }
+    };
+    fetch();
+    if (
+      storedValue?.user?.name !== infoUser.name ||
+      storedValue?.user?.avatar !== infoUser.avatar ||
+      storedValue?.user?.birthday !== infoUser.birthday ||
+      storedValue?.user?.gender !== infoUser.gender ||
+      storedValue?.user?.email !== infoUser.email ||
+      storedValue?.user?.phone !== infoUser.phone ||
+      storedValue?.user?.password !== infoUser.password
+    ) {
+      const vl = { ...infoUser };
+      const vl1 = { user: vl, token: storedValue.token };
+      localStorage.setItem("user", JSON.stringify(vl1));
+    }
+    console.log(user);
+  }, [roomId, updated, deleteComment, cmted, deletedCmt]);
+  console.log(storedValue);
+  console.log(infoUser);
   if (isLoading || isLoad)
     return (
       <div className="h-100 d-flex justify-content-center align-items-center">
@@ -359,7 +380,7 @@ function Comment({ roomId, cmted }) {
                   )}
                 </div>
               </div>
-              {show && user?.user?.role ==="ADMIN" ? (
+              {show && user?.user?.role === "ADMIN" ? (
                 <div className="userButton">
                   {cancel && indexx === index ? (
                     <button

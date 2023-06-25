@@ -153,7 +153,7 @@ function AirComment({ id }) {
 
   return (
     <div className="batDau">
-      <Container>
+      <Container cmted={reloadChild}>
         <h2 className="tieuDeNX">ĐÁNH GIÁ PHÒNG</h2>
         <div className="rating-stars">{renderStars()}</div>
         <InputGroup className="mt-2">
@@ -176,7 +176,7 @@ function AirComment({ id }) {
         <div className="mt-3">
           <Row>
             <Col>
-              <Comment cmnted={reloadChild} roomId={id} />
+              <Comment cmted={reloadChild} roomId={id} />
             </Col>
           </Row>
         </div>
