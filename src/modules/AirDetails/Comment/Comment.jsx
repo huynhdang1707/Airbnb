@@ -37,6 +37,7 @@ function Comment({ roomId, cmted }) {
   const [idDel, setIdDel] = useState(null);
   const [deleteCmt, setDeleteCmt] = useState(null);
   const [deletedCmt, setDeletedCmt] = useState(null);
+  const [deleteFlag, setDeleteFlag] = useState(false);
   const [flagDel, setFlagDel] = useState(false);
   const [rating, setRating] = useState(0);
   const { infoUser } = useSelector((state) => state.infoUser);
@@ -136,7 +137,7 @@ function Comment({ roomId, cmted }) {
       const vl1 = { user: vl, token: storedValue.token };
       localStorage.setItem("user", JSON.stringify(vl1));
     }
-  }, [roomId, updated, deleteComment, cmted, deletedCmt, flagDel]);
+  }, [roomId, updated, cmted, deleteFlag]);
 
   const handleUpdateComment = (index) => {
     if (inputRef.current && inputRef.current.key === index) {
@@ -278,7 +279,7 @@ function Comment({ roomId, cmted }) {
         deleteComment.current = null;
       });
     }
-    setDeletedCmt(null);
+    setDeleteFlag(!deleteFlag);
   }, [deletedCmt]);
   //
   const handleCancelComment = (index) => {
