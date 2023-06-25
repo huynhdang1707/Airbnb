@@ -101,6 +101,42 @@ function Comment({ roomId, cmted }) {
   } = useSelector((state) => state.updateComment);
 
   const [idCmt, setIdCmt] = useState(null);
+  useEffect(() => {
+    const fetch = async () => {
+      setIsLoading(true);
+      try {
+        const data = await apiGetCommentListRoomId(roomId);
+        setComments(data.content?.reverse());
+        if (data?.content) {
+          let sum = 0;
+          data.content?.forEach((obj) => {
+            if (obj.hasOwnProperty("saoBinhLuan")) {
+              sum += obj.saoBinhLuan;
+            }
+          });
+          setTotal(sum);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        setError(error);
+        setIsLoading(false);
+      }
+    };
+    fetch();
+    if (
+      storedValue?.user?.name !== infoUser.name ||
+      storedValue?.user?.avatar !== infoUser.avatar ||
+      storedValue?.user?.birthday !== infoUser.birthday ||
+      storedValue?.user?.gender !== infoUser.gender ||
+      storedValue?.user?.email !== infoUser.email ||
+      storedValue?.user?.phone !== infoUser.phone ||
+      storedValue?.user?.password !== infoUser.password
+    ) {
+      const vl = { ...infoUser };
+      const vl1 = { user: vl, token: storedValue.token };
+      localStorage.setItem("user", JSON.stringify(vl1));
+    }
+  }, [roomId, updated, deleteComment, cmted, deletedCmt, flagDel]);
 
   const handleUpdateComment = (index) => {
     if (inputRef.current && inputRef.current.key === index) {
@@ -114,32 +150,109 @@ function Comment({ roomId, cmted }) {
   const handleDeleteComment = async (index) => {
     setDeleteCmt(comments[index]);
     setFlagDel(!flagDel);
-    try {
-      const data = await dispatch(getCommentList());
-      console.log(data);
-      console.log(deleteCmt);
-      const cmtDelId = data?.payload.filter(
-        (item) =>
-          item.maPhong == roomId &&
-          item.maNguoiBinhLuan === user?.user?.id &&
-          item.noiDung === deleteCmt?.noiDung &&
-          item.ngayBinhLuan === deleteCmt?.ngayBinhLuan
-      );
-      setIdDel(cmtDelId[0]?.id);
-      console.log(cmtDelId);
+    console.log(comments[index]);
+    // try {
+    //   const data = await dispatch(getCommentList());
+    //   console.log(data);
+
+    //   if (data) {
+    //     const cmtDelId = data?.payload.filter(
+    //       (item) =>
+    //         item.maPhong == roomId &&
+    //         item.maNguoiBinhLuan === user?.user?.id &&
+    //         item.noiDung === deleteCmt?.noiDung &&
+    //         item.ngayBinhLuan === deleteCmt?.ngayBinhLuan
+    //     );
+    //     if (cmtDelId.length > 0) {
+    //       setIdDel(cmtDelId[0]?.id);
+    //       console.log(cmtDelId);
+    //     }
+    //   }
+
+    //   //
+    //   await swal({
+    //     title: "Bạn có muốn xóa đánh giá?",
+    //     text: "Nhấn Ok để tiếp tục!",
+    //     icon: "warning",
+    //     buttons: true,
+    //   }).then((willSuccess) => {
+    //     setFlagDel(!flagDel);
+    //     if (idDel) {
+    //       if (willSuccess) {
+    //         const fetch = async () => {
+    //           try {
+    //             const data = await apiDeleteComment(idDel);
+    //             setDeletedCmt(data);
+    //             deleteComment.current = data;
+    //           } catch (error) {
+    //             console.log(error);
+    //           }
+    //         };
+    //         fetch();
+    //         if (deletedCmt) {
+    //           swal({
+    //             title: `Xóa đánh giá thành công`,
+    //             text: "Nhấn Ok để tiếp tục!",
+    //             icon: "success",
+    //           }).then((willSuccess) => {
+    //             deleteComment.current = null;
+    //           });
+    //         }
+    //       }
+    //     }
+    //   });
+    //   //
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+  //
+  useEffect(() => {
+    const fetch = async () => {
+      if (deleteCmt) {
+        try {
+          const data = await dispatch(getCommentList());
+          console.log(data);
+
+          if (data) {
+            const cmtDelId = data?.payload.filter(
+              (item) =>
+                item.maPhong == roomId &&
+                item.maNguoiBinhLuan === user?.user?.id &&
+                item.noiDung === deleteCmt?.noiDung &&
+                item.ngayBinhLuan === deleteCmt?.ngayBinhLuan
+            );
+            if (cmtDelId.length > 0) {
+              setIdDel(cmtDelId[0]?.id);
+              console.log(cmtDelId);
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetch();
+    setDeleteCmt(null);
+  }, [deleteCmt]);
+  useEffect(() => {
+    const fetch = async () => {
       //
-      await swal({
-        title: "Bạn có muốn xóa đánh giá?",
-        text: "Nhấn Ok để tiếp tục!",
-        icon: "warning",
-        buttons: true,
-      }).then((willSuccess) => {
-        setFlagDel(!flagDel);
-        if (idDel) {
+      if (idDel) {
+        console.log(idDel);
+        await swal({
+          title: "Bạn có muốn xóa đánh giá?",
+          text: "Nhấn Ok để tiếp tục!",
+          icon: "warning",
+          buttons: true,
+        }).then((willSuccess) => {
+          setFlagDel(!flagDel);
+
           if (willSuccess) {
             const fetch = async () => {
               try {
                 const data = await apiDeleteComment(idDel);
+                console.log(data);
                 setDeletedCmt(data);
                 deleteComment.current = data;
               } catch (error) {
@@ -147,23 +260,27 @@ function Comment({ roomId, cmted }) {
               }
             };
             fetch();
-            if (deletedCmt) {
-              swal({
-                title: `Xóa đánh giá thành công`,
-                text: "Nhấn Ok để tiếp tục!",
-                icon: "success",
-              }).then((willSuccess) => {
-                deleteComment.current = null;
-              });
-            }
           }
-        }
-      });
+        });
+      }
       //
-    } catch (error) {
-      console.log(error)
+    };
+    fetch();
+    setIdDel(null);
+  }, idDel);
+  useEffect(() => {
+    if (deletedCmt) {
+      swal({
+        title: `Xóa đánh giá thành công`,
+        text: "Nhấn Ok để tiếp tục!",
+        icon: "success",
+      }).then((willSuccess) => {
+        deleteComment.current = null;
+      });
     }
-  };
+    setDeletedCmt(null);
+  }, [deletedCmt]);
+  //
   const handleCancelComment = (index) => {
     setCancel(false);
     setIndexx(index);
@@ -242,42 +359,7 @@ function Comment({ roomId, cmted }) {
       }
     }
   }, [updateComment1, updated, cancel]);
-  useEffect(() => {
-    const fetch = async () => {
-      setIsLoading(true);
-      try {
-        const data = await apiGetCommentListRoomId(roomId);
-        setComments(data.content?.reverse());
-        if (data?.content) {
-          let sum = 0;
-          data.content?.forEach((obj) => {
-            if (obj.hasOwnProperty("saoBinhLuan")) {
-              sum += obj.saoBinhLuan;
-            }
-          });
-          setTotal(sum);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        setError(error);
-        setIsLoading(false);
-      }
-    };
-    fetch();
-    if (
-      storedValue?.user?.name !== infoUser.name ||
-      storedValue?.user?.avatar !== infoUser.avatar ||
-      storedValue?.user?.birthday !== infoUser.birthday ||
-      storedValue?.user?.gender !== infoUser.gender ||
-      storedValue?.user?.email !== infoUser.email ||
-      storedValue?.user?.phone !== infoUser.phone ||
-      storedValue?.user?.password !== infoUser.password
-    ) {
-      const vl = { ...infoUser };
-      const vl1 = { user: vl, token: storedValue.token };
-      localStorage.setItem("user", JSON.stringify(vl1));
-    }
-  }, [roomId, updated, deleteComment, cmted, deletedCmt]);
+
   if (isLoading || isLoad)
     return (
       <div className="h-100 d-flex justify-content-center align-items-center">
