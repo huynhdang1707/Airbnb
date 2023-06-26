@@ -81,7 +81,7 @@ function UserSidebar() {
                 <Navbar.Brand href="/">
                   <svg
                     style={{ width: "102", height: "32", color: "#FF385C" }}
-                    className="mx-2 fs-4"
+                    className="mx-2 mt-2 mb-2 fs-4"
                   >
                     <path
                       fill="currentcolor"
