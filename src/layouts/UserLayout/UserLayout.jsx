@@ -13,11 +13,13 @@ function UserLayout() {
             <Col className=" col-4 col-md-2 bg-white vh-100 position-fixed">
               <UserSidebar />
             </Col>
-            && <Col className="col-4 col-md-2"></Col>
+            <Col className="col-4 col-md-2"></Col>
             <Col className="px-3">
               <AdminHeader />
               <AdminHeader />
-              <Outlet />
+              <div className="mt-2">
+                <Outlet />
+              </div>
             </Col>
           </Row>
         </Container>

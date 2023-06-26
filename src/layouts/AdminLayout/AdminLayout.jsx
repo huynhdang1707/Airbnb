@@ -11,21 +11,19 @@ function AdminLayout() {
     setToggle(!toggle);
   };
   return (
-    <div className="content">
+    <div>
       <div className="divvvvvvv2">
         <Container fluid className="bg-bg-secondary min-vh-100">
           <Row>
-            {toggle && (
-              <Col className=" col-4 col-md-2 bg-white vh-100 position-fixed">
-                <AdminSidebar />
-              </Col>
-            )}
-            {toggle && <Col className="col-4 col-md-2"></Col>}
+            <Col className=" col-4 col-md-2 bg-white vh-100 position-fixed">
+              <AdminSidebar />
+            </Col>
+            <Col className="col-4 col-md-2"></Col>
             <Col className="px-3">
               <AdminHeader />
-              <AdminHeader  />
+              <AdminHeader />
               <div className="mt-2">
-                <Outlet  />
+                <Outlet />
               </div>
             </Col>
           </Row>
@@ -37,7 +35,9 @@ function AdminLayout() {
           <AdminHeader toggle={toggle} Toggle={Toggle} />
           <AdminSidebar />
 
-          <Outlet Toggle={Toggle} />
+          <div className="mt-2">
+            <Outlet />
+          </div>
         </Container>
       </div>
     </div>

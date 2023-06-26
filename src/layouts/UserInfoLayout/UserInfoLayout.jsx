@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import UserInfo from "../../modules/UserInfo/UserInfo";
-import Button from 'react-bootstrap/Button';
-import "./UserInfoLayout.scss"
+import Button from "react-bootstrap/Button";
+import "./UserInfoLayout.scss";
 
 function UserInfoLayout() {
   const navigate = useNavigate();
@@ -13,22 +13,31 @@ function UserInfoLayout() {
   const handleClick = () => {
     navigate("/admin");
   };
+  const handleClick2 = () => {
+    navigate("/user");
+  };
 
   if (user) {
     return (
       <>
         <div className="container">
-          <h2 className="py-4 bg-white tieuDeUS">
-            Thông tin người dùng
-          </h2>
+          <h2 className="py-4 bg-white tieuDeUS">Thông tin người dùng</h2>
           {role === "ADMIN" && location.pathname !== "/admin" ? (
-              <div className="py-4">
-                  <Button variant="outline-secondary" onClick={handleClick}>Admin Page</Button>{' '}
-              </div>
-            ) : null}
+            <div className="py-4">
+              <Button variant="outline-secondary" onClick={handleClick}>
+                Admin Page
+              </Button>
+            </div>
+          ) : (
+            <div className="py-4">
+              <Button variant="outline-secondary" onClick={handleClick2}>
+                User Page
+              </Button>
+            </div>
+          )}
           <UserInfo />
         </div>
-      </> 
+      </>
     );
   } else
     return (
