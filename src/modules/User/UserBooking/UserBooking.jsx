@@ -238,7 +238,7 @@ function UserBooking() {
                 />
               </div>
               <div className="text-center mt-3">
-                <Button variant="outline-primary" disabled={isLoading ? true : false}>
+                <Button type="submit" variant="outline-primary" disabled={isLoading ? true : false}>
                   Đặt phòng
                 </Button>
                 {error && (
