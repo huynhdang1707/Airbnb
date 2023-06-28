@@ -44,6 +44,7 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
 
   //upload
   const [show, setShow] = useState(false);
+  const [show1, setShow1] = useState(false);
   const [key, setKey] = useState(null);
   const [id2, setId2] = useState(null);
   const [image, setImage] = useState(null);
@@ -95,6 +96,18 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
   const onSubmit = async (value) => {
     const data = await dispatch(updateUser(value));
     dispatch(userUpdated(data));
+    if (data?.payload?.statusCode === 200) {
+      swal({
+        title: `Cập nhật người dùng thành công`,
+        text: "Nhấn Ok để tiếp tục!",
+        icon: "success",
+      }).then((willSuccess) => {
+        if (willSuccess) {
+          handleShow(!onShow);
+          // setShow1(!show1);
+        }
+      });
+    }
   };
   const onErr = (error) => {
     console.log(error);
@@ -132,18 +145,8 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
         });
       }
     }
-  }, [onUpdateUser, imageUp]);
-  if (user?.statusCode === 200) {
-    swal({
-      title: `Cập nhật người dùng thành công`,
-      text: "Nhấn Ok để tiếp tục!",
-      icon: "success",
-    }).then((willSuccess) => {
-      if (willSuccess) {
-        handleShow(!onShow);
-      }
-    });
-  }
+  }, [onUpdateUser, imageUp, updated]);
+
 
   if (isLoading)
     return (
@@ -157,7 +160,7 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
     );
   return (
     <>
-      {show ? null : (
+      {show ? null : onShow ? (
         <Modal
           show={onShow}
           onHide={() => handleShow(!onShow)}
@@ -348,7 +351,7 @@ function UserForm({ onShow, handleShow, onUpdateUser }) {
             )}
           </form>
         </Modal>
-      )}
+      ) : null}
       <UploadImage
         handleUploaded={handleUploaded}
         onShoww={show}

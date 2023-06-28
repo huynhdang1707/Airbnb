@@ -28,7 +28,7 @@ function UserInfoLayout() {
                 Admin Page
               </Button>
             </div>
-          ) : (
+          ) : role === "USER" ? null : (
             <div className="py-4">
               <Button variant="outline-secondary" onClick={handleClick2}>
                 User Page

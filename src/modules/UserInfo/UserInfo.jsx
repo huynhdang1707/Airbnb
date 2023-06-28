@@ -59,7 +59,7 @@ function UserInfo() {
 
   useEffect(() => {
     dispatch(getInfoUser(user?.user?.id));
-  }, [user?.user?.id]);
+  }, [user?.user?.id, show]);
   const onSubmit = async (value) => {};
   useEffect(() => {
     reset({
@@ -71,9 +71,9 @@ function UserInfo() {
       role: infoUser?.role,
       avatar: infoUser?.avatar,
       birthday: infoUser?.birthday,
-      gender: infoUser.gender,
+      gender: infoUser?.gender,
     });
-  }, [infoUser]);
+  }, [infoUser, show]);
   const onErrer = (err) => {
     console.log(err);
   };
