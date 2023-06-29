@@ -20,6 +20,11 @@
     width: 45%;
   }
 }
+@media screen and (max-width:500px){
+  .form_container{
+    width: 70%;
+  }
+}
 
 .nut{
   @extend .btnPrimary;
